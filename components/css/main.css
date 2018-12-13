@@ -1,0 +1,103 @@
+
+body{
+    margin: auto 0 ;
+    height: 100%;
+}
+.im-bucket{
+    width: 40px;
+    height: 40px;
+    margin-right: 30px;
+}
+
+.tab-main{
+  border: 0px;
+}
+
+.tab-main td{
+    align-content: center;
+    height: auto;
+}
+
+.card-tex{
+
+}
+
+.tab-card {
+    border-collapse: separate;
+    width: 100%;
+    border-spacing: 14px 17px;
+}
+.tab-card td{
+    width: 15rem;
+
+}
+.link-add-to-cart {
+    display: block;
+    padding-top: 22px;
+    color: #FF8C00;
+    font: 14pt bold;
+}
+
+.footer{
+    background-color:  #232423;
+    flex: 0 0 auto;
+    margin: 0px;
+
+}
+.foot-copyright{
+    background-color:  #1E90FF;
+    flex: 0 0 auto;
+    margin: 0px;
+
+}
+
+.tb-product{
+    border-collapse: separate;
+    width: 100%;
+    border-spacing: 14px 17px;
+}
+
+.tab-cart{
+    border-collapse: separate;
+    width: 100%;
+    border-spacing: 14px 17px;
+
+}
+
+.td-sub{
+    padding-top: 20px;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.im-cart{
+    width: 100px;
+    height: 100px;
+}
+
+ul.submenu {
+    display: none;
+    position: absolute;
+    width: 120px;
+    top: 37px;
+    left: 0;
+    background-color: white;
+    border: 1px solid red;
+}
+ul.submenu > li {
+    display: block;
+}
+ul.submenu > li > a {
+    display: block;
+    padding: 10px;
+    color: white;
+    background-color: red;
+    text-decoration: none;
+}
+ul.submenu > li > a:hover {
+    text-decoration: underline;
+}
+
+ul.menu > li:hover > ul.submenu {
+    display: block;
+}
