@@ -10,10 +10,10 @@ class Products
 
     public static function getProductsItems($id){
             $listProducts = include('listProduct.php');
-           // echo $listProducts['prod'.$id]['id'];
+
             if($id){
                 if(array_key_exists('prod'.$id, $listProducts)){
-                  //  echo $listProducts['prod'.$id]['id'];
+
                     return  $listProducts['prod'.$id]['id'];
 
                 }

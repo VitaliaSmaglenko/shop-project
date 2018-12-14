@@ -1,6 +1,5 @@
 <?php include("views/include/header.php"); ?>
 
-
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -16,7 +15,7 @@
             <td width="50%" rowspan="1">
                 <div class="col-md-5 order-md-1">
 
-                 <img class="featurette-image img-fluid mx-auto" src="../components/<?php echo $product['prod'.$id]['img'];?>" alt="Generic placeholder image">
+                    <img class="featurette-image img-fluid mx-auto" src="../components/<?php echo $product['prod'.$id]['img'];?>" alt="Generic placeholder image">
                 </div> </td> <td width="50%">
 
                 <div class="row featurette">
@@ -27,7 +26,7 @@
                         <ul class="list-group list-group-flush">
                             <?php for($i=1; $i <= count($product['prod'.$id]['character']); $i++){?>
                                 <li class="list-group-item"><?php echo $product['prod'.$id]['character']['char'.$i];?></li>
-                            <? } echo __FILE__;
+                            <?php }
                             ?>
                         </ul>
                     </div>
@@ -48,7 +47,5 @@
 
 </div>
 
-
 <hr class="featurette-divider"><br>
-
 <?php include("views/include/footer.php"); ?>

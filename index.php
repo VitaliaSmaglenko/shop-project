@@ -8,6 +8,10 @@ require_once ("config/Autoload.php");
 //require_once ("core/Router.php");
 
 $router = new Router();
-$router ->start();
+$result=$router ->run();
+
+
+$contrloller = new Controller();
+$contrloller->start($result);
 
 //echo"start";
