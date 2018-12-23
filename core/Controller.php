@@ -5,7 +5,7 @@
  * Date: 14.12.18
  * Time: 16:09
  */
-
+namespace App;
 class Controller
 {
 

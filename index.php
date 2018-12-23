@@ -4,8 +4,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
 require_once ("config/Autoload.php");
-
-//require_once ("core/Router.php");
+use App\Router\Router;
+use App\Controller;
 
 $router = new Router();
 $result=$router ->run();
@@ -13,5 +13,7 @@ $result=$router ->run();
 
 $contrloller = new Controller();
 $contrloller->start($result);
+
+
 
 //echo"start";
