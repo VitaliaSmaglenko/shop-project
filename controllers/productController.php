@@ -1,5 +1,8 @@
 <?php
-include_once ('models/Products.php');
+
+use Model\Products;
+
+
 class productController
 {
     public function actionView($id){

@@ -1,8 +1,6 @@
 <?php
-
-    //include_once ('models/Category.php');
-    //include_once ('models/Products.php');
-
+use Model\Category;
+use Model\Products;
 class siteController
 {
     public function actionIndex(){

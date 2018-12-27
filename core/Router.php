@@ -1,4 +1,5 @@
 <?php
+namespace App;
 
 class Router
 {
@@ -35,31 +36,10 @@ class Router
               //  echo "<br> controller name " . $controllerName;
                // echo "<br> action name " . $actionName;
                 $parameters = $separators;
-                //echo '<pre>';
-               // print_r($parameters);
-
-
-                // $result[0]=$controllerName;
-                // $result[1]=$actionName;
 
                  $result = array($controllerName,$actionName, $parameters);
                  return $result;}
 
-                /*
-
-                $controllerFile = 'controllers/' . $controllerName . '.php';
-
-                if (file_exists($controllerFile)) {
-                    include_once($controllerFile);
-                }
-
-                $controllerObject = new $controllerName;
-              //  $result = $controllerObject->$actionName($parameters);
-                $result = call_user_func_array(array($controllerObject, $actionName), $parameters);
-
-                if ($result != null) {
-                    break;
-                } */
 
             }
         }
