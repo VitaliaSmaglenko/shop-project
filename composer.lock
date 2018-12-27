@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8b050c8092ef83c1989eca46fd687d1b",
+    "content-hash": "2825a6432326f9422167f8c88b380ab7",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -1488,6 +1488,40 @@
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
             "time": "2017-04-07T12:08:54+00:00"
+        },
+        {
+            "name": "vitalia/logger-package",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/VitaliaSmaglenko/logger-package.git",
+                "reference": "33c199a5982f8db56be810cdc04ac6aec0aa2ff6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/VitaliaSmaglenko/logger-package/zipball/33c199a5982f8db56be810cdc04ac6aec0aa2ff6",
+                "reference": "33c199a5982f8db56be810cdc04ac6aec0aa2ff6",
+                "shasum": ""
+            },
+            "require": {
+                "monolog/monolog": "^1.24",
+                "php": "^7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Logger\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "VitaliaSmaglenko",
+                    "email": "vitaliasmaglenko@gmail.com"
+                }
+            ],
+            "description": "Package for logging",
+            "time": "2018-12-27T12:18:52+00:00"
         },
         {
             "name": "webmozart/assert",
