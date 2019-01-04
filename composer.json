@@ -8,8 +8,8 @@
         }
     ],
     "require": {
-        "monolog/monolog": "^1.24",
-        "phpunit/phpunit": "^7.5"
+        "phpunit/phpunit": "^7.5",
+        "vitalia/logger-package": "^1.0"
     },
 
     "autoload": {

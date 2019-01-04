@@ -30,4 +30,13 @@ class Products
         }
     }
 
+    protected function  get()
+    {
+        $sql = 'INSERT TO blabala';
+        $db = new PDODB();
+        $db->execute($sql);
+
+        return $obj;
+    }
+
 }
