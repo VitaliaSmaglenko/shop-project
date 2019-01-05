@@ -1,14 +1,17 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: phpstudent
- * Date: 14.12.18
- * Time: 16:09
+ * Class Controller
+ * Component for connecting controllers
  */
+
 namespace App;
+
 class Controller
 {
-
+    /**
+     * Connects the controller class file
+     * @param $result
+     */
     public function start($result){
 
 

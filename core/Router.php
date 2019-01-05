@@ -1,15 +1,32 @@
 <?php
+/**
+ * Component for working with routes
+ */
+
 namespace App;
 
 
 class Router
 {
+    /*
+     * Property to store an array of routes
+     * @var array
+     */
     private $routes;
+
+    /**
+     * Router constructor.
+     */
 
     public function __construct()
     {
         $this->routes = include('config/routes.php');
     }
+
+    /**
+     * Method to handle the request
+     * @return array
+     */
 
     public function run()
     {
@@ -20,26 +37,17 @@ class Router
 
         foreach ($this->routes as $request => $path) {
 
-            //echo "<br> $pattern -> $path";
             if (preg_match("~$request~", $uri)) {
-                //f($uri==$pattern){
 
-                $fullPath = preg_replace("~$request~", $path, $uri);
-               // echo "<br>" . $uri;
-                ///  echo "<br>".$path;
-                //  echo "<br>".$request;
-               // echo "<br> " . $fullPath . "<br>";
+             $fullPath = preg_replace("~$request~", $path, $uri);
+             $separators = explode('/', $fullPath);
+             $controllerName = array_shift($separators) . 'Controller';
+             $actionName = 'action' . ucfirst((array_shift($separators)));
 
-                $separators = explode('/', $fullPath);
-                $controllerName = array_shift($separators) . 'Controller';
-                $actionName = 'action' . ucfirst((array_shift($separators)));
+             $parameters = $separators;
 
-              //  echo "<br> controller name " . $controllerName;
-               // echo "<br> action name " . $actionName;
-                $parameters = $separators;
-
-                 $result = array($controllerName,$actionName, $parameters);
-                 return $result;}
+             $result = array($controllerName,$actionName, $parameters);
+             return $result;}
 
 
             }

@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * Class Autoload
+ * Component for automatic connection classes
+ */
 class Autoload
 {
+    /**
+     * Method for automatic connection classes
+     * @param $className
+     */
    static public  function  myAutoload($className){
       $pathParts = explode('\\', $className);
       $class=array_pop($pathParts);
@@ -29,8 +37,6 @@ class Autoload
    } return;
     }
 
-
-
-
 }
-      spl_autoload_register('Autoload::myAutoload');
+
+  spl_autoload_register('Autoload::myAutoload');
