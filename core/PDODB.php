@@ -1,18 +1,19 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: phpstudent
- * Date: 04.01.19
- * Time: 17:34
+ * Class PDODB
+ * Component for working with database
  */
 
 namespace App;
 use PDO;
 
-
 class PDODB
 
 {
+    /**
+     * Establishes a database connection
+     * @return PDO
+     */
 
     public  function connect(){
         $conf = include ('config/db.php');
@@ -37,6 +38,12 @@ class PDODB
 
 
     }
+
+    /**
+     * Receives data from the database
+     * @param $sql
+     * @return array
+     */
 
     public function selectData($sql){
         $pdo = $this->connect();

@@ -1,8 +1,17 @@
 <?php
+/**
+ * Controller siteController
+ */
+
 use Model\Category;
 use Model\Products;
+
 class siteController
 {
+    /**
+     * Action for main page
+     * @return bool
+     */
     public function actionIndex(){
 
 
