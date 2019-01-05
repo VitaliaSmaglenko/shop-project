@@ -36,7 +36,7 @@ include("views/include/header.php");
                     <?php   foreach ($categories as $category):
                         ?>
                         <li><a href="category/<?php echo $category['id'];?>" class="cat-link">
-                        <?php echo $category['name'];?></a></li>
+                        <?php echo $category['category'];?></a></li>
                         <?php
                     endforeach;?>
                 </ol>

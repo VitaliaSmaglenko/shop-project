@@ -13,9 +13,8 @@ use PDO;
 class PDODB
 
 {
-    public $pdo;
 
-    public function connect(){
+    public  function connect(){
         $conf = include ('config/db.php');
         $host = $conf['host'];
         $db   = $conf['db'];
@@ -28,10 +27,10 @@ class PDODB
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_EMULATE_PREPARES   => false,
         ];
-        ///$pdo = new PDO($dsn, $user, $pass, $opt);
 
         try {
-            $this->pdo = new PDO($dsn, $user, $pass, $opt);
+          $pdo = new PDO($dsn, $user, $pass, $opt);
+          return $pdo;
         } catch (PDOException $e) {
             die('Подключение не удалось: ' . $e->getMessage());
         }
@@ -39,9 +38,10 @@ class PDODB
 
     }
 
-    public function selectData(){
-        $data = $this->pdo->query('SELECT category FROM category')->fetchAll(PDO::FETCH_COLUMN);
-        print_r($data);
+    public function selectData($sql){
+        $pdo = $this->connect();
+        $result = $pdo->query($sql)->fetchAll( );
+        $data = $result;
         return $data;
     }
 

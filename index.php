@@ -10,7 +10,6 @@ require_once (__DIR__."/vendor/autoload.php");
 use App\Router;
 use App\Controller;
 use Logger\Log;
-use App\PDODB;
 
 $router = new Router();
 $result=$router ->run();
@@ -19,12 +18,8 @@ $result=$router ->run();
 $contrloller = new Controller();
 $contrloller->start($result);
 
-$pdo = new PDODB();
-$pdo->connect();
-print_r($pdo);
 
-
-
+/*
 function userErrorHandler($errno, $errmsg, $filename, $errline){
 
 $time = date("Y-m-d H:i:s");
@@ -61,3 +56,4 @@ set_error_handler("userErrorHandler");
 
 
 myExample(10, '11');
+*/

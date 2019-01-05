@@ -6,7 +6,8 @@ class siteController
     public function actionIndex(){
 
 
-        $categories = Category::getCategoryList();
+        $categories = new Category();
+        $categories = $categories->get();
 
         $productList = Products::getProductsList();
 
