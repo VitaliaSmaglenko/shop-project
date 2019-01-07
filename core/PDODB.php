@@ -6,10 +6,18 @@
 
 namespace App;
 use PDO;
+use Logger\Log;
 
 class PDODB
 
 {
+    private $logger;
+
+    public function __construct()
+    {
+        $this->logger = new Log('pdo');
+    }
+
     /**
      * Establishes a database connection
      * @return PDO
@@ -33,7 +41,7 @@ class PDODB
           $pdo = new PDO($dsn, $user, $pass, $opt);
           return $pdo;
         } catch (PDOException $e) {
-            die('Подключение не удалось: ' . $e->getMessage());
+            die('Подключение не удалось: ' . $this->logger->error($e->getMessage()));
         }
 
 
@@ -47,9 +55,26 @@ class PDODB
 
     public function selectData($sql){
         $pdo = $this->connect();
-        $result = $pdo->query($sql)->fetchAll( );
-        $data = $result;
+        $result = $pdo->query($sql);
+        $data=$result->fetchAll( );
+
+        //$data = $result;
         return $data;
+    }
+
+    public function selectDataById($sql, $id){
+        $pdo = $this->connect();
+        $result = $pdo->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->execute();
+
+
+        //$result = $pdo->query($sql);
+        $data=$result->fetchAll( );
+
+        //$data = $result;
+        return $data;
+
     }
 
 }

@@ -16,7 +16,19 @@ class Category{
 
     public $category;
     public $status;
+    public $id;
 
+    public function setId(){
+
+    }
+
+    public function setCategory($category){
+        $this->category = $category;
+
+    }
+    public function getCategory(){
+        return $this->category;
+    }
     public function create(){
 
     }
@@ -26,11 +38,11 @@ class Category{
      * @return  array
      */
 
-    public function get() {
-        $sql ='SELECT  category, id FROM category WHERE status = "1"';
+    public function getCategories() {
+        $sql ='SELECT  category, id FROM category  WHERE status = "1"';
         $pdo = new PDODB();
-        $this->category=$pdo->selectData($sql);
-        return $this->category;
+        $result=$pdo->selectData($sql);
+        return $result;
     }
 
     public function update()

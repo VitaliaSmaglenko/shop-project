@@ -14,11 +14,11 @@ class siteController
      */
     public function actionIndex(){
 
+        $categoryObj = new Category();
+        $categories=$categoryObj->getCategories();
 
-        $categories = new Category();
-        $categories = $categories->get();
-
-        $productList = Products::getProductsList();
+        $productObj = new Products();
+        $productList = $productObj->getProducts();
 
        include_once ('views/index.php');
 

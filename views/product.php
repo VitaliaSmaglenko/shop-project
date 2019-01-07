@@ -15,17 +15,17 @@
             <td width="50%" rowspan="1">
                 <div class="col-md-5 order-md-1">
 
-                    <img class="featurette-image img-fluid mx-auto" src="../components/<?php echo $product['prod'.$id]['img'];?>" alt="Generic placeholder image">
+                    <img class="featurette-image img-fluid mx-auto" src="../components/<?php echo $productObg->getImage();?>" alt="Generic placeholder image">
                 </div> </td> <td width="50%">
 
                 <div class="row featurette">
                     <div class="col-md-7 order-md-2">
-                        <h3 class="featurette-heading"> <?php echo $product['prod'.$id]['title'];?></h3>
-                        <h4><span class="text-muted"><?php echo $product['prod'.$id]['price'];?></span></h4>
+                        <h3 class="featurette-heading"> <?php echo  $productObg->getName();?></h3>
+                        <h4><span class="text-muted"><?php echo $productObg->getPrice();?></span></h4>
                         <p class="lead">Product character:</p>
                         <ul class="list-group list-group-flush">
-                            <?php for($i=1; $i <= count($product['prod'.$id]['character']); $i++){?>
-                                <li class="list-group-item"><?php echo $product['prod'.$id]['character']['char'.$i];?></li>
+                            <?php for($i=0; $i < count($productObg->getSpecifications()); $i++){?>
+                                <li class="list-group-item"><?php echo $productObg->getSpecifications()[$i];?></li>
                             <?php }
                             ?>
                         </ul>
@@ -34,7 +34,7 @@
         </tr>
 
         <tr>
-            <td colspan="2"> <p class="lead"><?php echo $product['prod'.$id]['description'];?></p></td>
+            <td colspan="2"> <p class="lead"><?php echo $productObg->getDescription();?></p></td>
         </tr>
 
         <tr>
