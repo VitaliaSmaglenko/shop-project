@@ -1,10 +1,16 @@
 <?php
+/**
+ * Class Products model for working with goods
+ */
 
 namespace Model;
 use App\PDODB;
 
 class Products
 {
+    /**
+     * @var
+     */
     public $name;
     public $category_id;
     public $price;
@@ -19,13 +25,21 @@ class Products
 
 
 
-    public static function getProductsByCategory($id){
+    public function getProductsByCategory($id=false){
         if($id){
+            $sql ='SELECT  name, id, price, image  FROM products  INNER JOIN category  ON products.category_id = category.:id';
+            $pdo = new PDODB();
+            $listProduct=$pdo->selectDataById($sql, $id);
 
         }
+        return $listProduct;
     }
 
 
+    /**
+     * Returns an array of goods
+     * @return array
+     */
 
     public function getProducts() {
         $sql ='SELECT  name, id, price, image  FROM products WHERE status = "1"';
@@ -34,6 +48,11 @@ class Products
         return $listProduct;
     }
 
+    /**
+     * Returns the product with the specified id
+     * @param $id
+     * @return bool
+     */
 
     public function getProductsById($id) {
         $sql ='SELECT  name, id, price, image, description, specifications FROM products WHERE id = :id';

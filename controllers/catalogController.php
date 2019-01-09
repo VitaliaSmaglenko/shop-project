@@ -6,8 +6,12 @@ class catalogController
 {
     public function actionIndex(){
 
-        $categories = Category::getCategoryList();
-        $productList = Products::getProductsList();
+        $categoryObj = new Category();
+        $categories=$categoryObj->getCategories();
+
+
+        $productObj = new Products();
+        $productList = $productObj->getProducts();
 
         include_once ('views/catalog.php');
         return true;
@@ -15,8 +19,11 @@ class catalogController
 
     public function actionCategory($id){
 
-        $categories = Category::getCategoryList();
-        $productList = Products::getProductsByCategory($id);
+        $categoryObj = new Category();
+        $categories=$categoryObj->getCategories();
+
+        $productObj = new Products();
+        $productList = $productObj->getProductsByCategory($id);
 
         include_once ('views/category.php');
         return true;
