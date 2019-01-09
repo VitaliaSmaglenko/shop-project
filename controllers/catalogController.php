@@ -6,8 +6,8 @@ class catalogController
 {
     public function actionIndex(){
 
-        $categoryObj = new Category();
-        $categories=$categoryObj->getCategories();
+        $categories = new Category();
+        $categories=$categories->getCategories();
 
 
         $productList = new Products();

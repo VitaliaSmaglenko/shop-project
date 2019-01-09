@@ -18,17 +18,7 @@ class Category{
     public $status;
     public $id;
 
-    public function setId(){
 
-    }
-
-    public function setCategory($category){
-        $this->category = $category;
-
-    }
-    public function getCategory(){
-        return $this->category;
-    }
     public function create(){
 
     }
@@ -39,10 +29,20 @@ class Category{
      */
 
     public function getCategories() {
-        $sql ='SELECT  category, id FROM category  WHERE status = "1"';
+        $sql ='SELECT  category, id, status FROM category  WHERE status = "1"';
         $pdo = new PDODB();
-        $result=$pdo->selectData($sql);
-        return $result;
+        $category=$pdo->selectData($sql);
+
+        $categoryList = array();
+
+        for ($i=0; $i<count($category); $i++){
+            $objCategory = new Category();
+            $objCategory->setCategory($category[$i]['category']);
+            $objCategory->setId($category[$i]['id']);
+            $objCategory->setStatus($category[$i]['status']);
+            $categoryList[$i] = $objCategory;
+        }
+        return $categoryList;
     }
 
     public function update()
@@ -55,4 +55,27 @@ class Category{
 
     }
 
+    public function setId($id){
+        $this->id = $id;
+    }
+
+    public function getId(){
+        return $this->id;
+    }
+
+    public function setCategory($category){
+        $this->category = $category;
+
+    }
+    public function getCategory(){
+        return $this->category;
+    }
+
+    public function setStatus($status){
+        $this->status = $status;
+
+    }
+    public function getStatus(){
+        return $this->status;
+    }
 }

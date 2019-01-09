@@ -10,12 +10,13 @@ include("views/include/header.php");
                 <div class="p-3">
                     <h4 class="font-italic ">Categories</h4><br />
                     <ol class="list-unstyled mb-0">
-                        <?php   foreach ($categories as $category):
+                        <?php   for ($i=0; $i<count($categories); $i++) {
                             ?>
-                            <li><a href="<?php echo $category['id'];?>" class="cat-link">
-                                    <?php echo $category['category']; ?></a></li>
-                            <?php
-                        endforeach;?>
+                            <li><a href="<?php echo $categories[$i]->getId();;?>" class="cat-link">
+                                    <?php
+                                    echo $categories[$i]->getCategory();
+                                    ?></a></li>
+                        <?php }?>
                     </ol>
                 </div>
 
