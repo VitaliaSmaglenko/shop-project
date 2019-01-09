@@ -10,8 +10,8 @@ class catalogController
         $categories=$categoryObj->getCategories();
 
 
-        $productObj = new Products();
-        $productList = $productObj->getProducts();
+        $productList = new Products();
+        $productList = $productList->getProducts();
 
         include_once ('views/catalog.php');
         return true;
@@ -22,8 +22,8 @@ class catalogController
         $categoryObj = new Category();
         $categories=$categoryObj->getCategories();
 
-        $productObj = new Products();
-        $productList = $productObj->getProductsByCategory($id, $page);
+        $productList = new Products();
+        $productList = $productList->getProductsByCategory($id, $page);
 
         include_once ('views/category.php');
         return true;

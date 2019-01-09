@@ -22,7 +22,11 @@ class Products
     public $status;
     public $id;
 
-
+    /**
+     * @param bool $id
+     * @param $page
+     * @return array
+     */
 
 
     public function getProductsByCategory($id=false, $page){
@@ -31,13 +35,31 @@ class Products
         $offset = ($page - 1) * 6;
 
         if($id){
-            $sql ='SELECT  name, products.id, category.id, price, image  FROM products  LEFT JOIN category  ON products.category_id = category.id'.
+            $sql ='SELECT  name, products.id, category.id, price, image, description, specifications, availability, brand, products.status'.
+                  ' FROM products  LEFT JOIN category  ON products.category_id = category.id'.
                   ' WHERE category.id=:id LIMIT :limit OFFSET :offset';
             $pdo = new PDODB();
-            $listProduct=$pdo->selectCategoryById($sql, $id, $limit, $offset);
+            $product=$pdo->selectCategoryById($sql, $id, $limit, $offset);
+
+            $productList = array();
+
+            for ($i=0; $i<count($product); $i++){
+                $objProduct = new Products();
+                $objProduct->setName($product[$i]['name']);
+                $objProduct->setDescription($product[$i]['description']);
+                $objProduct->setImage($product[$i]['image']);
+                $objProduct->setPrice($product[$i]['price']);
+                $objProduct->setId($product[$i]['id']);
+                $objProduct->setSpecifications($product[$i]['specifications']);
+                $objProduct->setAvailability($product[$i]['availability']);
+                $objProduct->setBrand($product[$i]['brand']);
+                $objProduct->setStatus($product[$i]['status']);
+                $productList[$i] = $objProduct;
+            }
+
 
         }
-        return $listProduct;
+        return $productList;
     }
 
 
@@ -45,36 +67,57 @@ class Products
      * Returns an array of goods
      * @return array
      */
-
     public function getProducts()
     {
-        $sql ='SELECT  name, id, price, image  FROM products WHERE status = "1"';
+        $sql ='SELECT  name, id, price, image, description, specifications, availability, brand, status'.
+            ' FROM products WHERE status = "1"';
         $pdo = new PDODB();
-        $listProduct=$pdo->selectData($sql);
-        var_dump( $listProduct);
-        return $listProduct;
+        $product=$pdo->selectData($sql);
+        $productList = array();
+
+        for ($i=0; $i<count($product); $i++){
+            $objProduct = new Products();
+            $objProduct->setName($product[$i]['name']);
+            $objProduct->setDescription($product[$i]['description']);
+            $objProduct->setImage($product[$i]['image']);
+            $objProduct->setPrice($product[$i]['price']);
+            $objProduct->setId($product[$i]['id']);
+            $objProduct->setSpecifications($product[$i]['specifications']);
+            $objProduct->setAvailability($product[$i]['availability']);
+            $objProduct->setBrand($product[$i]['brand']);
+            $objProduct->setStatus($product[$i]['status']);
+            $productList[$i] = $objProduct;
+        }
+
+        return $productList;
     }
 
     /**
      * Returns the product with the specified id
      * @param $id
-     * @return bool
+     * @return Products
      */
 
-    public function getProductsById($id) {
-        $sql ='SELECT  name, id, price, image, description, specifications FROM products WHERE id = :id';
+    public function getProductsById($id)
+    {
+        $sql ='SELECT  name, id, price, image, description, specifications, availability, brand, status'.
+             ' FROM products WHERE id = :id';
         $pdo = new PDODB();
         $product=$pdo->selectDataById($sql, $id);
-
+        $objProduct = new Products();
         for ($i=0; $i<count($product); $i++){
-            $this->setName($product[$i]['name']);
-            $this->setDescription($product[$i]['description']);
-            $this->setImage($product[$i]['image']);
-            $this->setPrice($product[$i]['price']);
-            $this->setId($product[$i]['id']);
-            $this->setSpecifications($product[$i]['specifications']);
+            $objProduct->setName($product[$i]['name']);
+            $objProduct->setDescription($product[$i]['description']);
+            $objProduct->setImage($product[$i]['image']);
+            $objProduct->setPrice($product[$i]['price']);
+            $objProduct->setId($product[$i]['id']);
+            $objProduct->setSpecifications($product[$i]['specifications']);
+            $objProduct->setAvailability($product[$i]['availability']);
+            $objProduct->setBrand($product[$i]['brand']);
+            $objProduct->setStatus($product[$i]['status']);
         }
-        return true;
+
+        return $objProduct;
     }
 
 
@@ -93,52 +136,93 @@ class Products
 
     }
 
-    public function setName($name){
+    public function setName($name)
+    {
         $this->name = $name;
     }
 
-    public function getName(){
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function setDescription($description){
+    public function setDescription($description)
+    {
         $this->description = $description;
     }
 
-    public function getDescription(){
+    public function getDescription()
+    {
         return $this->description;
     }
 
-    public function setImage($image){
+    public function setImage($image)
+    {
         $this->image = $image;
     }
 
-    public function getImage(){
+    public function getImage()
+    {
         return $this->image;
     }
 
-    public function setPrice($price){
+    public function setPrice($price)
+    {
         $this->price = $price;
     }
 
     public function getPrice(){
         return $this->price;
     }
-    public function setId($id){
+    public function setId($id)
+    {
         $this->id = $id;
     }
 
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setSpecifications($specifications){
+    public function setSpecifications($specifications)
+    {
         $specifications = explode(';', $specifications);
         $this->specifications = $specifications;
     }
 
-    public function getSpecifications(){
+    public function getSpecifications()
+    {
         return $this->specifications;
+    }
+
+    public function setAvailability($availability)
+    {
+       $this->availability = $availability;
+    }
+
+    public function getAvailability()
+    {
+        return $this->availability;
+    }
+
+    public function setBrand($brand)
+    {
+        $this->brand = $brand;
+    }
+
+    public function getBrand()
+    {
+        return $this->brand;
+    }
+
+    public function setStatus($status)
+    {
+         $this->status = $status;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
     }
 
 }

@@ -17,8 +17,8 @@ class siteController
         $categoryObj = new Category();
         $categories=$categoryObj->getCategories();
 
-        $productObj = new Products();
-        $productList = $productObj->getProducts();
+        $productList = new Products();
+        $productList = $productList->getProducts();
 
        include_once ('views/index.php');
 
