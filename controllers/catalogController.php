@@ -17,13 +17,13 @@ class catalogController
         return true;
     }
 
-    public function actionCategory($id){
+    public function actionCategory($id, $page = 1){
 
         $categoryObj = new Category();
         $categories=$categoryObj->getCategories();
 
         $productObj = new Products();
-        $productList = $productObj->getProductsByCategory($id);
+        $productList = $productObj->getProductsByCategory($id, $page);
 
         include_once ('views/category.php');
         return true;

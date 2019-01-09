@@ -25,11 +25,16 @@ class Products
 
 
 
-    public function getProductsByCategory($id=false){
+    public function getProductsByCategory($id=false, $page){
+        $limit = 6;
+
+        $offset = ($page - 1) * 6;
+
         if($id){
-            $sql ='SELECT  name, id, price, image  FROM products  INNER JOIN category  ON products.category_id = category.:id';
+            $sql ='SELECT  name, products.id, category.id, price, image  FROM products  LEFT JOIN category  ON products.category_id = category.id'.
+                  ' WHERE category.id=:id LIMIT :limit OFFSET :offset';
             $pdo = new PDODB();
-            $listProduct=$pdo->selectDataById($sql, $id);
+            $listProduct=$pdo->selectCategoryById($sql, $id, $limit, $offset);
 
         }
         return $listProduct;
@@ -41,10 +46,12 @@ class Products
      * @return array
      */
 
-    public function getProducts() {
+    public function getProducts()
+    {
         $sql ='SELECT  name, id, price, image  FROM products WHERE status = "1"';
         $pdo = new PDODB();
         $listProduct=$pdo->selectData($sql);
+        var_dump( $listProduct);
         return $listProduct;
     }
 

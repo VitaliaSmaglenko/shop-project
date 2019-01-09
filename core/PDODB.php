@@ -77,4 +77,20 @@ class PDODB
 
     }
 
+    public function selectCategoryById($sql, $id, $limit, $offset){
+    $pdo = $this->connect();
+    $result = $pdo->prepare($sql);
+    $result->bindParam(':id', $id, PDO::PARAM_INT);
+    $result->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $result->bindParam(':offset', $offset, PDO::PARAM_INT);
+    $result->execute();
+
+
+    //$result = $pdo->query($sql);
+    $data=$result->fetchAll( );
+     //$data = $result;
+    return $data;
+
+}
+
 }
