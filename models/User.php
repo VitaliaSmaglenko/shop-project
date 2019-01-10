@@ -1,0 +1,84 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Виталия
+ * Date: 10.01.2019
+ * Time: 13:14
+ */
+
+namespace Model;
+use App\PDODB;
+
+class User
+
+{
+    private $userName;
+    private $firstName;
+    private $lastName;
+    private $email;
+    private $password;
+
+    public function createUser()
+    {
+        $sql ='INSERT INTO user (first_name, last_name, user_name, email, password) '.
+               ' VALUES (:firstName, :lastName, :userName, :email, :password)';
+        $pdo = new PDODB();
+        $result=$pdo->addUser($sql, $this->getUserName(), $this->getFirstName(),
+                              $this->getLastName(), $this->getEmail(), $this->getPassword());
+
+    }
+
+
+    public function setUserName($userName)
+    {
+        $this->userName = $userName;
+    }
+
+    public function getUserName()
+    {
+        return $this->userName;
+    }
+
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    }
+
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    }
+
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+
+
+}

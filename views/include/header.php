@@ -36,7 +36,7 @@
                 <a class="text-muted" href="cart">
                     <img src="../components/img/shopcard.png" class="im-bucket">
                 </a>
-                <a class="btn btn-sm btn-outline-secondary" href="/login">Sign up</a>
+                <a class="btn btn-sm btn-outline-secondary" href="/register">Sign up</a>
             </div>
         </div>
     </header>

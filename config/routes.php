@@ -14,7 +14,7 @@ return array(
     //cart:
     'cart' => 'cart/cart',
     //registration:
-    'login'=>'login/index',
+    'register'=>'user/register',
     //main page:
     '' => 'site/index',
 );

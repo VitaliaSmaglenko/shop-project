@@ -57,8 +57,6 @@ class PDODB
         $pdo = $this->connect();
         $result = $pdo->query($sql);
         $data=$result->fetchAll( );
-
-        //$data = $result;
         return $data;
     }
 
@@ -67,12 +65,7 @@ class PDODB
         $result = $pdo->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);
         $result->execute();
-
-
-        //$result = $pdo->query($sql);
         $data=$result->fetchAll( );
-
-        //$data = $result;
         return $data;
 
     }
@@ -84,13 +77,32 @@ class PDODB
     $result->bindParam(':limit', $limit, PDO::PARAM_INT);
     $result->bindParam(':offset', $offset, PDO::PARAM_INT);
     $result->execute();
-
-
-    //$result = $pdo->query($sql);
     $data=$result->fetchAll( );
-     //$data = $result;
     return $data;
+    }
 
-}
+    public function checkData($sql, $data)
+    {
+        $pdo = $this->connect();
+        $result = $pdo->prepare($sql);
+        $result->bindParam(1, $data, PDO::PARAM_STR);
+        $result->execute();
+        if($result->fetchColumn()){
+            return true;
+        }
+        return false;
+    }
+
+    public function addUser($sql, $userName, $firstName, $lastName, $email, $password)
+    {
+        $pdo = $this->connect();
+        $result = $pdo->prepare($sql);
+        $result->bindParam(':userName', $userName, PDO::PARAM_STR);
+        $result->bindParam(':firstName', $firstName, PDO::PARAM_STR);
+        $result->bindParam(':lastName', $lastName, PDO::PARAM_STR);
+        $result->bindParam(':email', $email, PDO::PARAM_STR);
+        $result->bindParam(':password', $password, PDO::PARAM_STR);
+        return $result->execute();
+    }
 
 }
