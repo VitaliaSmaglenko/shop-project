@@ -41,7 +41,7 @@ class Router
 
              $fullPath = preg_replace("~$request~", $path, $uri);
              $separators = explode('/', $fullPath);
-             $controllerName = array_shift($separators) . 'Controller';
+             $controllerName = ucfirst(array_shift($separators)) . 'Controller';
              $actionName = 'action' . ucfirst((array_shift($separators)));
 
              $parameters = $separators;

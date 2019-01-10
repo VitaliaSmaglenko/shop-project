@@ -1,7 +1,10 @@
 <?php
 
+/**
+ * Controller CartController
+ */
 
-class cartController
+class CartController
 {
     public function actionCart(){
         include_once ('views/cart.php');

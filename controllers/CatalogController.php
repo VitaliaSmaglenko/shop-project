@@ -1,9 +1,16 @@
 <?php
+/**
+ * Controller CatalogController
+ */
 use Model\Category;
 use Model\Products;
 
-class catalogController
+class CatalogController
 {
+    /**
+     * Action for display all products
+     * @return bool
+     */
     public function actionIndex(){
 
         $categories = new Category();
@@ -17,6 +24,10 @@ class catalogController
         return true;
     }
 
+    /**
+     * Action for display products by category
+     * @return bool
+     */
     public function actionCategory($id, $page = 1){
 
         $categoryObj = new Category();

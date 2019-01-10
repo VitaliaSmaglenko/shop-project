@@ -1,12 +1,12 @@
 <?php
 /**
- * Controller siteController
+ * Controller SiteController
  */
 
 use Model\Category;
 use Model\Products;
 
-class siteController
+class SiteController
 {
     /**
      * Action for main page

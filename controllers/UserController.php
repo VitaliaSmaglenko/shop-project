@@ -1,10 +1,16 @@
 <?php
-
+/**
+ *  Controller UserController
+ */
 use Model\User;
 use Model\CheckUser;
 
-class userController
+class UserController
 {
+    /**
+     * Action for user registration
+     * @return bool
+     */
     public function actionRegister(){
 
         $firstName= '';

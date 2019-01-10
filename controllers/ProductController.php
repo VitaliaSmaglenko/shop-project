@@ -1,11 +1,11 @@
 <?php
 /**
- * Controller productController
+ * Controller ProductController
  */
 use Model\Products;
 
 
-class productController
+class ProductController
 {
     /**
      * Action for the product review page
