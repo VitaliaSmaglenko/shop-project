@@ -1,8 +1,7 @@
 <?php
 /**
-    Class User component for working with users
+ * Class User component for working with users
  */
-
 namespace Model;
 use App\PDODB;
 

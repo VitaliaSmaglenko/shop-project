@@ -1,8 +1,7 @@
 <?php
 /**
-    Class CheckUser component for data validation
+ *  Class CheckUser component for data validation
  */
-
 namespace Model;
 use App\PDODB;
 
