@@ -60,6 +60,12 @@ class PDODB
         return $data;
     }
 
+    /**
+     * Receives data from the database by id
+     * @param $sql
+     * @param $id
+     * @return array
+     */
     public function selectDataById($sql, $id){
         $pdo = $this->connect();
         $result = $pdo->prepare($sql);
@@ -70,6 +76,14 @@ class PDODB
 
     }
 
+    /**
+     * Receives data from the database by category_id
+     * @param $sql
+     * @param $id
+     * @param $limit
+     * @param $offset
+     * @return array
+     */
     public function selectCategoryById($sql, $id, $limit, $offset){
     $pdo = $this->connect();
     $result = $pdo->prepare($sql);
@@ -81,6 +95,12 @@ class PDODB
     return $data;
     }
 
+    /**
+     * Checks for a match in the database
+     * @param $sql
+     * @param $data
+     * @return bool
+     */
     public function checkData($sql, $data)
     {
         $pdo = $this->connect();
@@ -93,6 +113,16 @@ class PDODB
         return false;
     }
 
+    /**
+     * Adds a new user to the database
+     * @param $sql
+     * @param $userName
+     * @param $firstName
+     * @param $lastName
+     * @param $email
+     * @param $password
+     * @return bool
+     */
     public function addUser($sql, $userName, $firstName, $lastName, $email, $password)
     {
         $pdo = $this->connect();

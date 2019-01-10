@@ -43,7 +43,6 @@ class Router
              $separators = explode('/', $fullPath);
              $controllerName = ucfirst(array_shift($separators)) . 'Controller';
              $actionName = 'action' . ucfirst((array_shift($separators)));
-
              $parameters = $separators;
              //echo $controllerName;
              //echo $actionName;

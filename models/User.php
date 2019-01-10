@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Виталия
- * Date: 10.01.2019
- * Time: 13:14
+    Class User component for working with users
  */
 
 namespace Model;
@@ -12,11 +9,18 @@ use App\PDODB;
 class User
 
 {
+    /**
+     * @var
+     */
     private $userName;
     private $firstName;
     private $lastName;
     private $email;
     private $password;
+
+    /**
+     * Adds a new user to the database
+     */
 
     public function createUser()
     {
