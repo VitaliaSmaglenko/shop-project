@@ -14,6 +14,7 @@ class Authenticate
      */
     private $session;
 
+
     /**
      * Authenticate constructor.
      */
@@ -32,7 +33,9 @@ class Authenticate
         $this->session->set('userName', $user->getUserName());
         $this->session->set('userId', $user->getId());
         $this->session->set('userEmail', $user->getEmail());
-
+        $this->setCookie('userName', $user->getUserName());
+        $this->setCookie('userId', $user->getId());
+        $this->setCookie('userEmail', $user->getEmail());
 
     }
 
@@ -42,14 +45,46 @@ class Authenticate
      */
     public function isAuth()
     {
-        if(isset($_SESSION['id'])){
+
+        $this->session->start();
+        if(isset($_SESSION['userId'])){
             return true;
         } else return false;
     }
 
+    public function checkLogged()
+    {
+        $this->session->start();
+        if($this->isAuth()){
+
+            return $_SESSION['userId'];
+        }
+        else {
+
+            header('Location: /login');
+            return false;
+        }
+    }
+
+    public function setCookie($key, $val)
+    {
+        if($this->session->cookieExists()){
+          setcookie($key, $val, time()+3600);
+        } else return;
+    }
+
+    public function getCookie($key)
+    {
+        if($this->session->cookieExists()){
+
+            return $_COOKIE[$key];
+        }
+        else return;
+    }
 
     public function logout()
     {
-
+        $this->session->start();
+        $this->session->destroy();
     }
 }

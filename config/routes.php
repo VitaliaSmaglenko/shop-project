@@ -17,6 +17,7 @@ return array(
     'register'=>'user/register',
     //authorisation:
     'login' => 'user/login',
+    'logout' => 'user/logout',
     //cabinet
     'cabinet'=> 'cabinet/index',
     //main page:

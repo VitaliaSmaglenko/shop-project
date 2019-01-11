@@ -5,9 +5,18 @@
 
 use Model\Category;
 use Model\Products;
+use Model\Authenticate;
 
 class SiteController
 {
+    public $checkAuth;
+    public function __construct()
+    {
+       $this->checkAuth = new Authenticate();
+
+
+    }
+
     /**
      * Action for main page
      * @return bool
@@ -19,6 +28,9 @@ class SiteController
 
         $productList = new Products();
         $productList = $productList->getProducts();
+
+
+
 
        include_once ('views/index.php');
 

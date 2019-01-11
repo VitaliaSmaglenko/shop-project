@@ -7,6 +7,12 @@ use Model\Products;
 
 class CatalogController
 {
+    public $checkAuth;
+    public function __construct()
+    {
+        $this->checkAuth = new Authenticate();
+    }
+
     /**
      * Action for display all products
      * @return bool

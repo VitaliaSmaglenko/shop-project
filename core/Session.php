@@ -94,7 +94,7 @@ class Session
     }
 
     /**
-     * Destroys session if it exist
+     * Destroys session if it exists
      */
     public function destroy()
     {
@@ -102,7 +102,11 @@ class Session
         if(!$this->sessionExist() && !$this->cookieExists()){
             return;
         }
-        else session_destroy();
+        else
+        {
+            session_unset();
+            session_destroy();
+        }
 
     }
 

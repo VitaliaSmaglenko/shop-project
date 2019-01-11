@@ -4,14 +4,22 @@
  */
 use Model\User;
 use Model\CheckUser;
+use Model\Authenticate;
 
 class UserController
 {
+    public $checkAuth;
+    public function __construct()
+    {
+        $this->checkAuth = new Authenticate();
+    }
+
     /**
      * Action for user registration
      * @return bool
      */
     public function actionRegister(){
+
 
         $firstName= '';
         $lastName= '';
@@ -68,12 +76,19 @@ class UserController
                 $user->setEmail($email);
                 $user->setPassword($password);
                 $user->getUser();
-                //header('Location: /cabinet');
+                header('Location: /cabinet');
 
             }
         }
 
         include_once ('views/login.php');
         return true;
+    }
+
+    public function actionLogout()
+    {
+        $user = new Authenticate();
+        $user->logout();
+        header('Location: /');
     }
 }

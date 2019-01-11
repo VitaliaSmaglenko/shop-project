@@ -36,8 +36,13 @@
                 <a class="text-muted" href="cart">
                     <img src="../components/img/shopcard.png" class="im-bucket">
                 </a>
+                    <?php if(!$this->checkAuth->isAuth()) { ?>
                 <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
                 <a class="btn btn-sm btn-outline-secondary" href="/register">Sign up</a>
+                <?php }
+                else {?>
+                <a class="btn btn-sm btn-outline-secondary" href="/logout">Log out</a>
+                <?php }?>
             </div>
 
         </div>
