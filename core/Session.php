@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Session
+ * Class Session for working with sessions
  */
 
 namespace App;
@@ -8,6 +8,9 @@ namespace App;
 
 class Session
 {
+    /**
+     *  Includes session if it does not exist yet
+     */
     public function start()
     {
         if(!$this->sessionExist()){
@@ -16,11 +19,21 @@ class Session
         else return;
     }
 
+    /**
+     * Checks session existence
+     * @return bool
+     */
+
     public function sessionExist()
     {
             return session_status() == PHP_SESSION_ACTIVE;
     }
 
+    /**
+     * Sets values in session
+     * @param $key
+     * @param $val
+     */
     public function set($key, $val)
     {
         if($this->sessionExist()){
@@ -29,6 +42,10 @@ class Session
         else return;
     }
 
+    /**
+     * Gets sessions values by key
+     * @param $key
+     */
     public function get($key)
     {
         if($this->sessionExist()){
@@ -36,6 +53,12 @@ class Session
         }
         else return;
     }
+
+    /**
+     * Sets session name
+     * @param $name
+     */
+
     public function setName($name)
     {
         if(!$this->sessionExist()){
@@ -43,6 +66,11 @@ class Session
         }
         else return;
     }
+
+    /**
+     * Gets session name
+     * @return string|void
+     */
 
     public function getName()
     {
@@ -52,6 +80,11 @@ class Session
         else return;
     }
 
+
+    /**
+     * Checks cookie existence
+     * @return bool
+     */
     public function cookieExists()
     {
         if(isset($_COOKIE['PHPSESSID'])){
@@ -60,6 +93,9 @@ class Session
         else return false;
     }
 
+    /**
+     * Destroys session if it exist
+     */
     public function destroy()
     {
 
