@@ -1,4 +1,4 @@
-<?php include("views/include/header.php");  echo __FILE__;?>
+<?php include("views/include/header.php"); ?>
 
 <div class="container">
     <nav aria-label="breadcrumb">
@@ -9,24 +9,35 @@
     </nav>
     <hr class="featurette-divider">
 
-    <form class="form-signin">
+    <form class="form-signin" method="post">
         <div class="text-center mb-4">
 
             <br> <h1 class="h3 mb-3 font-weight-normal">Sing in</h1>
 
         </div>
+        <?php
+        if(isset($errors) && !empty($errors->errors)) {
+            echo '<ul>';
+            for($i=0; $i<count($errors->errors); $i++) {
+                echo '<li>';
+                echo $errors->errors[$i];
+                echo '</li>';
+            }
+            echo '</ul>';
+        }
+        ?>
         <table class="form-sign" align="center" valign="center">
             <tr><td class="">
                     <div class="form-label-group justify-content-center">
                         <label for="inputEmail">Email address</label><br>
-                        <input type="email" id="inputEmail" class="aut-for" placeholder="Email address" required autofocus>
+                        <input type="email" name="email" id="inputEmail" class="aut-for" placeholder="Email address" required autofocus>
 
                     </div>
 
                     <div class="form-label-group">
                         <br>
                         <label for="inputPassword">Password</label><br>
-                        <input type="password" id="inputPassword" class="aut-for" placeholder="Password" required>
+                        <input type="password" name="password" id="inputPassword" class="aut-for" placeholder="Password" required>
 
                     </div>
 
@@ -36,7 +47,7 @@
                             <input width="100px" type="checkbox" value="remember-me"> Remember me
                         </label>
                     </div>
-                    <button class="btn aut-for btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                    <button class="btn aut-for btn-lg btn-primary btn-block" name="submitLog" type="submit">Sign in</button>
                     <p class="mt-5 mb-3 text-muted text-center"><a href="index.php">Forgot password?</a></p>
                     <p class="mt-5 mb-3 text-muted text-center"><a href="index.php">To register</a></p><br>
                 </td></tr>

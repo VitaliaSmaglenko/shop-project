@@ -114,6 +114,27 @@ class PDODB
     }
 
     /**
+     * Check user for a match in the database
+     * @param $sql
+     * @param $param1
+     * @param $param2
+     * @return bool
+     */
+    public function checkUser($sql, $param1, $param2)
+    {
+        $pdo = $this->connect();
+        $result = $pdo->prepare($sql);
+        $result->bindParam(1, $param1, PDO::PARAM_STR);
+        $result->bindParam(2, $param2, PDO::PARAM_STR);
+        $result->execute();
+        if($result->fetch()){
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
      * Adds a new user to the database
      * @param $sql
      * @param $userName
@@ -133,6 +154,26 @@ class PDODB
         $result->bindParam(':email', $email, PDO::PARAM_STR);
         $result->bindParam(':password', $password, PDO::PARAM_STR);
         return $result->execute();
+    }
+
+    /**
+     * Receives user from the database
+     * @param $sql
+     * @param $email
+     * @param $password
+     * @return mixed
+     */
+
+    public function getUser($sql, $email, $password)
+    {
+        $pdo = $this->connect();
+        $result = $pdo->prepare($sql);
+        $result->bindParam(':email', $email, PDO::PARAM_STR);
+        $result->bindParam(':password', $password, PDO::PARAM_STR);
+        $result->execute();
+        $data=$result->fetch();
+        return $data;
+
     }
 
 }

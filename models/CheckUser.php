@@ -22,15 +22,22 @@ class CheckUser
      * @param $password
      */
 
-    public function __construct($userName, $firstName, $lastName, $email, $password)
+    public function __construct($data= array())
     {
-        $this->checkUserName($userName);
-        $this->checkUserNameExists($userName);
-        $this->checkEmail($email);
-        $this->checkEmailExists($email);
-        $this->checkPassword($password);
-        $this->checkFirstName($firstName);
-        $this->checkLastName($lastName);
+        if (count($data)==5) {
+            $this->checkEmail($data[0]);
+            $this->checkEmailExists($data[0]);
+            $this->checkPassword($data[1]);
+            $this->checkUserName($data[2]);
+            $this->checkUserNameExists($data[2]);
+            $this->checkFirstName($data[3]);
+            $this->checkLastName($data[4]);
+        }
+        if (count($data)==2){
+            $this->checkEmail($data[0]);
+            $this->checkPassword($data[1]);
+            $this->checkUserExists($data[0], $data[1]);
+        }
 
         return $this->errors;
     }
@@ -139,5 +146,24 @@ class CheckUser
             return false;
         }
         return true;
+    }
+
+    /**
+     * Return true if user exists in database
+     * @param $email
+     * @param $password
+     * @return bool
+     */
+    public  function checkUserExists($email, $password)
+    {
+        $sql ='SELECT  user_name FROM user  WHERE email = :email AND password = :password';
+        $pdo = new PDODB();
+        $result=$pdo->checkUser($sql, $email, $password);
+
+        if($result){
+            return true;
+        }
+        $this->errors[] = 'Wrong email or password';
+        return false;
     }
 }

@@ -36,8 +36,10 @@
                 <a class="text-muted" href="cart">
                     <img src="../components/img/shopcard.png" class="im-bucket">
                 </a>
+                <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
                 <a class="btn btn-sm btn-outline-secondary" href="/register">Sign up</a>
             </div>
+
         </div>
     </header>
 
@@ -58,10 +60,13 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white font-weight-bold" href="#">About</a>
-                        <ul class="submenu">
-                            <li><a>Categoties</a></li>
-                        </ul>
+
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white font-weight-bold" href="/cabinet">Cabinet</a>
+
+                    </li>
+
 
                 </ul>
                 <form class="form-inline my-2 my-lg-0">

@@ -16,9 +16,11 @@ class User
     private $lastName;
     private $email;
     private $password;
+    private $id;
 
     /**
      * Adds a new user to the database
+     * @return bool
      */
 
     public function createUser()
@@ -28,9 +30,33 @@ class User
         $pdo = new PDODB();
         $result=$pdo->addUser($sql, $this->getUserName(), $this->getFirstName(),
                               $this->getLastName(), $this->getEmail(), $this->getPassword());
+        return true;
 
     }
 
+    /**
+     * Returns authorized user
+     * Return user
+     * @return User
+     */
+
+    public function getUser(){
+        $sql ='SELECT  user_name, first_name, last_name, email, id, password FROM user  WHERE email = :email AND password = :password';
+        $pdo = new PDODB();
+        $user=$pdo->getUser($sql, $this->getEmail(),$this->getPassword());
+        $objUser = new User();
+        for ($i=0; $i<count($user); $i++){
+            $objUser->setEmail($user['email']);
+            $objUser->setFirstName($user['first_name']);
+            $objUser->setLastName($user['last_name']);
+            $objUser->setPassword($user['password']);
+            $objUser->setId($user['id']);
+            $objUser->setUserName($user['user_name']);
+
+        }
+        return $objUser;
+
+    }
 
     public function setUserName($userName)
     {
@@ -82,6 +108,14 @@ class User
         return $this->email;
     }
 
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
+    public function getId()
+    {
+        return $this->id;
+    }
 
 }

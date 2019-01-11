@@ -15,6 +15,10 @@ return array(
     'cart' => 'cart/cart',
     //registration:
     'register'=>'user/register',
+    //authorisation:
+    'login' => 'user/login',
+    //cabinet
+    'cabinet'=> 'cabinet/index',
     //main page:
     '' => 'site/index',
 );
