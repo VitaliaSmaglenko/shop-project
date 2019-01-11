@@ -4,6 +4,7 @@
  */
 namespace Model;
 use App\PDODB;
+use Model\Authenticate;
 
 class User
 
@@ -52,8 +53,10 @@ class User
             $objUser->setPassword($user['password']);
             $objUser->setId($user['id']);
             $objUser->setUserName($user['user_name']);
+           }
+        $auth = new Authenticate();
+        $auth->auth($objUser);
 
-        }
         return $objUser;
 
     }

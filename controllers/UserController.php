@@ -68,7 +68,7 @@ class UserController
                 $user->setEmail($email);
                 $user->setPassword($password);
                 $user->getUser();
-                header('Location: /cabinet');
+                //header('Location: /cabinet');
 
             }
         }
