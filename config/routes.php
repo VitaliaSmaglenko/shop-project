@@ -11,6 +11,7 @@ return array(
 
     //'catalog/page-([0-9]+)' => 'catalog/',
     'catalog' => 'catalog/index',
+    'category' => 'catalog/index',
     //cart:
     'cart' => 'cart/cart',
     //registration:

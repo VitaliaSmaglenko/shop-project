@@ -3,6 +3,7 @@
  * Controller ProductController
  */
 use Model\Products;
+use Model\Authenticate;
 
 
 class ProductController

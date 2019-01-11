@@ -4,6 +4,7 @@
  */
 use Model\Category;
 use Model\Products;
+use Model\Authenticate;
 
 class CatalogController
 {

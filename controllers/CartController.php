@@ -3,6 +3,7 @@
 /**
  * Controller CartController
  */
+use Model\Authenticate;
 
 class CartController
 {
