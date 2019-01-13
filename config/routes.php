@@ -21,6 +21,7 @@ return array(
     'logout' => 'user/logout',
     //cabinet
     'cabinet'=> 'cabinet/index',
+    'edit'=> 'cabinet/edit',
     //main page:
     '' => 'site/index',
 );

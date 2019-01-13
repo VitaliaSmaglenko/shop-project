@@ -39,6 +39,12 @@ class CheckUser
             $this->checkUserExists($data[0], $data[1]);
         }
 
+        if (count($data)==3){
+            $this->checkPassword($data[0]);
+            $this->checkFirstName($data[1]);
+            $this->checkLastName($data[2]);
+        }
+
         return $this->errors;
     }
 

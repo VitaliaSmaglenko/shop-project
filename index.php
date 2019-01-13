@@ -10,6 +10,9 @@ require_once (__DIR__."/vendor/autoload.php");
 use App\Router;
 use App\Controller;
 use Logger\Log;
+use Model\Authenticate;
+$checkAuth = new Authenticate();
+$checkAuth->isAuth();
 
 $router = new Router();
 $result=$router ->run();

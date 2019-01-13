@@ -31,7 +31,7 @@ class User
         $pdo = new PDODB();
         $result=$pdo->addUser($sql, $this->getUserName(), $this->getFirstName(),
                               $this->getLastName(), $this->getEmail(), $this->getPassword());
-        return true;
+        return $result;
 
     }
 
@@ -59,6 +59,42 @@ class User
 
         return $objUser;
 
+    }
+
+    /**
+     * Returns authorized user by id
+     * @param $id
+     * @return User
+     */
+    public function getUserById($id){
+        $sql ='SELECT  user_name, first_name, last_name, email, id, password FROM user  WHERE id = :id';
+        $pdo = new PDODB();
+        $user=$pdo-> selectDataById($sql, $id);
+        $objUser = new User();
+        for ($i=0; $i<count($user); $i++){
+            $objUser->setEmail($user[$i]['email']);
+            $objUser->setFirstName($user[$i]['first_name']);
+            $objUser->setLastName($user[$i]['last_name']);
+            $objUser->setPassword($user[$i]['password']);
+            $objUser->setId($user[$i]['id']);
+            $objUser->setUserName($user[$i]['user_name']);
+        }
+          return $objUser;
+
+    }
+
+    /**
+     * Updates user data by id
+     * @param $id
+     * @return bool
+     */
+    public function updateUser($id)
+    {
+        $sql ='UPDATE user SET first_name = :firstName, last_name = :lastName, password = :password '.
+            ' WHERE id = :id';
+        $pdo = new PDODB();
+        $result=$pdo->updateData($sql, $this->getFirstName(), $this->getLastName(), $this->getPassword(), $id);
+        return $result;
     }
 
     public function setUserName($userName)

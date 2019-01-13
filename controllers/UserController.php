@@ -85,10 +85,15 @@ class UserController
         return true;
     }
 
+    /**
+     * Action for exit the page
+     * @return bool
+     */
     public function actionLogout()
     {
         $user = new Authenticate();
         $user->logout();
         header('Location: /');
+        return true;
     }
 }

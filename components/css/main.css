@@ -38,6 +38,11 @@ body{
     font: 14pt bold;
 }
 
+.link-edit {
+    color: #FF8C00;
+
+}
+
 .footer{
     background-color:  #232423;
     flex: 0 0 auto;

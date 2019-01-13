@@ -176,4 +176,26 @@ class PDODB
 
     }
 
+    /**
+     * Updates user data
+     * @param $sql
+     * @param $par1
+     * @param $par2
+     * @param $par3
+     * @param $par4
+     * @return bool
+     */
+    public function updateData($sql, $par1, $par2, $par3, $par4)
+    {
+        $pdo = $this->connect();
+
+        $result = $pdo->prepare($sql);
+        $result->bindParam(1, $par1, PDO::PARAM_STR);
+        $result->bindParam(2, $par2, PDO::PARAM_STR);
+        $result->bindParam(3, $par3, PDO::PARAM_STR);
+        $result->bindParam(4, $par4, PDO::PARAM_INT);
+        return $result->execute();
+
+
+    }
 }

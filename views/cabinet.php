@@ -12,12 +12,16 @@
     <form class="form-signin">
         <div class="text-center mb-4">
 
-            <br> <h1 class="h3 mb-3 font-weight-normal">Cabinet</h1>
+            <br> <h1 class="h1 mb-3 font-weight-normal">Cabinet</h1>
 
         </div>
+        <br> <p class="h4 mb-3 font-weight-normal">Hello, <?php echo $user->getFirstName()?>
+            <?php echo $user->getLastName()?>.</p>
 
-
-
+        <br>
+        <p class="h4  font-weight-normal ">May be you want to
+        <a class=" h4  font-weight-normal link-edit" href="/edit">Edit data</a>
+        ?</p>
     </form>
 
 </div>
