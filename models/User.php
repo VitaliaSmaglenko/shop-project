@@ -31,6 +31,7 @@ class User
         $pdo = new PDODB();
         $result=$pdo->addUser($sql, $this->getUserName(), $this->getFirstName(),
                               $this->getLastName(), $this->getEmail(), $this->getPassword());
+        $auth = new Authenticate();
         return $result;
 
     }

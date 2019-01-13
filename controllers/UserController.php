@@ -41,6 +41,8 @@ class UserController
                 $user->setEmail($email);
                 $user->setPassword($password);
                 $user->createUser();
+                $user->getUser();
+                header('Location: /cabinet');
             }
         }
         include_once ('views/register.php');
