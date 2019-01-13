@@ -4,15 +4,9 @@
  */
 use Model\Category;
 use Model\Products;
-use Model\Authenticate;
 
 class CatalogController
 {
-    public $checkAuth;
-    public function __construct()
-    {
-        $this->checkAuth = new Authenticate();
-    }
 
     /**
      * Action for display all products
@@ -22,11 +16,8 @@ class CatalogController
 
         $categories = new Category();
         $categories=$categories->getCategories();
-
-
         $productList = new Products();
         $productList = $productList->getProducts();
-
         include_once ('views/catalog.php');
         return true;
     }
@@ -39,10 +30,8 @@ class CatalogController
 
         $categoryObj = new Category();
         $categories=$categoryObj->getCategories();
-
         $productList = new Products();
         $productList = $productList->getProductsByCategory($id, $page);
-
         include_once ('views/category.php');
         return true;
     }

@@ -36,10 +36,23 @@
         <tr>
             <td colspan="2"> <p class="lead"><?php echo $product->getDescription();?></p></td>
         </tr>
-
+        <?php if(!$cart){?>
         <tr>
-            <td colspan="2" class="td-sub"> <button class="btn btn-info my-2 my-sm-0" type="submit">Add to cart</button></td>
+            <td colspan="2" class="td-sub">
+                <a href="../add/<?php echo $product->getId();?>" class="btn btn-info my-2 my-sm-0" name="view-btn">Add to cart</a>
+            </td>
         </tr>
+
+        <?php } else{?>
+            <tr>
+                <td colspan="2" class="td-sub"><p class="lead font-weight-bold">Item in cart</p> </td>
+                </tr>
+            <tr>
+                <td colspan="2" class="td-sub">
+                    <a href="../add/<?php echo $product->getId();?>" class="btn btn-info my-2 my-sm-0" name="view-btn">Add one more</a>
+                </td>
+            </tr>
+        <?php } ?>
     </table>
 
 </div>

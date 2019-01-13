@@ -1,6 +1,7 @@
 <?php
 
 return array(
+
     //category:
     'category/page-([0-9]+)/([0-9])+' => 'catalog/category/$1/$2',
     'category/([0-9])+' => 'catalog/category/$1',
@@ -13,7 +14,9 @@ return array(
     'catalog' => 'catalog/index',
     'category' => 'catalog/index',
     //cart:
+    'add/([0-9]+)' => 'cart/add/$1',
     'cart' => 'cart/cart',
+
     //registration:
     'register'=>'user/register',
     //authorisation:

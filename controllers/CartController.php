@@ -3,18 +3,32 @@
 /**
  * Controller CartController
  */
-use Model\Authenticate;
+
+use Model\Cart;
+
 
 class CartController
 {
-    public $checkAuth;
-    public function __construct()
-    {
-        $this->checkAuth = new Authenticate();
-    }
-
+    /**
+     * Action for cart page
+     * @return bool
+     */
     public function actionCart(){
         include_once ('views/cart.php');
+        return true;
+    }
+
+    /**
+     * Action for add product to cart
+     * @param $id
+     * @return bool
+     */
+    public function actionAdd($id)
+    {
+        $cart = new Cart();
+        $result = $cart ->addProduct($id);
+        $path = ('/product/'.$id);
+        header('Location:'.$path);
         return true;
     }
 }

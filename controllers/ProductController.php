@@ -3,17 +3,9 @@
  * Controller ProductController
  */
 use Model\Products;
-use Model\Authenticate;
-
 
 class ProductController
 {
-    public $checkAuth;
-    public function __construct()
-    {
-        $this->checkAuth = new Authenticate();
-    }
-
     /**
      * Action for the product review page
      * @param $id
@@ -23,8 +15,10 @@ class ProductController
     public function actionView($id){
         $product = new Products();
         $product=$product->getProductsById($id);
-        include_once ('views/product.php');
+        $cart = new Model\Cart();
+        $cart = $cart->isProduct($id);
 
+        include_once ('views/product.php');
         return true;
     }
 

@@ -33,10 +33,18 @@
                 <a class="blog-header-logo text-dark" href="#"><h2 class="font-weight-bold ">My shop</h2></a>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
-                <a class="text-muted" href="cart">
+                <span class=" h3 nav-link text-dark font-weight-bold " >
+
+                <a class="text-muted h4" href="cart">
+                     (<?php $count = new Model\Cart();
+                     echo $count->countProducts();?>)
                     <img src="../components/img/shopcard.png" class="im-bucket">
+
                 </a>
-                    <?php if(!$this->checkAuth->isAuth()) { ?>
+                    </span>
+                     <?php
+                     $checkAuth = new Model\Authenticate();
+                     if(!$checkAuth->isAuth()) { ?>
                 <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
                 <a class="btn btn-sm btn-outline-secondary" href="/register">Sign up</a>
                 <?php }

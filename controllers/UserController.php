@@ -8,11 +8,6 @@ use Model\Authenticate;
 
 class UserController
 {
-    public $checkAuth;
-    public function __construct()
-    {
-        $this->checkAuth = new Authenticate();
-    }
 
     /**
      * Action for user registration

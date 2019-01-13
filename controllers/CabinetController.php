@@ -8,11 +8,6 @@ use Model\CheckUser;
 
 class CabinetController
 {
-    public $checkAuth;
-    public function __construct()
-    {
-        $this->checkAuth = new Authenticate();
-    }
 
     /**
      * Action for show user cabinet
