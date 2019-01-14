@@ -21,6 +21,7 @@ class UserController
         $userName= '';
         $email= '';
         $password='';
+        $phone = '';
 
 
         if(isset($_POST['submitReg'])){
@@ -30,16 +31,19 @@ class UserController
             $userName= $_POST['userName'];
             $email= $_POST['email'];
             $password=$_POST['password'];
-            $data = array($email, $password, $userName, $firstName, $lastName);
+            $phone= $_POST['phone'];
 
-            $errors = new CheckUser($data);
-            if(empty($errors->errors)){
+            $errors = new CheckUser();
+            $errors = $errors->checkRegistration($email, $password, $userName, $firstName, $lastName, $phone);
+
+            if(empty($errors)){
                 $user = new User();
                 $user->setUserName($userName);
                 $user->setFirstName($firstName);
                 $user->setLastName($lastName);
                 $user->setEmail($email);
                 $user->setPassword($password);
+                $user->setPhone($phone);
                 $user->createUser();
                 $user->getUser();
                 header('Location: /cabinet');
@@ -65,10 +69,10 @@ class UserController
             $email= $_POST['email'];
             $password=$_POST['password'];
 
-            $data = array($email, $password);
-            $errors = new CheckUser($data);
+            $errors = new CheckUser();
+            $errors = $errors->checkAuthorisation($email, $password);
 
-            if(empty($errors->errors)){
+            if(empty($errors)){
                 $user = new User();
                 $user->setEmail($email);
                 $user->setPassword($password);

@@ -141,7 +141,7 @@ class PDODB
      * @param $password
      * @return bool
      */
-    public function addUser($sql, $userName, $firstName, $lastName, $email, $password)
+    public function addUser($sql, $userName, $firstName, $lastName, $email, $password, $phone)
     {
         $pdo = $this->connect();
         $result = $pdo->prepare($sql);
@@ -150,6 +150,7 @@ class PDODB
         $result->bindParam(':lastName', $lastName, PDO::PARAM_STR);
         $result->bindParam(':email', $email, PDO::PARAM_STR);
         $result->bindParam(':password', $password, PDO::PARAM_STR);
+        $result->bindParam(':phone', $phone, PDO::PARAM_STR);
         return $result->execute();
     }
 
@@ -180,7 +181,7 @@ class PDODB
      * @param $par4
      * @return bool
      */
-    public function updateData($sql, $par1, $par2, $par3, $par4)
+    public function updateData($sql, $par1, $par2, $par3, $par4, $par5)
     {
         $pdo = $this->connect();
 
@@ -189,6 +190,7 @@ class PDODB
         $result->bindParam(2, $par2, PDO::PARAM_STR);
         $result->bindParam(3, $par3, PDO::PARAM_STR);
         $result->bindParam(4, $par4, PDO::PARAM_INT);
+        $result->bindParam(5, $par5, PDO::PARAM_STR);
         return $result->execute();
 
 

@@ -18,6 +18,7 @@ class User
     private $email;
     private $password;
     private $id;
+    private $phone;
 
     /**
      * Adds a new user to the database
@@ -26,12 +27,12 @@ class User
 
     public function createUser()
     {
-        $sql ='INSERT INTO user (first_name, last_name, user_name, email, password) '.
-               ' VALUES (:firstName, :lastName, :userName, :email, :password)';
+        $sql ='INSERT INTO user (first_name, last_name, user_name, email, password, phone) '.
+               ' VALUES (:firstName, :lastName, :userName, :email, :password, :phone)';
         $pdo = new PDODB();
         $result=$pdo->addUser($sql, $this->getUserName(), $this->getFirstName(),
-                              $this->getLastName(), $this->getEmail(), $this->getPassword());
-        $auth = new Authenticate();
+                              $this->getLastName(), $this->getEmail(), $this->getPassword(), $this->getPhone()
+        );
         return $result;
 
     }
@@ -43,10 +44,11 @@ class User
      */
 
     public function getUser(){
-        $sql ='SELECT  user_name, first_name, last_name, email, id, password FROM user  WHERE email = :email AND password = :password';
+        $sql ='SELECT  user_name, first_name, last_name, email, id, password, phone FROM user  WHERE email = :email AND password = :password';
         $pdo = new PDODB();
         $user=$pdo->getUser($sql, $this->getEmail(),$this->getPassword());
         $objUser = new User();
+
         for ($i=0; $i<count($user); $i++){
             $objUser->setEmail($user['email']);
             $objUser->setFirstName($user['first_name']);
@@ -54,6 +56,7 @@ class User
             $objUser->setPassword($user['password']);
             $objUser->setId($user['id']);
             $objUser->setUserName($user['user_name']);
+            $objUser->setPhone($user['phone']);
            }
         $auth = new Authenticate();
         $auth->auth($objUser);
@@ -68,7 +71,7 @@ class User
      * @return User
      */
     public function getUserById($id){
-        $sql ='SELECT  user_name, first_name, last_name, email, id, password FROM user  WHERE id = :id';
+        $sql ='SELECT  user_name, first_name, last_name, email, id, password, phone FROM user  WHERE id = :id';
         $pdo = new PDODB();
         $user=$pdo-> selectDataById($sql, $id);
         $objUser = new User();
@@ -79,6 +82,7 @@ class User
             $objUser->setPassword($user[$i]['password']);
             $objUser->setId($user[$i]['id']);
             $objUser->setUserName($user[$i]['user_name']);
+            $objUser->setPhone($user[$i]['phone']);
         }
           return $objUser;
 
@@ -91,10 +95,10 @@ class User
      */
     public function updateUser($id)
     {
-        $sql ='UPDATE user SET first_name = :firstName, last_name = :lastName, password = :password '.
+        $sql ='UPDATE user SET first_name = :firstName, last_name = :lastName, password = :password, phone = :phone'.
             ' WHERE id = :id';
         $pdo = new PDODB();
-        $result=$pdo->updateData($sql, $this->getFirstName(), $this->getLastName(), $this->getPassword(), $id);
+        $result=$pdo->updateData($sql, $this->getFirstName(), $this->getLastName(), $this->getPassword(), $this->getPhone(), $id);
         return $result;
     }
 
@@ -156,6 +160,16 @@ class User
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+    public function getPhone()
+    {
+        return $this->phone;
     }
 
 }

@@ -40,7 +40,9 @@ include("views/include/header.php");
             <tr>
                 <td class="td-sub font-weight-bold text-info" colspan="5">Total price: <?php echo $price;?> грн</td>
             </tr>
-        <tr><td  class="td-sub" colspan="5"><button class="btn btn-info btn-del">Checkout</button></td></tr>
+        <tr><td  class="td-sub" colspan="5">
+                <a href="/checkout" class="btn btn-info my-2 my-sm-0" name="view-btn">Checkout</a>
+            </td></tr>
         <?php } ?>
     </table>
 

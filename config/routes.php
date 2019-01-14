@@ -16,7 +16,8 @@ return array(
     //cart:
     'add/([0-9]+)' => 'cart/add/$1',
     'cart' => 'cart/cart',
-
+    //order:
+    'checkout' => 'order/checkout',
     //registration:
     'register'=>'user/register',
     //authorisation:

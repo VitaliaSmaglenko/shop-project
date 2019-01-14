@@ -12,11 +12,11 @@
     <hr class="featurette-divider">
     <?php
 
-    if(isset($errors) && !empty($errors->errors)) {
+    if(isset($errors) && !empty($errors)) {
         echo '<ul>';
-        for($i=0; $i<count($errors->errors); $i++) {
+        for($i=0; $i<count($errors); $i++) {
             echo '<li>';
-            echo $errors->errors[$i];
+            echo $errors[$i];
             echo '</li>';
         }
         echo '</ul>';
@@ -57,12 +57,24 @@
                 </div>
             </div>
 
+            <div class="col-md-4 mb-3">
+                <label for="validationCustomUsername">Your phone number</label>
+                <input type="text" name="phone" value="<?php echo $user->getPhone();?>"
+                       placeholder="Your phone number"
+                       class=" white  form-control"
+                       id="phone_no" pattern="^((8|\+3)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$" required>
+                <div class="invalid-feedback feedback-pos">
+                    Please input phone number
+                </div>
+            </div>
+
 
         </div>
 
 
 
         <button class="btn btn-primary" name="submitSave" type="submit">Save</button>
+        <a class="btn  btn-primary" href="/cabinet">Back to cabinet</a>
     </form>
     <?php } ?>
     <script>

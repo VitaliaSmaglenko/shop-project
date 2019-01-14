@@ -38,20 +38,24 @@ class CabinetController
         $firstName= '';
         $lastName= '';
         $password='';
+        $phone='';
+
         $result = false;
         if(isset($_POST['submitSave'])){
 
             $firstName= $_POST['firstName'];
             $lastName= $_POST['lastName'];
             $password=$_POST['password'];
-            $data = array($password, $firstName, $lastName);
+            $phone=$_POST['phone'];
 
-            $errors = new CheckUser($data);
-            if(empty($errors->errors)){
+            $errors = new CheckUser();
+            $errors = $errors->checkEdit($password, $firstName, $lastName, $phone);
+            if(empty($errors)){
                 $user->setFirstName($firstName);
                 $user->setLastName($lastName);
                 $user->setPassword($password);
-               $result = $user->updateUser($userId);
+                $user->setPhone($phone);
+                $result = $user->updateUser($userId);
 
             }
         }

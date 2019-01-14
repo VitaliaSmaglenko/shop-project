@@ -16,11 +16,11 @@
 
         </div>
         <?php
-        if(isset($errors) && !empty($errors->errors)) {
+        if(isset($errors) && !empty($errors)) {
             echo '<ul>';
-            for($i=0; $i<count($errors->errors); $i++) {
+            for($i=0; $i<count($errors); $i++) {
                 echo '<li>';
-                echo $errors->errors[$i];
+                echo $errors[$i];
                 echo '</li>';
             }
             echo '</ul>';

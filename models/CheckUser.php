@@ -12,41 +12,66 @@ class CheckUser
      */
     public $errors = array( );
 
+
     /**
-     * Sets values to functions for validation
-     * CheckUser constructor.
+     * Validates registration data
+     * @param $email
+     * @param $password
      * @param $userName
      * @param $firstName
      * @param $lastName
+     * @param $phone
+     * @return array
+     */
+        public function checkRegistration($email, $password, $userName, $firstName, $lastName, $phone)
+        {
+            $this->checkEmail($email);
+            $this->checkEmailExists($email);
+            $this->checkPassword($password);
+            $this->checkUserName($userName);
+            $this->checkUserNameExists($userName);
+            $this->checkFirstName($firstName);
+            $this->checkLastName($lastName);
+            $this->checkPhone($phone);
+
+            return $this->errors;
+        }
+
+    /**
+     * Validates authorisation data
      * @param $email
      * @param $password
+     * @return array
      */
+        public function checkAuthorisation($email, $password)
+        {
+            $this->checkEmail($email);
+            $this->checkPassword($password);
+            $this->checkUserExists($email, $password);
 
-    public function __construct($data= array())
-    {
-        if (count($data)==5) {
-            $this->checkEmail($data[0]);
-            $this->checkEmailExists($data[0]);
-            $this->checkPassword($data[1]);
-            $this->checkUserName($data[2]);
-            $this->checkUserNameExists($data[2]);
-            $this->checkFirstName($data[3]);
-            $this->checkLastName($data[4]);
-        }
-        if (count($data)==2){
-            $this->checkEmail($data[0]);
-            $this->checkPassword($data[1]);
-            $this->checkUserExists($data[0], $data[1]);
+            return $this->errors;
+
         }
 
-        if (count($data)==3){
-            $this->checkPassword($data[0]);
-            $this->checkFirstName($data[1]);
-            $this->checkLastName($data[2]);
+    /**
+     * Validates data when it editing
+     * @param $password
+     * @param $firstName
+     * @param $lastName
+     * @param $phone
+     * @return array
+     */
+        public function checkEdit($password, $firstName, $lastName, $phone)
+        {
+            $this->checkPassword($password);
+            $this->checkFirstName($firstName);
+            $this->checkLastName($lastName);
+            $this->checkPhone($phone);
+
+            return $this->errors;
         }
 
-        return $this->errors;
-    }
+
 
     /**
      * Checks userName length
@@ -119,6 +144,21 @@ class CheckUser
     }
 
     /**
+     * Checks that the value is a phone number
+     * @param $phone
+     * @return bool
+     */
+
+    public function checkPhone($phone)
+    {
+        if(strlen($phone) >=10 && strlen($phone) <= 13){
+            return true;
+        }
+        $this->errors[] = 'Invalid phone number';
+        return false;
+    }
+
+    /**
      * Checks email already exists in database
      * @param $email
      * @return bool
@@ -172,4 +212,5 @@ class CheckUser
         $this->errors[] = 'Wrong email or password';
         return false;
     }
+
 }
