@@ -9,9 +9,9 @@
     <br> <h1 class="h3 mb-3 font-weight-normal">Checkout</h1>
     <hr class="featurette-divider">
 
-
+    <form method="post" class="validation" novalidate  action="#">
     <table class="form-sign" align="center" valign="center" width="1000px">
-        <form method="post" class="validation" novalidate  action="#">
+
             <tr><td class="">
 
                 <div class="col-md-4 mb-3">
@@ -34,13 +34,16 @@
 
 
             <tr> <td>
-                <div class="col-md-4 mb-3">
-                    <label for="validationCustomUsername">Number of phone</label>
-                    <input type="password" name="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" value="" required>
-                    <div class="invalid-feedback feedback-pos">
-                        Please input password
+                    <div class="col-md-4 mb-3">
+                        <label for="validationCustomUsername">Your phone number</label>
+                        <input type="text" name="phone" value=""
+                               placeholder="Your phone number"
+                               class=" white  form-control"
+                               id="phone_no" pattern="^((8|\+3)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$" required>
+                        <div class="invalid-feedback feedback-pos">
+                            Please input phone number
+                        </div>
                     </div>
-                </div>
 
 
 
@@ -62,8 +65,9 @@
                     <button class="btn btn-primary" name="submitSave" type="submit">Save</button>
                     </div></td></tr>
 
-        </form>
+
     </table>
+    </form>
     <script>
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {
