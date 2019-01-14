@@ -35,7 +35,7 @@
             <div class="col-4 d-flex justify-content-end align-items-center">
                 <span class=" h3 nav-link text-dark font-weight-bold " >
 
-                <a class="text-muted h4" href="cart">
+                <a class="text-muted h4" href="/cart">
                      (<?php $count = new Model\Cart();
                      echo $count->countProducts();?>)
                     <img src="../components/img/shopcard.png" class="im-bucket">

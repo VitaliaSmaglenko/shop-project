@@ -5,6 +5,7 @@
  */
 
 use Model\Cart;
+use Model\Products;
 
 
 class CartController
@@ -14,6 +15,15 @@ class CartController
      * @return bool
      */
     public function actionCart(){
+        $cartProducts = new Cart();
+        $cart=$cartProducts->getProducts();
+        $products = new Products();
+        if($cart) {
+            $productsId = array_keys($cart);
+            $products = $products->getProductsByIds($productsId);
+            $price = $cartProducts->getPrice($products);
+
+        }
         include_once ('views/cart.php');
         return true;
     }

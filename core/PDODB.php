@@ -56,8 +56,7 @@ class PDODB
     public function selectData($sql){
         $pdo = $this->connect();
         $result = $pdo->query($sql);
-        $data=$result->fetchAll( );
-        return $data;
+        return $result->fetchAll( );
     }
 
     /**
@@ -71,8 +70,7 @@ class PDODB
         $result = $pdo->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);
         $result->execute();
-        $data=$result->fetchAll( );
-        return $data;
+        return $result->fetchAll( );
 
     }
 
@@ -91,8 +89,7 @@ class PDODB
     $result->bindParam(':limit', $limit, PDO::PARAM_INT);
     $result->bindParam(':offset', $offset, PDO::PARAM_INT);
     $result->execute();
-    $data=$result->fetchAll( );
-    return $data;
+    return $result->fetchAll( );
     }
 
     /**
@@ -171,10 +168,8 @@ class PDODB
         $result->bindParam(':email', $email, PDO::PARAM_STR);
         $result->bindParam(':password', $password, PDO::PARAM_STR);
         $result->execute();
-        $data=$result->fetch();
-        return $data;
-
-    }
+        return $result->fetch();
+     }
 
     /**
      * Updates user data
@@ -196,6 +191,21 @@ class PDODB
         $result->bindParam(4, $par4, PDO::PARAM_INT);
         return $result->execute();
 
+
+    }
+
+    /**
+     * Returns an array of products by ids
+     * @param $sql
+     * @param $ids
+     * @return array
+     */
+    public function getDataByIds($sql, $ids)
+    {
+        $pdo = $this->connect();
+        $result = $pdo->query($sql);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        return $result->fetchAll();
 
     }
 }

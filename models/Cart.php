@@ -38,8 +38,22 @@ class Cart
             } else {
             $products[$id] = 1;
         }
+
         $this->session->set('products', $products);
         return true;
+    }
+
+    /**
+     * Returns the product id and its quantity from the session
+     * @return bool|void
+     */
+    public function getProducts()
+    {
+        if($this->isCart()) {
+              return $this->session->get('products');
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -81,5 +95,22 @@ class Cart
         if(isset($_SESSION['products'][$id])){
             return true;
         } else return false;
+    }
+
+    /**
+     *  Calculates the total price of products
+     * @param $products
+     * @return int
+     */
+    public function getPrice($products)
+    {
+        $cartProducts = $this->getProducts();
+        $price = 0;
+        if($cartProducts){
+            for ($i=0; $i<count($products); $i++){
+                 $price += $products[$i]->getPrice() * $cartProducts[$products[$i]->getId()];
+            }
+         }
+        return $price;
     }
 }

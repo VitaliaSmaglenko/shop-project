@@ -120,6 +120,37 @@ class Products
         return $objProduct;
     }
 
+    /**
+     * Returns an array with products by their id
+     * @param $idsArray
+     * @return array
+     */
+    public function getProductsByIds($idsArray)
+    {
+        $ids = implode(',', $idsArray);
+
+        $sql ='SELECT  name, id, price, image, description, specifications, availability, brand, status'.
+            ' FROM products WHERE status="1" AND id IN ('.$ids.')';
+        $pdo = new PDODB();
+        $product=$pdo->getDataByIds($sql, $ids);
+        $productList = array();
+        for ($i=0; $i<count($product); $i++){
+            $objProduct = new Products();
+            $objProduct->setName($product[$i]['name']);
+            $objProduct->setDescription($product[$i]['description']);
+            $objProduct->setImage($product[$i]['image']);
+            $objProduct->setPrice($product[$i]['price']);
+            $objProduct->setId($product[$i]['id']);
+            $objProduct->setSpecifications($product[$i]['specifications']);
+            $objProduct->setAvailability($product[$i]['availability']);
+            $objProduct->setBrand($product[$i]['brand']);
+            $objProduct->setStatus($product[$i]['status']);
+            $productList[$i] = $objProduct;
+
+        }
+
+        return $productList;
+    }
 
 
     public function update()
