@@ -12,7 +12,7 @@ use App\Controller;
 use Model\Authenticate;
 
 $checkAuth = new Authenticate();
-//$checkAuth->isAuth();
+$checkAuth->isAuth();
 
 $router = new Router();
 $result=$router ->run();

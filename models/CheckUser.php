@@ -71,7 +71,14 @@ class CheckUser
             return $this->errors;
         }
 
+        public function checkCheckout($firstName, $lastName, $phone)
+        {
+            $this->checkFirstName($firstName);
+            $this->checkLastName($lastName);
+            $this->checkPhone($phone);
 
+            return $this->errors;
+        }
 
     /**
      * Checks userName length

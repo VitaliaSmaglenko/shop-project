@@ -113,4 +113,11 @@ class Cart
          }
         return $price;
     }
+
+    public function clear()
+    {
+        if($this->isCart()){
+            $this->session->destroy();
+        }
+    }
 }
