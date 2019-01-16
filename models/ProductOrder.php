@@ -8,25 +8,64 @@
 
 namespace Model;
 
+use App\PDODB;
+
 
 class ProductOrder
 {
-    private $firstName;
-    private $lastName;
-    private $comment;
-    private $phone;
-    private $updated_at;
-    private $created_at;
-    private $products;
-    private $status;
+    private $idProduct;
+    private $idOrders;
+    private $price;
+    private $quantity;
 
-
-    public function createOrder()
+    public function createProductOrder()
     {
-        $sql ='';
+        $sql = 'INSERT INTO product_order(id_product, id_orders, price, quantity) ' .
+               ' VALUES (:idProduct, :idOrders, :price, :quantity);';
         $pdo = new PDODB();
-        $result=$pdo->addUser();
+        $pdo = new PDODB();
+        $result = $pdo->addProductOrder($sql, $this->getIdProduct(), $this->getIdOrders(), $this->price, $this->quantity);
+
         return $result;
     }
 
+     public function setIdProduct($idProduct)
+     {
+         $this->idProduct = $idProduct;
+     }
+
+    public function getIdProduct()
+    {
+       return $this->idProduct;
+     }
+
+    public function setIdOrders($idOrders)
+    {
+        $this->idOrders = $idOrders;
+     }
+
+    public function getIdOrders()
+    {
+        return $this->idOrders;
+     }
+
+    public function setPrice($price)
+    {
+        $this->price = $price;
+     }
+
+    public function getPrice()
+    {
+        return $this->price;
+     }
+
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+     }
+
+    public function getQuantity()
+    {
+        return $this->quantity;
+     }
 }

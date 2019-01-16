@@ -38,7 +38,7 @@
                 <div class="col-md-4 mb-3">
                     <label for="validationCustom01">First name</label>
                     <input type="text" name="firstName" class="form-control" id="validationCustom01" placeholder="First name"
-                      value="<?php echo $firstName?>" required>
+                      value="<?php echo  $firstName?>" required>
                     <div class="invalid-feedback">
                         Please choose a first name.
                     </div>
@@ -59,7 +59,7 @@
             <tr> <td>
                     <div class="col-md-4 mb-3">
                         <label for="validationCustomUsername">Your phone number</label>
-                        <input type="text" name="phone" value="<?php echo $phone?>"
+                        <input type="text" name="phone" value="<?php echo  $phone;?>"
                                placeholder="Your phone number"
                                class=" white  form-control"
                                id="phone_no" pattern="^((8|\+3)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$" required>

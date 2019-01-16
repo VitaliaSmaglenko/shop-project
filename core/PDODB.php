@@ -210,4 +210,37 @@ class PDODB
         return $result->fetchAll();
 
     }
+
+    public function addBuyers($sql, $firstName, $lastName, $comment, $phone, $userId,  $updatedAt, $createdAt)
+    {
+        $pdo = $this->connect();
+        $result = $pdo->prepare($sql);
+        $result->bindParam(':firstName', $firstName, PDO::PARAM_STR);
+        $result->bindParam(':lastName', $lastName, PDO::PARAM_STR);
+        $result->bindParam(':comment', $comment, PDO::PARAM_STR);
+        $result->bindParam(':phone', $phone, PDO::PARAM_STR);
+        if(!$userId==false){$result->bindParam(':userId', $userId, PDO::PARAM_INT);}
+        $result->bindParam(':updatedAt', $updatedAt, PDO::PARAM_STR);
+        $result->bindParam(':createdAt', $createdAt, PDO::PARAM_STR);
+        return $result->execute();
+    }
+
+    public  function addOrders($sql, $buyersID)
+    {
+        $pdo = $this->connect();
+        $result = $pdo->prepare($sql);
+        $result->bindParam(':id_buyers', $buyersID, PDO::PARAM_INT);
+        return $result->execute();
+    }
+
+    public  function addProductOrder($sql, $idProduct, $idOrders, $price, $quantity)
+    {
+        $pdo = $this->connect();
+        $result = $pdo->prepare($sql);
+        $result->bindParam(':id_product', $idProduct, PDO::PARAM_INT);
+        $result->bindParam(':id_orders', $idOrders, PDO::PARAM_INT);
+        $result->bindParam(':price', $price, PDO::PARAM_INT);
+        $result->bindParam(':quantity', $quantity, PDO::PARAM_INT);
+        return $result->execute();
+    }
 }

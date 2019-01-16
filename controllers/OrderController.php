@@ -4,10 +4,12 @@
  */
 use Model\Cart;
 use Model\ProductOrder;
+use Model\Orders;
 use Model\Products;
 use Model\Authenticate;
 use Model\User;
 use Model\CheckUser;
+use Model\Buyers;
 
 class OrderController
 {
@@ -15,12 +17,18 @@ class OrderController
     {
         $cart = new Cart();
         $cartProduct = $cart->getProducts();
+
+        var_dump($cartProduct);
         $isUser = new Authenticate();
         $user = new User();
         $product = new Products();
-        $order = new ProductOrder();
 
+        $buyer = new Buyers();
+        $order = new Orders();
+        $productOrder = new ProductOrder();
         $result = false;
+
+
 
         if (isset($_POST['submitSave'])) {
             $firstName=$_POST['firstName'];
@@ -40,7 +48,29 @@ class OrderController
                     $userId = $isUser->checkLogged();
                 }
 
-                $result = $order->createOrder();
+
+                $buyer->setLastName($lastName);
+                $buyer->setFirstName($firstName);
+                $buyer->setPhone($phone);
+                $buyer->setComment($comment);
+                $buyer->setCreatedAt();
+                $buyer->setUpdatedAt();
+                $buyer->setUserId($userId);
+
+
+                $result = $buyer->createBuyers();
+                $order->setIdBuyers($buyer->getBuyersId());
+                $order->createOrder();
+
+                for($i=0; $i<count($cartProduct); $i++) {
+                    $productOrder->setIdOrders($order->getOrdersId());
+                    $product->getProductsById(key($cartProduct));
+                    $productOrder->setIdProduct();
+                    $productOrder->setPrice();
+                    $productOrder->setQuantity();
+                    $productOrder->createProductOrder();
+                }
+
                 if($result){
                     $cart->clear();
                 }
@@ -59,8 +89,7 @@ class OrderController
                 header('Location: /');
            } else{
                 //if in cart exists products
-                $productsIds = array_keys($cartProduct);
-                $product = $product->getProductsByIds($productsIds);
+
                 $price = $cart->getPrice($product);
                 $quantity = $cart->countProducts();
                 $firstName = false;
@@ -74,6 +103,8 @@ class OrderController
                     $userId = $isUser->checkLogged();
                     $user = $user->getUserById($userId);
                     $firstName = $user->getFirstName();
+                    $lastName = $user->getLastName();
+                    $phone = $user->getPhone();
                 }
             }
         }
