@@ -49,11 +49,11 @@ class CabinetController
             $phone=$_POST['phone'];
 
             $errors = new CheckUser();
-            $errors = $errors->checkEdit($password, $firstName, $lastName, $phone);
+            $errors = $errors->checkEdit((hash( "md5",$password)), $firstName, $lastName, $phone);
             if(empty($errors)){
                 $user->setFirstName($firstName);
                 $user->setLastName($lastName);
-                $user->setPassword($password);
+                $user->setPassword((hash( "md5",$password)));
                 $user->setPhone($phone);
                 $result = $user->updateUser($userId);
 

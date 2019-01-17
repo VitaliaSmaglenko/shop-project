@@ -51,7 +51,7 @@
 
             <div class="col-md-4 mb-3">
                 <label for="validationCustomUsername">Password</label>
-                <input type="password" name="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" value="<?php echo $user->getPassword();?>" required>
+                <input type="password" name="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" value="" required>
                 <div class="invalid-feedback feedback-pos">
                     Please input password
                 </div>

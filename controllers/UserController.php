@@ -37,12 +37,13 @@ class UserController
             $errors = $errors->checkRegistration($email, $password, $userName, $firstName, $lastName, $phone);
 
             if(empty($errors)){
+
                 $user = new User();
                 $user->setUserName($userName);
                 $user->setFirstName($firstName);
                 $user->setLastName($lastName);
                 $user->setEmail($email);
-                $user->setPassword($password);
+                $user->setPassword(hash( "md5",$password));
                 $user->setPhone($phone);
                 $user->createUser();
                 $user->getUser();
@@ -63,19 +64,21 @@ class UserController
         $email= '';
         $password='';
 
-        if(isset($_POST['submitLog'])){
+        $a = 'romashka1234';
+         if(isset($_POST['submitLog'])){
 
 
             $email= $_POST['email'];
             $password=$_POST['password'];
-
+           // var_dump(password_hash($password, PASSWORD_BCRYPT));
             $errors = new CheckUser();
-            $errors = $errors->checkAuthorisation($email, $password);
+            $errors = $errors->checkAuthorisation($email, hash( "md5",$password));
 
             if(empty($errors)){
                 $user = new User();
                 $user->setEmail($email);
-                $user->setPassword($password);
+                $user->setPassword(hash( "md5",$password));
+
                 $user->getUser();
                 header('Location: /cabinet');
 
