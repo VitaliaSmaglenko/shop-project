@@ -129,4 +129,30 @@ class Cart
         $this->session->set('products', $cartProduct);
         return;
     }
+
+    public function minusProduct($id)
+    {
+        $cartProduct = $this->getProducts();
+
+        if($cartProduct[$id] != 1){
+            $cartProduct[$id] --;
+        } else {
+            unset($cartProduct[$id]);
+        }
+        $this->session->set('products', $cartProduct);
+        return;
+
+    }
+
+    public function plusProduct($id)
+    {
+        $cartProduct = $this->getProducts();
+
+        if($cartProduct[$id]){
+            $cartProduct[$id] ++;
+        }
+        $this->session->set('products', $cartProduct);
+        return;
+
+    }
 }

@@ -50,4 +50,22 @@ class CartController
         header('Location:'.$path);
         return true;
     }
+
+    public function actionPlus($id)
+    {
+        $cart = new Cart();
+        $cart->plusProduct($id);
+        $path = ('/cart');
+        header('Location:'.$path);
+        return true;
+    }
+
+    public function actionMinus($id)
+    {
+        $cart = new Cart();
+        $cart->minusProduct($id);
+        $path = ('/cart');
+        header('Location:'.$path);
+        return true;
+    }
 }

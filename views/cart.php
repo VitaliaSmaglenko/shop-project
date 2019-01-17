@@ -29,10 +29,15 @@ include("views/include/header.php");
                 <td><?php echo  $products[$i]->getName();?> </td>
                 <td><?php echo  $products[$i]->getPrice();?> грн </td>
                <td><img src="components/<?php echo  $products[$i]->getImage();?>" class="im-cart"/></td>
-                <td> <button class="btn btn-info btn-del"> - </button>
-                    <input type="number" class="count-product"
-                     placeholder="<?php echo  $cart[$products[$i]->getId()];?>">
-                    <button class="btn btn-info btn-del">+</button></td>
+                <td>  <a href="/minus/<?php echo  $products[$i]->getId();?>"
+                         class="btn btn-info my-2 my-sm-0" name="view-btn">-</a>
+
+                    <input disabled type="text"   class="count-product arrow"
+                     value="<?php echo  $cart[$products[$i]->getId()];?>">
+
+                    <a href="/plus/<?php echo  $products[$i]->getId();?>"
+                       class="btn btn-info my-2 my-sm-0" name="view-btn">+</a>
+
                 <td> <a href="/delete/<?php echo  $products[$i]->getId();?>" class="btn btn-info my-2 my-sm-0" name="view-btn">Delete</a>
                         </button></td>
             </tr>
