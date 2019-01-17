@@ -41,4 +41,13 @@ class CartController
         header('Location:'.$path);
         return true;
     }
+
+    public function actionDelete($id)
+    {
+        $cart = new Cart();
+        $cart->deleteProduct($id);
+        $path = ('/cart');
+        header('Location:'.$path);
+        return true;
+    }
 }

@@ -121,4 +121,12 @@ class Cart
             unset($_SESSION['products']);
         }
     }
+
+    public function deleteProduct($id)
+    {
+        $cartProduct = $this->getProducts();
+        unset($cartProduct[$id]);
+        $this->session->set('products', $cartProduct);
+        return;
+    }
 }

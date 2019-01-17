@@ -33,7 +33,7 @@ include("views/include/header.php");
                     <input type="number" class="count-product"
                      placeholder="<?php echo  $cart[$products[$i]->getId()];?>">
                     <button class="btn btn-info btn-del">+</button></td>
-                <td><button class="btn btn-info btn-del">Delete
+                <td> <a href="/delete/<?php echo  $products[$i]->getId();?>" class="btn btn-info my-2 my-sm-0" name="view-btn">Delete</a>
                         </button></td>
             </tr>
         <?php } ?>

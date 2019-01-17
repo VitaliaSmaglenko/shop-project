@@ -16,6 +16,7 @@ return array(
     //cart:
     'add/([0-9]+)' => 'cart/add/$1',
     'cart' => 'cart/cart',
+    'delete/([0-9])+'=>'cart/delete/$1',
     //order:
     'checkout' => 'order/checkout',
     //registration:
