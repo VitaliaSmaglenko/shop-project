@@ -15,23 +15,24 @@ class Orders
 {
     private $idBuyers;
     private $id;
+    private $totalPrice;
+    private $totalCount;
 
     public function createOrder()
     {
 
-            $sql = 'INSERT INTO orders (id_buyers) VALUES (:id_buyers);';
+            $sql = 'INSERT INTO orders (id_buyers, total_price, total_count) '.
+                'VALUES (:idBuyers, :totalPrice, :totalCount);';
             $pdo = new PDODB();
-
             $pdo = new PDODB();
-            $result = $pdo->addOrders($sql, $this->getIdBuyers());
-
-
-        return $result;
+            $result = $pdo->addOrders($sql, $this->getIdBuyers(),
+                    $this->getTotalPrice(), $this->getTotalCount());
+            return $result;
     }
 
     public function getOrdersId()
     {
-        $sql = "SELECT id FROM orders LIMIT 1";
+        $sql = "SELECT id FROM orders  ORDER BY id DESC LIMIT 1";
         $pdo = new PDODB();
         $result = $pdo->selectData($sql);
 
@@ -58,5 +59,20 @@ class Orders
 
     public function getIdBuyers(){
         return $this->idBuyers;
+    }
+
+    public function setTotalPrice($totalPrice){
+        $this->totalPrice = $totalPrice;
+    }
+
+    public function getTotalPrice(){
+        return $this->totalPrice;
+    }
+    public function setTotalCount($totalCount){
+        $this->totalCount = $totalCount;
+    }
+
+    public function getTotalCount(){
+        return $this->totalCount;
     }
 }

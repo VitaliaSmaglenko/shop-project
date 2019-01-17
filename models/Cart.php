@@ -116,8 +116,9 @@ class Cart
 
     public function clear()
     {
+
         if($this->isCart()){
-            $this->session->destroy();
+            unset($_SESSION['products']);
         }
     }
 }

@@ -10,14 +10,6 @@
     <hr class="featurette-divider">
 
     <?php
-        if($result){
-            echo"<p> Order is processed. We will call you back<p>";
-        } else
-            echo"<p> You choose goods -".$quantity." cost- ".$price."<p>";
-    ?>
-
-
-    <?php
 
     if(isset($errors) && !empty($errors)) {
         echo '<ul>';
@@ -28,6 +20,12 @@
         }
         echo '</ul>';
     }
+    ?>
+    <?php
+    if($result){
+        echo"<p> Order is processed. We will call you back<p>";
+    } else {
+        echo"<p> You choose goods -".$quantity." cost- ".$price."<p>";
     ?>
 
     <form method="post" class="validation" novalidate  action="#">
@@ -91,6 +89,8 @@
 
     </table>
     </form>
+
+    <?php } ?>
     <script>
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {

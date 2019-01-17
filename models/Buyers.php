@@ -45,7 +45,7 @@ class Buyers
 
     public function getBuyersId()
     {
-        $sql = "SELECT id FROM buyers LIMIT 1";
+        $sql = "SELECT id FROM buyers ORDER BY id DESC LIMIT 1";
         $pdo = new PDODB();
         $result = $pdo->selectData($sql);
 

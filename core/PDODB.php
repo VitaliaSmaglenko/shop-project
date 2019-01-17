@@ -225,11 +225,13 @@ class PDODB
         return $result->execute();
     }
 
-    public  function addOrders($sql, $buyersID)
+    public  function addOrders($sql, $buyersId, $totalPrice, $totalCount)
     {
         $pdo = $this->connect();
         $result = $pdo->prepare($sql);
-        $result->bindParam(':id_buyers', $buyersID, PDO::PARAM_INT);
+        $result->bindParam(':idBuyers', $buyersId, PDO::PARAM_INT);
+        $result->bindParam(':totalPrice', $totalPrice, PDO::PARAM_INT);
+        $result->bindParam(':totalCount', $totalCount, PDO::PARAM_INT);
         return $result->execute();
     }
 
@@ -237,8 +239,8 @@ class PDODB
     {
         $pdo = $this->connect();
         $result = $pdo->prepare($sql);
-        $result->bindParam(':id_product', $idProduct, PDO::PARAM_INT);
-        $result->bindParam(':id_orders', $idOrders, PDO::PARAM_INT);
+        $result->bindParam(':idProduct', $idProduct, PDO::PARAM_INT);
+        $result->bindParam(':idOrders', $idOrders, PDO::PARAM_INT);
         $result->bindParam(':price', $price, PDO::PARAM_INT);
         $result->bindParam(':quantity', $quantity, PDO::PARAM_INT);
         return $result->execute();

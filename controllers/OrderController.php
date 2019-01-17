@@ -17,18 +17,17 @@ class OrderController
     {
         $cart = new Cart();
         $cartProduct = $cart->getProducts();
-
-        var_dump($cartProduct);
         $isUser = new Authenticate();
         $user = new User();
         $product = new Products();
-
         $buyer = new Buyers();
         $order = new Orders();
         $productOrder = new ProductOrder();
         $result = false;
 
-
+        if($cartProduct == false){
+         unset($_POST);
+        }
 
         if (isset($_POST['submitSave'])) {
             $firstName=$_POST['firstName'];
@@ -38,7 +37,10 @@ class OrderController
 
             $errors = new CheckUser();
             $errors = $errors->checkCheckout( $firstName, $lastName, $phone);
-
+            $productsIds = array_keys($cartProduct);
+            $items = $product->getProductsByIds($productsIds);
+            $price = $cart->getPrice($items);
+            $quantity = $cart->countProducts();
             if(empty($errors)){
 
 
@@ -60,26 +62,22 @@ class OrderController
 
                 $result = $buyer->createBuyers();
                 $order->setIdBuyers($buyer->getBuyersId());
+                $order->setTotalCount($quantity);
+                $order->setTotalPrice( $price);
                 $order->createOrder();
-
-                for($i=0; $i<count($cartProduct); $i++) {
+                foreach($cartProduct as $cartPr) {
                     $productOrder->setIdOrders($order->getOrdersId());
-                    $product->getProductsById(key($cartProduct));
-                    $productOrder->setIdProduct();
-                    $productOrder->setPrice();
-                    $productOrder->setQuantity();
+                    $item=$product->getProductsById(key($cartProduct));
+                    next($cartProduct);
+                    $productOrder->setIdProduct($item->getId());
+                    $productOrder->setPrice($item->getPrice());
+                    $productOrder->setQuantity($cartPr);
                     $productOrder->createProductOrder();
                 }
-
                 if($result){
                     $cart->clear();
+
                 }
-            } else
-            {
-                $productsIds = array_keys($cartProduct);
-                $product = $product->getProductsByIds($productsIds);
-                $price = $cart->getPrice($product);
-                $quantity = $cart->countProducts();
             }
 
         } else{
@@ -89,17 +87,16 @@ class OrderController
                 header('Location: /');
            } else{
                 //if in cart exists products
-
-                $price = $cart->getPrice($product);
+                $productsIds = array_keys($cartProduct);
+                $items = $product->getProductsByIds($productsIds);
+                $price = $cart->getPrice($items);
                 $quantity = $cart->countProducts();
                 $firstName = false;
                 $lastName = false;
                 $phone = false;
                 $comment = false;
 
-                if(!$isUser->isAuth()){
-
-                } else {
+                if($isUser->isAuth()){
                     $userId = $isUser->checkLogged();
                     $user = $user->getUserById($userId);
                     $firstName = $user->getFirstName();
