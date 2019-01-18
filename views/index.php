@@ -33,10 +33,10 @@ include("views/include/header.php");
             <div class="p-3">
                 <h4 class="font-italic ">Categories</h4><br />
                 <ol class="list-unstyled mb-0">
-                    <?php   for ($i=0; $i<count($data[0]); $i++) {
+                    <?php   for ($i=0; $i<count($categories); $i++) {
                         ?>
-                        <li><a href="category/<?php echo $data[0][$i]->getId();?>" class="cat-link">
-                        <?php echo $data[0][$i]->getCategory(); ?></a></li>
+                        <li><a href="category/<?php echo $categories[$i]->getId();?>" class="cat-link">
+                        <?php echo $categories[$i]->getCategory(); ?></a></li>
                         <?php }?>
                 </ol>
             </div>
@@ -58,13 +58,13 @@ include("views/include/header.php");
 
             <div class="container">
                 <div class="row mb-4 col-xs-4">
-                      <?php for ($i=0; $i<count($data[1]); $i++) {?>
+                      <?php for ($i=0; $i<count($productList); $i++) {?>
                         <div class="card-deck mb-4 col-xs-4 text-center" style="width: 26%; margin: 15px; ">
                             <div class="card text-center mb-4 col-sm" style="width: 15rem;">
                                 <img class="card-img-top" style="width: 150px; height: 150px; padding-top: 10px;" src="components/<?php echo  $productList[$i]->getImage();?>" alt="Card image cap">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?php echo   $productList[$i]->getName();?></h5>
-                                    <p class="card-text"> Id: <?php echo  $productList[$i]->getId();?></p>
+                                    <h5 class="card-title"><?php echo  $productList[$i]->getName();?></h5>
+                                    <p class="card-text"> Id: <?php echo $productList[$i]->getId();?></p>
                                     <h6 class="card-title"><?php echo $productList[$i]->getPrice();?> грн</h6>
                                     <a href="product/<?php echo $productList[$i]->getId();?>" class="btn btn-primary" name="view-btn">View</a> <br>
                                     <a href="add/<?php echo $productList[$i]->getId();?>"

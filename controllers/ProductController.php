@@ -3,7 +3,7 @@
  * Controller ProductController
  */
 use Model\Products;
-
+use App\View;
 class ProductController
 {
     /**
@@ -14,11 +14,11 @@ class ProductController
 
     public function actionView($id){
         $product = new Products();
-        $product=$product->getProductsById($id);
+        $dataPage['product'] = $product=$product->getById($id);
         $cart = new Model\Cart();
-        $cart = $cart->isProduct($id);
-
-        include_once ('views/product.php');
+        $dataPage['cart'] = $cart = $cart->isProduct($id);
+        $view = new View();
+        $view->render('product.php',  $dataPage);
         return true;
     }
 

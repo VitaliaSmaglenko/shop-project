@@ -10,6 +10,7 @@ use Model\Authenticate;
 use Model\User;
 use Model\CheckUser;
 use Model\Buyers;
+use App\View;
 
 class OrderController
 {
@@ -24,23 +25,30 @@ class OrderController
         $order = new Orders();
         $productOrder = new ProductOrder();
         $result = false;
-
+        $dataPage['result'] = $result;
         if($cartProduct == false){
          unset($_POST);
         }
 
         if (isset($_POST['submitSave'])) {
-            $firstName=$_POST['firstName'];
+            $firstName = $_POST['firstName'];
             $lastName = $_POST['lastName'];
             $phone = $_POST['phone'];
             $comment = $_POST['comment'];
 
+            $dataPage['phone'] = $phone;
+            $dataPage['lastName'] = $lastName;
+            $dataPage['firstName'] = $firstName;
+
             $errors = new CheckUser();
             $errors = $errors->checkCheckout( $firstName, $lastName, $phone);
+            $dataPage ['errors'] = $errors;
             $productsIds = array_keys($cartProduct);
-            $items = $product->getProductsByIds($productsIds);
+            $items = $product->getByIds($productsIds);
             $price = $cart->getPrice($items);
+            $dataPage['price'] = $price;
             $quantity = $cart->countProducts();
+            $dataPage['quantity'] = $quantity;
             if(empty($errors)){
 
 
@@ -48,6 +56,9 @@ class OrderController
                         $userId = false;
                 } else {
                     $userId = $isUser->checkLogged();
+                    if($userId == false){
+                        header('Location: /login');
+                    }
                 }
 
 
@@ -61,13 +72,14 @@ class OrderController
 
 
                 $result = $buyer->createBuyers();
+                $dataPage['result'] = $result;
                 $order->setIdBuyers($buyer->getBuyersId());
                 $order->setTotalCount($quantity);
                 $order->setTotalPrice( $price);
                 $order->createOrder();
                 foreach($cartProduct as $cartPr) {
                     $productOrder->setIdOrders($order->getOrdersId());
-                    $item=$product->getProductsById(key($cartProduct));
+                    $item = $product->getById(key($cartProduct));
                     next($cartProduct);
                     $productOrder->setIdProduct($item->getId());
                     $productOrder->setPrice($item->getPrice());
@@ -88,24 +100,38 @@ class OrderController
            } else{
                 //if in cart exists products
                 $productsIds = array_keys($cartProduct);
-                $items = $product->getProductsByIds($productsIds);
+                $items = $product->getByIds($productsIds);
                 $price = $cart->getPrice($items);
+                $dataPage['price'] = $price;
                 $quantity = $cart->countProducts();
+                $dataPage['quantity'] = $quantity;
                 $firstName = false;
                 $lastName = false;
                 $phone = false;
                 $comment = false;
+                $dataPage['phone'] = $phone;
+                $dataPage['lastName'] = $lastName;
+                $dataPage['firstName'] = $firstName;
 
                 if($isUser->isAuth()){
                     $userId = $isUser->checkLogged();
-                    $user = $user->getUserById($userId);
+                    if($userId == false){
+                        header('Location: /login');
+                    }
+                    $user = $user->getById($userId);
                     $firstName = $user->getFirstName();
+                    $dataPage['firstName'] = $firstName;
                     $lastName = $user->getLastName();
+                    $dataPage['lastName'] = $lastName;
                     $phone = $user->getPhone();
+                    $dataPage['phone'] = $phone;
                 }
             }
         }
-        include ('views/checkout.php');
+
+        $view = new View();
+        $view->render('checkout.php',  $dataPage);
+        return true;
     }
 
 }

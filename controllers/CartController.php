@@ -6,7 +6,7 @@
 
 use Model\Cart;
 use Model\Products;
-
+use App\View;
 
 class CartController
 {
@@ -16,15 +16,16 @@ class CartController
      */
     public function actionCart(){
         $cartProducts = new Cart();
-        $cart=$cartProducts->getProducts();
+        $dataPage['cart'] = $cart=$cartProducts->getProducts();
         $products = new Products();
         if($cart) {
             $productsId = array_keys($cart);
-            $products = $products->getProductsByIds($productsId);
-            $price = $cartProducts->getPrice($products);
+            $dataPage['products'] = $products = $products->getByIds($productsId);
+            $dataPage['price'] = $price = $cartProducts->getPrice($products);
 
         }
-        include_once ('views/cart.php');
+        $view = new View();
+        $view->render('cart.php',  $dataPage);
         return true;
     }
 

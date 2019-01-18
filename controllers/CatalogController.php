@@ -16,9 +16,9 @@ class CatalogController
     public function actionIndex(){
 
         $categories = new Category();
-       $dataPage[] =$categories=$categories->getCategories();
+        $dataPage['categories'] = $categories = $categories->get();
         $productList = new Products();
-        $dataPage[] = $productList = $productList->getProducts();
+        $dataPage['productList'] = $productList = $productList->get();
         $view = new View();
         $view->render('catalog.php', $dataPage);
         return true;
@@ -31,30 +31,33 @@ class CatalogController
     public function actionCategory($id, $page = 1){
 
         $categoryObj = new Category();
-        $categories=$categoryObj->getCategories();
+        $dataPage['categories'] = $categories = $categoryObj->get();
         $productList = new Products();
-        $productList = $productList->getProductsByCategory($id, $page);
-        include_once ('views/category.php');
+        $dataPage['productList'] = $productList = $productList->getByCategory($id, $page);
+        $view = new View();
+        $view->render('category.php', $dataPage);
         return true;
     }
 
     public function actionPrice()
     {
         $categories = new Category();
-        $categories=$categories->getCategories();
+        $dataPage['categories'] = $categories = $categories->get();
         $productList = new Products();
-        $productList = $productList->getProductsSortingByPrice();
-        include_once ('views/catalog.php');
+        $dataPage['productList'] = $productList = $productList->getSortingByPrice();
+        $view = new View();
+        $view->render('catalog.php', $dataPage);
         return true;
     }
 
     public function actionPriceCategory($id)
     {
         $categories = new Category();
-        $categories=$categories->getCategories();
+        $dataPage['categories'] = $categories = $categories->get();
         $productList = new Products();
-        $productList = $productList->getProductsByCategory($id);
-        include_once ('views/category.php');
+        $dataPage['productList'] = $productList = $productList->getByCategory($id);
+        $view = new View();
+        $view->render('catalog.php', $dataPage);
         return true;
     }
 

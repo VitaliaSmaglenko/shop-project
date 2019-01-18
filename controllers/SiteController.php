@@ -15,15 +15,14 @@ class SiteController
      * @return bool
      */
     public function actionIndex(){
-        $view = new View();
         $categories = new Category();
-        $dataPage[] = $categories=$categories->getCategories();
+        $categories = $categories->get();
+        $dataPage['categories'] = $categories;
         $productList = new Products();
-         $productList = $productList->getProducts();
-        $dataPage[] =  $productList;
-        //var_dump($categories);
+        $productList = $productList->get();
+        $dataPage['productList'] =  $productList;
+        $view = new View();
         $view->render('index.php',  $dataPage);
-
 
         return true;
     }

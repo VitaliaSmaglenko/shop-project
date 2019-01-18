@@ -3,13 +3,15 @@
 /**
  * Controller AdminController
  */
+use App\View;
 
 class AdminController
 {
     public function actionIndex()
     {
 
-        include_once('views/admin/index.php');
+        $view = new View();
+        $view->render('admin/index.php');
         return true;
     }
 }

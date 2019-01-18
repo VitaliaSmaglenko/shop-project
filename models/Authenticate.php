@@ -61,7 +61,6 @@ class Authenticate
         }
         else {
 
-            header('Location: /login');
             return false;
         }
     }

@@ -43,7 +43,7 @@ class User
      * @return User
      */
 
-    public function getUser(){
+    public function get(){
         $sql ='SELECT  user_name, first_name, last_name, email, id, password, phone FROM user  WHERE email = :email AND password = :password';
         $pdo = new PDODB();
         $user=$pdo->getUser($sql, $this->getEmail(),$this->getPassword());
@@ -58,8 +58,6 @@ class User
             $objUser->setUserName($user['user_name']);
             $objUser->setPhone($user['phone']);
            }
-        $auth = new Authenticate();
-        $auth->auth($objUser);
 
         return $objUser;
 
@@ -70,7 +68,7 @@ class User
      * @param $id
      * @return User
      */
-    public function getUserById($id){
+    public function getById($id){
         $sql ='SELECT  user_name, first_name, last_name, email, id, password, phone FROM user  WHERE id = :id';
         $pdo = new PDODB();
         $user=$pdo-> selectDataById($sql, $id);

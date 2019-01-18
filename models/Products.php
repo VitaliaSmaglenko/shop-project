@@ -29,7 +29,7 @@ class Products
      */
 
 
-    public function getProductsByCategory($id=false, $page){
+    public function getByCategory($id=false, $page){
         $limit = 6;
 
         $offset = ($page - 1) * 6;
@@ -67,7 +67,7 @@ class Products
      * Returns an array of goods
      * @return array
      */
-    public function getProducts()
+    public function get()
     {
         $sql ='SELECT  name, id, price, image, description, specifications, availability, brand, status'.
             ' FROM products WHERE status = "1"';
@@ -98,7 +98,7 @@ class Products
      * @return Products
      */
 
-    public function getProductsById($id)
+    public function getById($id)
     {
         $sql ='SELECT  name, id, price, image, description, specifications, availability, brand, status'.
              ' FROM products WHERE id = :id';
@@ -125,7 +125,7 @@ class Products
      * @param $idsArray
      * @return array
      */
-    public function getProductsByIds($idsArray)
+    public function getByIds($idsArray)
     {
         $ids = implode(',', $idsArray);
 
@@ -153,7 +153,7 @@ class Products
     }
 
 
-    public function getProductsSortingByPrice()
+    public function getSortingByPrice()
     {
         $sql ='SELECT  name, id, price, image, description, specifications, availability, brand, status'.
             ' FROM products WHERE status = "1" ORDER BY price ASC' ;

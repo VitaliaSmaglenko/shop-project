@@ -28,7 +28,7 @@ class Category{
      * @return  array
      */
 
-    public function getCategories() {
+    public function get() {
         $sql ='SELECT  category, id, status FROM category  WHERE status = "1"';
         $pdo = new PDODB();
         $category=$pdo->selectData($sql);

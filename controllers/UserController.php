@@ -5,6 +5,7 @@
 use Model\User;
 use Model\CheckUser;
 use Model\Authenticate;
+use App\View;
 
 class UserController
 {
@@ -16,26 +17,26 @@ class UserController
     public function actionRegister(){
 
 
-        $firstName= '';
-        $lastName= '';
-        $userName= '';
-        $email= '';
-        $password='';
-        $phone = '';
+        $dataPage['firstName'] = $firstName = '';
+        $dataPage['lastName'] = $lastName = '';
+        $dataPage['userName'] =  $userName = '';
+        $dataPage['email'] = $email = '';
+        $password ='';
+        $dataPage['phone'] = $phone = '';
 
 
         if(isset($_POST['submitReg'])){
 
-            $firstName= $_POST['firstName'];
-            $lastName= $_POST['lastName'];
-            $userName= $_POST['userName'];
-            $email= $_POST['email'];
+            $dataPage['firstName']  = $firstName = $_POST['firstName'];
+            $dataPage['lastName'] = $lastName = $_POST['lastName'];
+            $dataPage['userName'] = $userName = $_POST['userName'];
+            $dataPage['email'] = $email = $_POST['email'];
             $password=$_POST['password'];
-            $phone= $_POST['phone'];
+            $dataPage['phone'] = $phone= $_POST['phone'];
 
             $errors = new CheckUser();
             $errors = $errors->checkRegistration($email, $password, $userName, $firstName, $lastName, $phone);
-
+            $dataPage['errors'] =  $errors;
             if(empty($errors)){
 
                 $user = new User();
@@ -46,11 +47,14 @@ class UserController
                 $user->setPassword(hash( "md5",$password));
                 $user->setPhone($phone);
                 $user->createUser();
-                $user->getUser();
+                $user = $user->get();
+                $auth = new Authenticate();
+                $auth->auth($user);
                 header('Location: /cabinet');
             }
         }
-        include_once ('views/register.php');
+        $view = new View();
+        $view->render('register.php', $dataPage);
         return true;
     }
 
@@ -61,31 +65,31 @@ class UserController
 
     public function actionLogin()
     {
-        $email= '';
-        $password='';
+        $dataPage = [];
 
-        $a = 'romashka1234';
          if(isset($_POST['submitLog'])){
 
 
-            $email= $_POST['email'];
-            $password=$_POST['password'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
            // var_dump(password_hash($password, PASSWORD_BCRYPT));
             $errors = new CheckUser();
-            $errors = $errors->checkAuthorisation($email, hash( "md5",$password));
+            $dataPage['errors'] = $errors = $errors->checkAuthorisation($email, hash( "md5",$password));
 
             if(empty($errors)){
                 $user = new User();
                 $user->setEmail($email);
                 $user->setPassword(hash( "md5",$password));
 
-                $user->getUser();
+                $user = $user->get();
+                $auth = new Authenticate();
+                $auth->auth($user);
                 header('Location: /cabinet');
 
             }
         }
-
-        include_once ('views/login.php');
+        $view = new View();
+        $view->render('login.php', $dataPage);
         return true;
     }
 
