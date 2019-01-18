@@ -1,7 +1,8 @@
 <?php
 
 return array(
-
+    //admin:
+    'admin' => 'admin/index',
     //category:
     'category/page-([0-9]+)/([0-9])+' => 'catalog/category/$1/$2',
     'category/([0-9])+' => 'catalog/category/$1',

@@ -5,6 +5,7 @@
 
 use Model\Category;
 use Model\Products;
+use App\View;
 
 class SiteController
 {
@@ -14,12 +15,16 @@ class SiteController
      * @return bool
      */
     public function actionIndex(){
-
+        $view = new View();
         $categories = new Category();
-        $categories=$categories->getCategories();
+        $dataPage[] = $categories=$categories->getCategories();
         $productList = new Products();
-        $productList = $productList->getProducts();
-        include_once ('views/index.php');
+         $productList = $productList->getProducts();
+        $dataPage[] =  $productList;
+        //var_dump($categories);
+        $view->render('index.php',  $dataPage);
+
+
         return true;
     }
 

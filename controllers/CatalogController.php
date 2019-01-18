@@ -4,6 +4,7 @@
  */
 use Model\Category;
 use Model\Products;
+use App\View;
 
 class CatalogController
 {
@@ -15,10 +16,11 @@ class CatalogController
     public function actionIndex(){
 
         $categories = new Category();
-        $categories=$categories->getCategories();
+       $dataPage[] =$categories=$categories->getCategories();
         $productList = new Products();
-        $productList = $productList->getProducts();
-        include_once ('views/catalog.php');
+        $dataPage[] = $productList = $productList->getProducts();
+        $view = new View();
+        $view->render('catalog.php', $dataPage);
         return true;
     }
 

@@ -33,10 +33,10 @@ include("views/include/header.php");
             <div class="p-3">
                 <h4 class="font-italic ">Categories</h4><br />
                 <ol class="list-unstyled mb-0">
-                    <?php   for ($i=0; $i<count($categories); $i++) {
+                    <?php   for ($i=0; $i<count($data[0]); $i++) {
                         ?>
-                        <li><a href="category/<?php echo $categories[$i]->getId();?>" class="cat-link">
-                        <?php echo $categories[$i]->getCategory(); ?></a></li>
+                        <li><a href="category/<?php echo $data[0][$i]->getId();?>" class="cat-link">
+                        <?php echo $data[0][$i]->getCategory(); ?></a></li>
                         <?php }?>
                 </ol>
             </div>
@@ -58,7 +58,7 @@ include("views/include/header.php");
 
             <div class="container">
                 <div class="row mb-4 col-xs-4">
-                      <?php for ($i=0; $i<count($productList); $i++) {?>
+                      <?php for ($i=0; $i<count($data[1]); $i++) {?>
                         <div class="card-deck mb-4 col-xs-4 text-center" style="width: 26%; margin: 15px; ">
                             <div class="card text-center mb-4 col-sm" style="width: 15rem;">
                                 <img class="card-img-top" style="width: 150px; height: 150px; padding-top: 10px;" src="components/<?php echo  $productList[$i]->getImage();?>" alt="Card image cap">
