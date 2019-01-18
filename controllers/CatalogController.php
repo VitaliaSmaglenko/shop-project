@@ -36,4 +36,24 @@ class CatalogController
         return true;
     }
 
+    public function actionPrice()
+    {
+        $categories = new Category();
+        $categories=$categories->getCategories();
+        $productList = new Products();
+        $productList = $productList->getProductsSortingByPrice();
+        include_once ('views/catalog.php');
+        return true;
+    }
+
+    public function actionPriceCategory($id)
+    {
+        $categories = new Category();
+        $categories=$categories->getCategories();
+        $productList = new Products();
+        $productList = $productList->getProductsByCategory($id);
+        include_once ('views/category.php');
+        return true;
+    }
+
 }

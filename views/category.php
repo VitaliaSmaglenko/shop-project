@@ -12,7 +12,7 @@ include("views/include/header.php");
                     <ol class="list-unstyled mb-0">
                         <?php   for ($i=0; $i<count($categories); $i++) {
                             ?>
-                            <li><a href="<?php echo $categories[$i]->getId();;?>" class="cat-link">
+                            <li><a href="<?php echo $categories[$i]->getId();?>" class="cat-link">
                                     <?php
                                     echo $categories[$i]->getCategory();
                                     ?></a></li>
@@ -23,7 +23,7 @@ include("views/include/header.php");
                 <div class="p-3">
                     <h4 class="font-italic">Sorting</h4> <br />
                     <ol class="list-unstyled">
-                        <li><a class="cat-link" href="#">By price</a></li>
+                        <li><a class="cat-link" href="/category/by-price">By price</a></li>
                         <li><a class="cat-link" href="#">By date</a></li>
                         <li><a class="cat-link" href="#">By popularity</a></li>
                     </ol>

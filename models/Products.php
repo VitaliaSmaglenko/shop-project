@@ -153,6 +153,31 @@ class Products
     }
 
 
+    public function getProductsSortingByPrice()
+    {
+        $sql ='SELECT  name, id, price, image, description, specifications, availability, brand, status'.
+            ' FROM products WHERE status = "1" ORDER BY price ASC' ;
+        $pdo = new PDODB();
+        $product=$pdo->selectData($sql);
+        $productList = array();
+
+        for ($i=0; $i<count($product); $i++){
+            $objProduct = new Products();
+            $objProduct->setName($product[$i]['name']);
+            $objProduct->setDescription($product[$i]['description']);
+            $objProduct->setImage($product[$i]['image']);
+            $objProduct->setPrice($product[$i]['price']);
+            $objProduct->setId($product[$i]['id']);
+            $objProduct->setSpecifications($product[$i]['specifications']);
+            $objProduct->setAvailability($product[$i]['availability']);
+            $objProduct->setBrand($product[$i]['brand']);
+            $objProduct->setStatus($product[$i]['status']);
+            $productList[$i] = $objProduct;
+        }
+
+        return $productList;
+    }
+
     public function update()
     {
 

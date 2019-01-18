@@ -13,6 +13,9 @@ return array(
     //'catalog/page-([0-9]+)' => 'catalog/',
     'catalog' => 'catalog/index',
     'category' => 'catalog/index',
+    'category/by-price/([0-9])+' => 'catalog/priceCategory/$1',
+    'by-price' => 'catalog/price',
+
     //cart:
     'add/([0-9]+)' => 'cart/add/$1',
     'cart' => 'cart/cart',
