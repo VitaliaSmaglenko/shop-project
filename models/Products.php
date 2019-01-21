@@ -11,16 +11,19 @@ class Products
     /**
      * @var
      */
-    public $name;
-    public $category_id;
-    public $price;
-    public $availability;
-    public $brand;
-    public $image;
-    public $description;
-    public $specifications;
-    public $status;
-    public $id;
+    private $name;
+    private $categoryId;
+    private $price;
+    private $availability;
+    private $brand;
+    private $image;
+    private $description;
+    private $specifications;
+    private $status;
+    private $id;
+    private $updatedAt;
+    private $createdAt;
+    private $isNew;
 
     /**
      * @param bool $id
@@ -35,15 +38,16 @@ class Products
         $offset = ($page - 1) * 6;
 
         if($id){
-            $sql ='SELECT  name, products.id, category.id, price, image, description, specifications, availability, brand, products.status'.
+            $sql = 'SELECT  name, products.id, price, product_images.image, description, specifications, availability, brand, products.status'.
                   ' FROM products  LEFT JOIN category  ON products.category_id = category.id'.
-                  ' WHERE category.id=:id LIMIT :limit OFFSET :offset';
+                    ' LEFT JOIN product_images ON products.id = product_images.product_id  '.
+                  '  WHERE category.id=:id  AND products.status = "1" ORDER by products.id ASC LIMIT :limit OFFSET :offset  ';
             $pdo = new PDODB();
-            $product=$pdo->selectCategoryById($sql, $id, $limit, $offset);
+            $product = $pdo->selectCategoryById($sql, $id, $limit, $offset);
 
             $productList = array();
 
-            for ($i=0; $i<count($product); $i++){
+            for ($i = 0; $i<count($product); $i++){
                 $objProduct = new Products();
                 $objProduct->setName($product[$i]['name']);
                 $objProduct->setDescription($product[$i]['description']);
@@ -69,13 +73,38 @@ class Products
      */
     public function get()
     {
-        $sql ='SELECT  name, id, price, image, description, specifications, availability, brand, status'.
-            ' FROM products WHERE status = "1"';
+        $sql = 'SELECT  name, products.id, price, product_images.image, is_new, category_id, description, specifications, availability, brand, status'.
+            ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id WHERE products.status = "1" ORDER by products.id ASC ';
         $pdo = new PDODB();
         $product=$pdo->selectData($sql);
         $productList = array();
 
-        for ($i=0; $i<count($product); $i++){
+        for ($i = 0; $i < count($product); $i++){
+            $objProduct = new Products();
+            $objProduct->setName($product[$i]['name']);
+            $objProduct->setDescription($product[$i]['description']);
+            $objProduct->setImage($product[$i]['image']);
+            $objProduct->setPrice($product[$i]['price']);
+            $objProduct->setId($product[$i]['id']);
+            $objProduct->setSpecifications($product[$i]['specifications']);
+            $objProduct->setAvailability($product[$i]['availability']);
+            $objProduct->setBrand($product[$i]['brand']);
+            $objProduct->setStatus($product[$i]['status']);
+            $productList[$i] = $objProduct;
+        }
+
+        return $productList;
+    }
+
+    public function getAdmin()
+    {
+        $sql = 'SELECT  name, id, price, image, description, specifications, availability, brand, status'.
+            ' FROM products';
+        $pdo = new PDODB();
+        $product=$pdo->selectData($sql);
+        $productList = array();
+
+        for ($i = 0; $i < count($product); $i++){
             $objProduct = new Products();
             $objProduct->setName($product[$i]['name']);
             $objProduct->setDescription($product[$i]['description']);
@@ -100,12 +129,12 @@ class Products
 
     public function getById($id)
     {
-        $sql ='SELECT  name, id, price, image, description, specifications, availability, brand, status'.
-             ' FROM products WHERE id = :id';
+        $sql = 'SELECT  name, products.id, price, product_images.image, is_new, category_id, description, specifications, availability, brand, status'.
+             ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id WHERE products.id = :id';
         $pdo = new PDODB();
-        $product=$pdo->selectDataById($sql, $id);
+        $product = $pdo->selectDataById($sql, $id);
         $objProduct = new Products();
-        for ($i=0; $i<count($product); $i++){
+        for ($i = 0; $i < count($product); $i++){
             $objProduct->setName($product[$i]['name']);
             $objProduct->setDescription($product[$i]['description']);
             $objProduct->setImage($product[$i]['image']);
@@ -115,6 +144,8 @@ class Products
             $objProduct->setAvailability($product[$i]['availability']);
             $objProduct->setBrand($product[$i]['brand']);
             $objProduct->setStatus($product[$i]['status']);
+            $objProduct->setCategoryId($product[$i]['category_id']);
+            $objProduct->setIsNew($product[$i]['is_new']);
         }
 
         return $objProduct;
@@ -129,12 +160,12 @@ class Products
     {
         $ids = implode(',', $idsArray);
 
-        $sql ='SELECT  name, id, price, image, description, specifications, availability, brand, status'.
-            ' FROM products WHERE status="1" AND id IN ('.$ids.')';
+        $sql = 'SELECT  name, products.id, price, products.image, description, specifications, availability, brand, status'.
+            ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id WHERE status="1" AND products.id IN ('.$ids.')';
         $pdo = new PDODB();
-        $product=$pdo->getDataByIds($sql, $ids);
+        $product = $pdo->getDataByIds($sql, $ids);
         $productList = array();
-        for ($i=0; $i<count($product); $i++){
+        for ($i = 0; $i < count($product); $i++){
             $objProduct = new Products();
             $objProduct->setName($product[$i]['name']);
             $objProduct->setDescription($product[$i]['description']);
@@ -155,13 +186,13 @@ class Products
 
     public function getSortingByPrice()
     {
-        $sql ='SELECT  name, id, price, image, description, specifications, availability, brand, status'.
-            ' FROM products WHERE status = "1" ORDER BY price ASC' ;
+        $sql = 'SELECT  name, products.id, price, products.image, description, specifications, availability, brand, status'.
+            ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id WHERE status = "1" ORDER BY price ASC' ;
         $pdo = new PDODB();
-        $product=$pdo->selectData($sql);
+        $product = $pdo->selectData($sql);
         $productList = array();
 
-        for ($i=0; $i<count($product); $i++){
+        for ($i = 0; $i < count($product); $i++){
             $objProduct = new Products();
             $objProduct->setName($product[$i]['name']);
             $objProduct->setDescription($product[$i]['description']);
@@ -178,19 +209,47 @@ class Products
         return $productList;
     }
 
-    public function update()
+    public function deleteById($id)
     {
-
+        $sql = "DELETE FROM products WHERE id = :id";
+        $pdo = new PDODB();
+        $product = $pdo->deleteData($sql, $id);
+        return $product;
     }
 
-    public function delete()
+    public function create()
     {
+        $sql ='INSERT INTO products (name, category_id, price, availability, brand, '.
+            ' description, status, update_at, created_at, specifications, is_new) '.
+            ' VALUES (:name, :category_id, :price, :availability, :brand, '.
+            ' :description, :status, :update_at, :created_at, :specifications, :is_new)';
+        $pdo = new PDODB();
+        $data= array($this->getName(), $this->getCategoryId(), $this->getPrice(),
+            $this->getAvailability(), $this->getBrand(),  $this->getDescription(),
+            $this->getStatus(), $this->getUpdatedAt(), $this->getCreatedAt(),
+            $this->getSpecifications(), $this->getIsNew());
+        $result=$pdo->add($sql, $data);
+        return $result;
 
+     }
+
+
+    public function updateById($id)
+    {
+        $sql = 'UPDATE products SET name = :name, category_id = :category_id, price = :price, '.
+           ' availability = :availability, brand = :brand, description = :desciption, status = :status, '.
+           ' update_at = :update_at,  specifications = :specifications, ' .
+           ' is_new = :is_new WHERE id = :id';
+
+        $pdo = new PDODB();
+        $data= array($this->getName(), $this->getCategoryId(), $this->getPrice(),
+            $this->getAvailability(), $this->getBrand(),  $this->getDescription(),
+            $this->getStatus(), $this->getUpdatedAt(),
+            $this->getSpecifications(), $this->getIsNew(), $id);
+        $result=$pdo->add($sql, $data);
+        return $result;
     }
 
-    public function create(){
-
-    }
 
     public function setName($name)
     {
@@ -242,7 +301,7 @@ class Products
 
     public function setSpecifications($specifications)
     {
-        $specifications = explode(';', $specifications);
+       // $specifications = explode(';', $specifications);
         $this->specifications = $specifications;
     }
 
@@ -281,4 +340,42 @@ class Products
         return $this->status;
     }
 
+    public function setCategoryId($categoryId)
+    {
+        $this->categoryId = $categoryId;
+    }
+
+    public function getCategoryId()
+    {
+        return $this->categoryId;
+    }
+    public function setUpdatedAt()
+    {
+        $this->updatedAt = date('Y-m-d');
+
+    }
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    public function setCreatedAt()
+    {
+        $this->createdAt = date('Y-m-d');
+
+    }
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function setIsNew($isNew)
+    {
+        $this->isNew = $isNew;
+    }
+
+    public function getIsNew()
+    {
+        return $this->isNew;
+    }
 }

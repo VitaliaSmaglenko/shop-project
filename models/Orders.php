@@ -17,6 +17,7 @@ class Orders
     private $id;
     private $totalPrice;
     private $totalCount;
+    private $status;
 
     public function createOrder()
     {
@@ -42,7 +43,48 @@ class Orders
         return $this->getId();
     }
 
+    public function deleteById($id)
+    {
+        $sql = "DELETE FROM orders WHERE id = :id";
+        $pdo = new PDODB();
+        $buyer = $pdo->deleteData($sql, $id);
+        return $buyer;
+    }
 
+    public function getById($id)
+    {
+        $sql = 'SELECT orders.id, id_buyers, total_price, total_count, status'.
+            ' FROM orders INNER JOIN buyers  ON orders.id_buyers=buyers.id WHERE orders.id_buyers = :id';
+        $pdo = new PDODB();
+        $result = $pdo->selectDataById($sql, $id);
+        $objOrder = new Orders();
+        for ($i=0; $i<count($result); $i++) {
+            $objOrder ->setId($result[$i]['id']);
+            $objOrder ->setIdBuyers($result[$i]['id_buyers']);
+            $objOrder ->setStatus($result[$i]['status']);
+            $objOrder -> setTotalPrice($result[$i]['total_price']);
+            $objOrder ->setTotalCount($result[$i]['total_count']);
+        }
+        return $objOrder;
+    }
+
+    public function getStatusText($status)
+    {
+        switch ($status){
+            case '1':
+                return "New orders";
+                break;
+            case '2':
+                return "In processing";
+                break;
+            case '3':
+                return "is delivered";
+                break;
+            case '4':
+                return"Is closed";
+                break;
+        }
+    }
     public function setId($id)
     {
         $this->id = $id;
@@ -74,5 +116,14 @@ class Orders
 
     public function getTotalCount(){
         return $this->totalCount;
+    }
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

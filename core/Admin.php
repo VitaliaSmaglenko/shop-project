@@ -6,18 +6,25 @@
  * Time: 13:31
  */
 
-namespace Model;
+namespace App;
 use Model\Authenticate;
 use Model\User;
 
 
-class Admin
+abstract class Admin
 {
     public function checkAdmin()
     {
         $isUser = new Authenticate();
         $userId = $isUser->checkLogged();
+        if($userId == false){
+            header('Location: /login');
+        }
         $user = new User();
-        $user->getUserById($userId);
+        $user = $user->getById($userId);
+        if($user->getRole() == "admin"){
+            return true;
+        }
+        die("Access denied");
     }
 }

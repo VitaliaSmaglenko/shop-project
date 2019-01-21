@@ -24,8 +24,8 @@
                         <h4><span class="text-muted"><?php echo $product->getPrice();?></span></h4>
                         <p class="lead">Product character:</p>
                         <ul class="list-group list-group-flush">
-                            <?php for($i=0; $i < count($product->getSpecifications()); $i++){?>
-                                <li class="list-group-item"><?php echo $product ->getSpecifications()[$i];?></li>
+                            <?php for($i=0; $i < count(explode(';', $product->getSpecifications())); $i++){?>
+                                <li class="list-group-item"><?php echo explode(';', $product ->getSpecifications())[$i];?></li>
                             <?php }
                             ?>
                         </ul>

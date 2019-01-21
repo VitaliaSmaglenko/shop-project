@@ -10,10 +10,33 @@
             </div>
 
 
-            <h2>Welcome to admin panel</h2>
+            <h2>Category</h2>
+            <br>
+            <a href="/admin/category/add"> + Add category </a>
+            <br> <br>
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Category name</th>
+                        <th>Status</th>
 
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php for ($i=0; $i<count($categories); $i++) {?>
+                        <tr>
+                            <td><?php echo $categories[$i]->getId();?></td>
+                            <td><?php echo  $categories[$i]->getCategory();?></td>
+                            <td><?php echo $categories[$i]->getStatus();?></td>
+                            <td><a href="/admin/category/edit/<?php echo $categories[$i]->getId();?>">Edit</a></td>
+                            <td><a href="/admin/category/delete/<?php echo $categories[$i]->getId();?>">Delete</a></td>
+                        </tr>
+                    <?php } ?>
+                    </tbody>
                 </table>
             </div>
         </main>
@@ -24,5 +47,3 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 <script src="dashboard.js"></script></body>
-
-<?php include("views/include/footer_admin.php"); ?>

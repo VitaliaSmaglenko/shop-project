@@ -66,8 +66,7 @@ class OrderController
                 $buyer->setFirstName($firstName);
                 $buyer->setPhone($phone);
                 $buyer->setComment($comment);
-                $buyer->setCreatedAt();
-                $buyer->setUpdatedAt();
+                $buyer->setData();
                 $buyer->setUserId($userId);
 
 

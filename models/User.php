@@ -19,6 +19,7 @@ class User
     private $password;
     private $id;
     private $phone;
+    private $role;
 
     /**
      * Adds a new user to the database
@@ -69,7 +70,7 @@ class User
      * @return User
      */
     public function getById($id){
-        $sql ='SELECT  user_name, first_name, last_name, email, id, password, phone FROM user  WHERE id = :id';
+        $sql ='SELECT  user_name, first_name, last_name, email, id, password, phone, role FROM user  WHERE id = :id';
         $pdo = new PDODB();
         $user=$pdo-> selectDataById($sql, $id);
         $objUser = new User();
@@ -81,6 +82,7 @@ class User
             $objUser->setId($user[$i]['id']);
             $objUser->setUserName($user[$i]['user_name']);
             $objUser->setPhone($user[$i]['phone']);
+            $objUser->setRole($user[$i]['role']);
         }
           return $objUser;
 
@@ -170,4 +172,13 @@ class User
         return $this->phone;
     }
 
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+    public function getRole()
+    {
+        return $this->role;
+    }
 }

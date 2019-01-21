@@ -6,7 +6,10 @@
 
 namespace App;
 use PDO;
+use PDOException;
 use Logger\Log;
+
+
 
 class PDODB
 
@@ -16,7 +19,7 @@ class PDODB
     public function __construct()
     {
         $this->logger = new Log('pdo');
-    }
+      }
 
     /**
      * Establishes a database connection
@@ -39,6 +42,7 @@ class PDODB
 
         try {
           $pdo = new PDO($dsn, $user, $pass, $opt);
+          $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
           return $pdo;
         } catch (PDOException $e) {
             die('Подключение не удалось: ' . $this->logger->error($e->getMessage()));
@@ -68,7 +72,7 @@ class PDODB
     public function selectDataById($sql, $id){
         $pdo = $this->connect();
         $result = $pdo->prepare($sql);
-        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(1, $id, PDO::PARAM_INT);
         $result->execute();
         return $result->fetchAll( );
 
@@ -215,6 +219,7 @@ class PDODB
     {
         $pdo = $this->connect();
         $result = $pdo->prepare($sql);
+
         $result->bindParam(':firstName', $firstName, PDO::PARAM_STR);
         $result->bindParam(':lastName', $lastName, PDO::PARAM_STR);
         $result->bindParam(':comment', $comment, PDO::PARAM_STR);
@@ -244,5 +249,34 @@ class PDODB
         $result->bindParam(':price', $price, PDO::PARAM_INT);
         $result->bindParam(':quantity', $quantity, PDO::PARAM_INT);
         return $result->execute();
+    }
+
+
+
+    public function deleteData($sql, $par1)
+    {
+        $pdo = $this->connect();
+        $result = $pdo->prepare($sql);
+        $result->bindParam(1, $par1, PDO::PARAM_INT);
+        return $result->execute();
+    }
+
+    public function add($sql, $data)
+    {
+        $pdo = $this->connect();
+
+        try {
+            $result = $pdo->prepare($sql);
+            for ($i = 0; $i < count($data); $i++) {
+                $result->bindParam($i+1, $data[$i]);
+            }
+            if($result->execute()){
+                return $pdo->lastInsertId();
+            }
+
+        }catch (PDOException $e ){
+            die("You have errors: {$e->getMessage()}\n");
+        }
+
     }
 }

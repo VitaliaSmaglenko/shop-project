@@ -10,12 +10,15 @@
             </div>
 
 
-            <h2>Welcome to admin panel</h2>
-            <div class="table-responsive">
-                <table class="table table-striped table-sm">
+            <h2>Delete products # <?php echo $id; ?></h2>
+            <br>
+            <p>Do you really want to delete this orders?</p>
+            <br>
+            <form method="post">
+                <button class="btn btn-primary" name="submitDelete" formmethod="post" type="submit">Delete</button>
+                <a class="btn  btn-primary" href="/admin/orders">Back</a>
+            </form>
 
-                </table>
-            </div>
         </main>
     </div>
 </div>
@@ -24,5 +27,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 <script src="dashboard.js"></script></body>
-
-<?php include("views/include/footer_admin.php"); ?>
+</html>

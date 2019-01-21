@@ -17,6 +17,7 @@ class ProductOrder
     private $idOrders;
     private $price;
     private $quantity;
+    private $nameProduct;
 
     public function createProductOrder()
     {
@@ -27,6 +28,25 @@ class ProductOrder
         $result = $pdo->addProductOrder($sql, $this->getIdProduct(), $this->getIdOrders(), $this->price, $this->quantity);
 
         return $result;
+    }
+    public function getById($id)
+    {
+        $sql = 'SELECT id_product, id_orders, product_order.price, quantity, name '.
+            ' FROM product_order INNER JOIN products  ON product_order.id_product=products.id WHERE '.
+            ' product_order.id_orders = :id';
+        $pdo = new PDODB();
+
+        $result = $pdo->selectDataById($sql, $id);
+        $productOrderList = array();
+        for($i=0; $i<count($result); $i++){
+            $objProductOrder = new ProductOrder();
+            $objProductOrder->setIdProduct($result[$i]["id_product"]);
+            $objProductOrder->setNameProduct($result[$i]["name"]);
+            $objProductOrder->setPrice($result[$i]["price"]);
+            $objProductOrder->setQuantity($result[$i]["quantity"]);
+            $productOrderList[]=$objProductOrder;
+        }
+        return $productOrderList;
     }
 
      public function setIdProduct($idProduct)
@@ -58,6 +78,18 @@ class ProductOrder
     {
         return $this->price;
      }
+
+
+    public function setNameProduct($nameProduct)
+    {
+        $this->nameProduct = $nameProduct;
+    }
+
+    public function getNameProduct()
+    {
+        return $this->nameProduct;
+    }
+
 
     public function setQuantity($quantity)
     {
