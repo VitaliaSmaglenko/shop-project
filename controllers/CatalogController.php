@@ -5,6 +5,7 @@
 use Model\Category;
 use Model\Products;
 use Base\Controller;
+use App\Pagination;
 
 class CatalogController extends Controller
 {
@@ -39,10 +40,13 @@ class CatalogController extends Controller
         $categoryObj = new Category();
         $categories = $categoryObj->get();
         $dataPage['categories'] = $categories;
-        $productList = new Products();
-        $productList = $productList->getByCategory($id, $page);
+        $product = new Products();
+        $productList = $product->getByCategory($id, $page);
         $dataPage['productList'] = $productList;
+        $total = $product->getTotalProduct($id);
 
+        $pagination = new Pagination($total, $page, Products::LIMIT, 'page-');
+        $dataPage['pagination'] = $pagination;
         $this->view->render('category.php', $dataPage);
         return true;
     }

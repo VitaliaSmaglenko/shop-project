@@ -9,8 +9,9 @@
 namespace Model;
 
 use App\PDODB;
+use Base\Model;
 
-class Buyers
+class Buyers extends Model
 {
     private $firstName;
     private $lastName;
@@ -18,14 +19,16 @@ class Buyers
     private $phone;
     private $updatedAt;
     private $createdAt;
-
     private $userId;
     private $id;
     private $orderStatus;
 
 
-
-    public function createBuyers()
+    /**
+     * Method to create  buyers
+     * @return bool
+     */
+    public function createBuyers():bool
     {
         if($this->getUserId()==false) {
             $sql = 'INSERT INTO buyers (first_name, last_name, comment, phone,  updated_at, created_at) '
@@ -48,7 +51,10 @@ class Buyers
         return $result;
     }
 
-    public function getBuyersId()
+    /**
+     * @return int
+     */
+    public function getBuyersId():int
     {
         $sql = "SELECT id FROM buyers ORDER BY id DESC LIMIT 1";
         $pdo = new PDODB();
@@ -60,7 +66,11 @@ class Buyers
         return $this->getId();
     }
 
-    public function get()
+    /**
+     * Gets array of buyers
+     * @return array
+     */
+    public function get():array
     {
         $sql = "SELECT buyers.id, last_name, first_name, phone, updated_at, created_at, user_id, comment, status FROM buyers" .
             " INNER JOIN orders ON buyers.id = orders.id_buyers";
@@ -87,7 +97,11 @@ class Buyers
 
     }
 
-    public function updateById($id)
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function updateById(int $id):bool
     {
         $sql = 'UPDATE buyers '.
             ' INNER JOIN orders ON buyers.id = orders.id_buyers ' .
@@ -101,7 +115,11 @@ class Buyers
         return $result;
     }
 
-    public function deleteById($id)
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function deleteById(int $id):bool
     {
         $sql = "DELETE FROM buyers WHERE id = :id";
         $pdo = new PDODB();
@@ -110,7 +128,11 @@ class Buyers
         return $buyer;
     }
 
-    public function getById($id)
+    /**
+     * @param int $id
+     * @return Buyers
+     */
+    public function getById(int $id):Buyers
     {
         $sql = 'SELECT buyers.id, status, first_name, last_name, phone, comment, user_id, created_at, updated_at '.
             ' FROM buyers INNER JOIN orders  ON orders.id_buyers=buyers.id WHERE buyers.id = :id';
@@ -134,7 +156,7 @@ class Buyers
 
     }
 
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
     }
@@ -144,7 +166,7 @@ class Buyers
         return $this->id;
     }
 
-    public function setLastName($lastName)
+    public function setLastName(string $lastName)
     {
         $this->lastName = $lastName;
     }
@@ -154,7 +176,7 @@ class Buyers
         return $this->lastName;
     }
 
-    public function setFirstName($firstName)
+    public function setFirstName(string $firstName)
     {
         $this->firstName = $firstName;
     }
@@ -164,7 +186,7 @@ class Buyers
         return $this->firstName;
     }
 
-    public function setPhone($phone)
+    public function setPhone(string $phone)
     {
         $this->phone = $phone;
     }
@@ -174,7 +196,7 @@ class Buyers
         return $this->phone;
     }
 
-    public function setComment($comment)
+    public function setComment(string $comment)
     {
         $this->comment = $comment;
     }
@@ -205,7 +227,7 @@ class Buyers
         return $this->createdAt;
     }
 
-    public function setUserId($userId)
+    public function setUserId(int $userId)
     {
         $this->userId = $userId;
     }
@@ -215,7 +237,7 @@ class Buyers
         return $this->userId;
     }
 
-    public function setStatusOrder($orderStatus)
+    public function setStatusOrder(int $orderStatus)
     {
         $this->orderStatus = $orderStatus;
     }

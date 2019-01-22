@@ -18,7 +18,7 @@ return array(
     'admin/product' => 'adminProduct/index',
     'admin' => 'admin/index',
     //category:
-    'category/page-([0-9]+)/([0-9])+' => 'catalog/category/$1/$2',
+    '([0-9]+)/page-([0-9]+)' => 'catalog/category/$1/$2',
     'category/([0-9]+)' => 'catalog/category/$1',
     'category/product/([0-9])+' => 'product/view/$1',
         //'category/[a-z]+/([0-9])+' => 'catalog/category/$1',

@@ -32,7 +32,8 @@ class PDODB
      * @return PDO
      */
 
-    public  function connect(){
+    public  function connect():PDO
+    {
         $conf = include ('config/db.php');
         $host = $conf['host'];
         $db   = $conf['db'];
@@ -64,7 +65,8 @@ class PDODB
      * @param string $method
      * @return array
      */
-    public function queryData($sql, $method=''){
+    public function queryData(string $sql, string $method=''):array
+    {
         $pdo = $this->connect();
 
         try{
@@ -87,7 +89,7 @@ class PDODB
      * @param $method
      * @return array|bool|mixed|string
      */
-    public function prepareData($sql, $data, $method)
+    public function prepareData(string $sql, array $data, string $method)
     {
         $pdo = $this->connect();
         try {

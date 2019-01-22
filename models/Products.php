@@ -25,18 +25,16 @@ class Products
     private $createdAt;
     private $isNew;
 
+    const LIMIT = 3;
     /**
      * @param bool $id
      * @param $page
      * @return array
      */
-
-
-    public function getByCategory($id=false, $page){
-        $limit = 6;
-
-        $offset = ($page - 1) * 6;
-
+    public function getByCategory($id=false, int $page=1):array
+    {
+        $limit = self::LIMIT;
+        $offset = ($page - 1) * self::LIMIT;
         if($id){
             $sql = 'SELECT  name, products.id, price, product_images.image, description, specifications, availability, brand, products.status'.
                   ' FROM products  LEFT JOIN category  ON products.category_id = category.id'.
@@ -72,7 +70,7 @@ class Products
      * Returns an array of goods
      * @return array
      */
-    public function get()
+    public function get():array
     {
         $sql = 'SELECT  name, products.id, price, product_images.image, is_new, category_id, description, specifications, availability, brand, status'.
             ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id WHERE products.status = "1" ORDER by products.id ASC ';
@@ -97,7 +95,10 @@ class Products
         return $productList;
     }
 
-    public function getAdmin()
+    /**
+     * @return array
+     */
+    public function getAdmin():array
     {
         $sql = 'SELECT  name, id, price, image, description, specifications, availability, brand, status'.
             ' FROM products';
@@ -124,11 +125,11 @@ class Products
 
     /**
      * Returns the product with the specified id
-     * @param $id
+     * @param int $id
      * @return Products
      */
 
-    public function getById($id)
+    public function getById(int $id):Products
     {
         $sql = 'SELECT  name, products.id, price, product_images.image, is_new, category_id, description, specifications, availability, brand, status'.
              ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id WHERE products.id = :id';
@@ -155,10 +156,10 @@ class Products
 
     /**
      * Returns an array with products by their id
-     * @param $idsArray
+     * @param array $idsArray
      * @return array
      */
-    public function getByIds($idsArray)
+    public function getByIds(array $idsArray):array
     {
         $ids = implode(',', $idsArray);
 
@@ -185,8 +186,23 @@ class Products
         return $productList;
     }
 
+    /**
+     * @param int $id
+     * @return int
+     */
 
-    public function getSortingByPrice()
+    public  function getTotalProduct(int $id):int
+    {
+        $sql = "SELECT count(id) AS count FROM products WHERE status='1' AND category_id = '".$id."'";
+        $pdo = new PDODB();
+        $product = $pdo->queryData($sql, 'setFetchMode');
+        return $product[0]['count'];
+    }
+
+    /**
+     * @return array
+     */
+    public function getSortingByPrice():array
     {
         $sql = 'SELECT  name, products.id, price, products.image, description, specifications, availability, brand, status'.
             ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id WHERE status = "1" ORDER BY price ASC' ;
@@ -211,7 +227,11 @@ class Products
         return $productList;
     }
 
-    public function deleteById($id)
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function deleteById(int $id):bool
     {
         $sql = "DELETE FROM products WHERE id = :id";
         $pdo = new PDODB();
@@ -220,7 +240,10 @@ class Products
         return $product;
     }
 
-    public function create()
+    /**
+     * @return int
+     */
+    public function create():int
     {
         $sql ='INSERT INTO products (name, category_id, price, availability, brand, '.
             ' description, status, update_at, created_at, specifications, is_new) '.
@@ -236,8 +259,11 @@ class Products
 
      }
 
-
-    public function updateById($id)
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function updateById(int $id):bool
     {
         $sql = 'UPDATE products SET name = :name, category_id = :category_id, price = :price, '.
            ' availability = :availability, brand = :brand, description = :description, status = :status, '.

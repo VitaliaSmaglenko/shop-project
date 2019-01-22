@@ -12,7 +12,7 @@ include("views/include/header.php");
                     <ol class="list-unstyled mb-0">
                         <?php   for ($i=0; $i<count($categories); $i++) {
                             ?>
-                            <li><a href="category/<?php echo $categories[$i]->getId();?>" class="cat-link">
+                            <li><a href="/<?php echo $categories[$i]->getId();?>/page-1" class="cat-link">
                                     <?php echo $categories[$i]->getCategory();?></a></li>
                         <?php }?>
                     </ol>

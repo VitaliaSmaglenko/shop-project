@@ -12,7 +12,7 @@ include("views/include/header.php");
                     <ol class="list-unstyled mb-0">
                         <?php   for ($i=0; $i<count($categories); $i++) {
                             ?>
-                            <li><a href="<?php echo $categories[$i]->getId();?>" class="cat-link">
+                            <li><a href="/<?php echo $categories[$i]->getId();?>/page-1" class="cat-link">
                                     <?php
                                     echo $categories[$i]->getCategory();
                                     ?></a></li>
@@ -42,7 +42,7 @@ include("views/include/header.php");
                         <?php for ($i=0; $i<count($productList); $i++) {?>
                             <div class="card-deck mb-4 col-xs-4 text-center" style="width: 26%; margin: 15px; ">
                                 <div class="card text-center mb-4 col-sm" style="width: 15rem;">
-                                    <img class="card-img-top" style="width: 150px; height: 150px; padding-top: 10px;" src="../components/<?php echo $productList[$i]->getImage();?>" alt="Card image cap">
+                                    <img class="card-img-top" style="width: 150px; height: 150px; padding-top: 10px;" src="../../components/<?php echo $productList[$i]->getImage();?>" alt="Card image cap">
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo   $productList[$i]->getName();;?></h5>
                                         <p class="card-text"> Id: <?php echo $productList[$i]->getId();?></p>
@@ -68,29 +68,14 @@ include("views/include/header.php");
         </div>
 
         <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center" >
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            </ul>
+
+            <?php echo $pagination->get();?>
+
         </nav>
 
 
     </main>
     <br>
-
 
     <hr class="featurette-divider"><br>
 
