@@ -24,8 +24,9 @@ class ProductOrder
         $sql = 'INSERT INTO product_order(id_product, id_orders, price, quantity) ' .
                ' VALUES (:idProduct, :idOrders, :price, :quantity);';
         $pdo = new PDODB();
-        $pdo = new PDODB();
-        $result = $pdo->addProductOrder($sql, $this->getIdProduct(), $this->getIdOrders(), $this->price, $this->quantity);
+        $data = array(':idProduct' => $this->getIdProduct(), ':idOrders' => $this->getIdOrders(),
+            ':price' => $this->price, ':quantity' => $this->quantity);
+        $result = $pdo->prepareData($sql, $data, 'execute');
 
         return $result;
     }
@@ -35,8 +36,8 @@ class ProductOrder
             ' FROM product_order INNER JOIN products  ON product_order.id_product=products.id WHERE '.
             ' product_order.id_orders = :id';
         $pdo = new PDODB();
-
-        $result = $pdo->selectDataById($sql, $id);
+        $data = array('id' => $id);
+        $result = $pdo->prepareData($sql, $data, 'fetchAll');
         $productOrderList = array();
         for($i=0; $i<count($result); $i++){
             $objProductOrder = new ProductOrder();

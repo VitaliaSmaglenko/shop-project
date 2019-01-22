@@ -25,8 +25,9 @@ class Category{
         $sql ='INSERT INTO category (category,  status, updated_at, created_at)'.
             ' VALUES (:category, :status, :update_at, :created_at)';
         $pdo = new PDODB();
-        $data= array( $this->getCategory(),  $this->getStatus(), $this->getUpdatedAt(), $this->getCreatedAt());
-        $result=$pdo->add($sql, $data);
+        $data= array(':category' => $this->getCategory(), ':status' => $this->getStatus(),
+            ':update_at' => $this->getUpdatedAt(), ':created_at' => $this->getCreatedAt());
+        $result=$pdo->prepareData($sql, $data, 'execute');
         return $result;
 
     }
@@ -39,7 +40,7 @@ class Category{
     public function get() {
         $sql ='SELECT  category, id, status FROM category  WHERE status = "1"';
         $pdo = new PDODB();
-        $category=$pdo->selectData($sql);
+        $category=$pdo->queryData($sql);
 
         $categoryList = array();
 
@@ -56,7 +57,7 @@ class Category{
     public function getAdmin() {
         $sql ='SELECT  category, id, status FROM category';
         $pdo = new PDODB();
-        $category=$pdo->selectData($sql);
+        $category=$pdo->queryData($sql);
 
         $categoryList = array();
 
@@ -73,7 +74,8 @@ class Category{
     public function getById($id) {
         $sql ='SELECT  category, id, status FROM category WHERE id = :id';
         $pdo = new PDODB();
-        $category=$pdo->selectDataById($sql, $id);
+        $data = array('id' => $id);
+        $category=$pdo->prepareData($sql, $data, 'fetchAll');
         $objCategory = new Category();
         for ($i=0; $i<count($category); $i++){
             $objCategory->setCategory($category[$i]['category']);
@@ -89,8 +91,9 @@ class Category{
             ' updated_at = :update_at WHERE id = :id';
 
         $pdo = new PDODB();
-        $data= array($this->getCategory(),  $this->getStatus(), $this->getUpdatedAt(), $id);
-        $result=$pdo->add($sql, $data);
+        $data= array(':category' => $this->getCategory(), ':status' => $this->getStatus(),
+           ':update_at' => $this->getUpdatedAt(), ':id' => $id);
+        $result=$pdo->prepareData($sql, $data, 'execute');
         return $result;
     }
 
@@ -98,8 +101,9 @@ class Category{
     {
         $sql = "DELETE FROM category WHERE id = :id";
         $pdo = new PDODB();
-        $product = $pdo->deleteData($sql, $id);
-        return $product;
+        $data = array(':id' => $id);
+        $category = $pdo->prepareData($sql, $data, 'execute');
+        return $category;
     }
 
     public function setId($id){

@@ -31,9 +31,11 @@ class User
         $sql ='INSERT INTO user (first_name, last_name, user_name, email, password, phone) '.
                ' VALUES (:firstName, :lastName, :userName, :email, :password, :phone)';
         $pdo = new PDODB();
-        $result=$pdo->addUser($sql, $this->getUserName(), $this->getFirstName(),
-                              $this->getLastName(), $this->getEmail(), $this->getPassword(), $this->getPhone()
-        );
+        $data = array(':firstName' => $this->getFirstName(), ':lastName' => $this->getLastName(),
+            ':userName' => $this->getUserName(), ':email' => $this->getEmail(),
+            ':password' => $this->getPassword(), ':phone' => $this->getPhone());
+        $result=$pdo->prepareData($sql, $data, 'execute');
+
         return $result;
 
     }
@@ -47,7 +49,8 @@ class User
     public function get(){
         $sql ='SELECT  user_name, first_name, last_name, email, id, password, phone FROM user  WHERE email = :email AND password = :password';
         $pdo = new PDODB();
-        $user=$pdo->getUser($sql, $this->getEmail(),$this->getPassword());
+        $data = array(':email' => $this->getEmail(), ':password' => $this->getPassword());
+        $user=$pdo->prepareData($sql, $data, 'fetch' );
         $objUser = new User();
 
         for ($i=0; $i<count($user); $i++){
@@ -72,7 +75,8 @@ class User
     public function getById($id){
         $sql ='SELECT  user_name, first_name, last_name, email, id, password, phone, role FROM user  WHERE id = :id';
         $pdo = new PDODB();
-        $user=$pdo-> selectDataById($sql, $id);
+        $data = array(':id' => $id);
+        $user = $pdo-> prepareData($sql, $data, 'fetchAll');
         $objUser = new User();
         for ($i=0; $i<count($user); $i++){
             $objUser->setEmail($user[$i]['email']);
@@ -98,7 +102,9 @@ class User
         $sql ='UPDATE user SET first_name = :firstName, last_name = :lastName, password = :password, phone = :phone'.
             ' WHERE id = :id';
         $pdo = new PDODB();
-        $result=$pdo->updateData($sql, $this->getFirstName(), $this->getLastName(), $this->getPassword(), $this->getPhone(), $id);
+        $data = array( ':firstName' => $this->getFirstName(), ':lastName' => $this->getLastName(),
+            ':password' => $this->getPassword(), ':phone' => $this->getPhone(), ':id' => $id);
+        $result=$pdo->prepareData($sql, $data, 'execute');
         return $result;
     }
 

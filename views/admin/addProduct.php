@@ -102,7 +102,7 @@
                             <br>
                             <select name="is_new">
                                 <option value="1">Yes</option>
-                                <option value="o">No</option>
+                                <option value="0">No</option>
                             </select>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                             <br>
                             <select name="status">
                                 <option value="1">Displayed</option>
-                                <option value="o">Not displayed</option>
+                                <option value="0">Not displayed</option>
                             </select>
                         </div>
                     </div>

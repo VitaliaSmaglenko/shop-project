@@ -41,7 +41,7 @@ class AdminProductController extends App\Admin
             $errors = false;
 
             foreach ($options as $option){
-                if(!isset($option) || empty($option)){
+                if(!isset($option) || strlen ($option)== 0){
                     $errors[] = "Fill in the field ".key($options);
 
                 }

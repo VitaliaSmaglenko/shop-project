@@ -174,7 +174,8 @@ class CheckUser
     {
         $sql ='SELECT  COUNT(*) FROM user  WHERE email = :email';
         $pdo = new PDODB();
-        $result=$pdo->checkData($sql, $email);
+        $data = array(':email' => $email);
+        $result=$pdo->prepareData($sql, $data, 'fetchColumn');
 
         if($result){
             $this->errors[] = 'This email already exists.';
@@ -192,7 +193,8 @@ class CheckUser
     {
         $sql ='SELECT  COUNT(*) FROM user  WHERE user_name = :userName';
         $pdo = new PDODB();
-        $result=$pdo->checkData($sql, $userName);
+        $data = array(':userName'=> $userName);
+        $result=$pdo->prepareData($sql, $data, 'fetchColumn');
 
         if($result){
             $this->errors[] = 'This user name already exists.';
@@ -211,8 +213,8 @@ class CheckUser
     {
         $sql ='SELECT  user_name FROM user  WHERE email = :email AND password = :password';
         $pdo = new PDODB();
-        $result=$pdo->checkUser($sql, $email, $password);
-
+        $data = array('email' => $email, 'password' => $password);
+        $result=$pdo->prepareData($sql, $data, 'fetch');
         if($result){
             return true;
         }

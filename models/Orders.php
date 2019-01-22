@@ -25,9 +25,9 @@ class Orders
             $sql = 'INSERT INTO orders (id_buyers, total_price, total_count) '.
                 'VALUES (:idBuyers, :totalPrice, :totalCount);';
             $pdo = new PDODB();
-            $pdo = new PDODB();
-            $result = $pdo->addOrders($sql, $this->getIdBuyers(),
-                    $this->getTotalPrice(), $this->getTotalCount());
+            $data = array(':idBuyers' => $this->getIdBuyers(), ':totalPrice' => $this->getTotalPrice(),
+                '::totalCount' => $this->getTotalCount());
+            $result = $pdo->prepareData($sql,$data, 'execute');
             return $result;
     }
 
@@ -35,7 +35,7 @@ class Orders
     {
         $sql = "SELECT id FROM orders  ORDER BY id DESC LIMIT 1";
         $pdo = new PDODB();
-        $result = $pdo->selectData($sql);
+        $result = $pdo->queryData($sql);
 
         for ($i=0; $i<count($result); $i++) {
             $this->setId($result[$i]['id']);
@@ -47,7 +47,8 @@ class Orders
     {
         $sql = "DELETE FROM orders WHERE id = :id";
         $pdo = new PDODB();
-        $buyer = $pdo->deleteData($sql, $id);
+        $data = array(':id' => $id);
+        $buyer = $pdo->prepareData($sql, $data, 'execute');
         return $buyer;
     }
 
@@ -56,7 +57,8 @@ class Orders
         $sql = 'SELECT orders.id, id_buyers, total_price, total_count, status'.
             ' FROM orders INNER JOIN buyers  ON orders.id_buyers=buyers.id WHERE orders.id_buyers = :id';
         $pdo = new PDODB();
-        $result = $pdo->selectDataById($sql, $id);
+        $data = array('id' => $id);
+        $result = $pdo->prepareData($sql, $data, 'fetchAll');
         $objOrder = new Orders();
         for ($i=0; $i<count($result); $i++) {
             $objOrder ->setId($result[$i]['id']);
