@@ -17,6 +17,6 @@ ini_set('display_startup_errors', 1);
 $router = new Router();
 $result=$router ->run();
 
-$contrloller = new Controller();
-$contrloller->start($result);
+$controloller = new Controller();
+$controloller->start($result);
 

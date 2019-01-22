@@ -45,7 +45,8 @@ class Router
              $actionName = 'action' . ucfirst((array_shift($separators)));
 
              $parameters = $separators;
-             $result = array($controllerName,$actionName, $parameters);
+             $result = array('controllerName' => $controllerName,
+                              'actionName' => $actionName, 'parameters' => $parameters);
              return $result;
             }
         }
