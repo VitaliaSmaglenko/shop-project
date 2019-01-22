@@ -5,7 +5,7 @@
 
 namespace Model;
 use App\Session;
-
+use Model\User;
 
 class Authenticate
 {
@@ -13,7 +13,6 @@ class Authenticate
      * @var Session
      */
     private $session;
-
 
     /**
      * Authenticate constructor.
@@ -25,9 +24,9 @@ class Authenticate
 
     /**
      * Includes session and sets values in session
-     * @param $user
+     * @param \Model\User $user
      */
-    public function auth($user)
+    public function auth(User $user):void
     {
         $this->session->start();
         $this->session->set('userName', $user->getUserName());
@@ -36,14 +35,13 @@ class Authenticate
         $this->setCookie('userName', $user->getUserName());
         $this->setCookie('userId', $user->getId());
         $this->setCookie('userEmail', $user->getEmail());
-
     }
 
     /**
      * Checks user is authorisation
      * @return bool
      */
-    public function isAuth()
+    public function isAuth():bool
     {
 
         $this->session->start();
@@ -52,19 +50,24 @@ class Authenticate
         } else return false;
     }
 
+    /**
+     * @return bool
+     */
     public function checkLogged()
     {
         $this->session->start();
         if($this->isAuth()){
-
             return $_SESSION['userId'];
         }
         else {
-
             return false;
         }
     }
 
+    /**
+     * @param $key
+     * @param $val
+     */
     public function setCookie($key, $val)
     {
         if($this->session->cookieExists()){
@@ -72,16 +75,18 @@ class Authenticate
         } else return;
     }
 
+    /**
+     * @param $key
+     */
     public function getCookie($key)
     {
         if($this->session->cookieExists()){
-
             return $_COOKIE[$key];
         }
         else return;
     }
 
-    public function logout()
+     public function logout()
     {
         $this->session->start();
         $this->session->destroy();

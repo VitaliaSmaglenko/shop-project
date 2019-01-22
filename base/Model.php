@@ -9,7 +9,7 @@
 namespace Base;
 
 
-class Model
+abstract class Model
 {
 
 }
