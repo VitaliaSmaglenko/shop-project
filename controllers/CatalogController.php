@@ -4,60 +4,81 @@
  */
 use Model\Category;
 use Model\Products;
-use App\View;
+use Base\Controller;
 
-class CatalogController
+class CatalogController extends Controller
 {
 
     /**
      * Action for display all products
      * @return bool
      */
-    public function actionIndex(){
+    public function actionIndex():bool
+    {
 
         $categories = new Category();
-        $dataPage['categories'] = $categories = $categories->get();
+        $categories = $categories->get();
+        $dataPage['categories'] = $categories;
         $productList = new Products();
-        $dataPage['productList'] = $productList = $productList->get();
-        $view = new View();
-        $view->render('catalog.php', $dataPage);
+        $productList = $productList->get();
+        $dataPage['productList'] = $productList;
+
+        $this->view->render('catalog.php', $dataPage);
         return true;
     }
 
     /**
      * Action for display products by category
+     * @param int $id
+     * @param int $page
      * @return bool
      */
-    public function actionCategory($id, $page = 1){
+    public function actionCategory(int $id, int $page = 1):bool
+    {
 
         $categoryObj = new Category();
-        $dataPage['categories'] = $categories = $categoryObj->get();
+        $categories = $categoryObj->get();
+        $dataPage['categories'] = $categories;
         $productList = new Products();
-        $dataPage['productList'] = $productList = $productList->getByCategory($id, $page);
-        $view = new View();
-        $view->render('category.php', $dataPage);
+        $productList = $productList->getByCategory($id, $page);
+        $dataPage['productList'] = $productList;
+
+        $this->view->render('category.php', $dataPage);
         return true;
     }
 
-    public function actionPrice()
+    /**
+     * Action for sorting by price
+     * @return bool
+     */
+    public function actionPrice():bool
     {
         $categories = new Category();
-        $dataPage['categories'] = $categories = $categories->get();
+        $categories = $categories->get();
+        $dataPage['categories'] = $categories;
         $productList = new Products();
-        $dataPage['productList'] = $productList = $productList->getSortingByPrice();
-        $view = new View();
-        $view->render('catalog.php', $dataPage);
+        $productList = $productList->getSortingByPrice();
+        $dataPage['productList'] = $productList;
+
+        $this->view->render('catalog.php', $dataPage);
         return true;
     }
 
-    public function actionPriceCategory($id)
+    /**
+     * Action for sorting by price
+     * @param int $id
+     * @return bool
+     */
+    public function actionPriceCategory(int $id):bool
     {
         $categories = new Category();
-        $dataPage['categories'] = $categories = $categories->get();
+        $categories = $categories->get();
+        $dataPage['categories'] = $categories;
         $productList = new Products();
-        $dataPage['productList'] = $productList = $productList->getByCategory($id);
-        $view = new View();
-        $view->render('catalog.php', $dataPage);
+        $productList = $productList->getByCategory($id);
+        $dataPage['productList'] = $productList;
+
+        $this->view->render('catalog.php', $dataPage);
         return true;
     }
 

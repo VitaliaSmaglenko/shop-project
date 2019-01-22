@@ -2,28 +2,26 @@
 /**
  *  Controller UserController
  */
+use Base\Controller;
 use Model\User;
 use Model\CheckUser;
 use Model\Authenticate;
-use App\View;
 
-class UserController
+
+class UserController extends Controller
 {
-
     /**
      * Action for user registration
      * @return bool
      */
-    public function actionRegister(){
-
-
+    public function actionRegister():bool
+    {
         $dataPage['firstName'] = $firstName = '';
         $dataPage['lastName'] = $lastName = '';
         $dataPage['userName'] =  $userName = '';
         $dataPage['email'] = $email = '';
-        $password ='';
+        $password = '';
         $dataPage['phone'] = $phone = '';
-
 
         if(isset($_POST['submitReg'])){
 
@@ -53,8 +51,8 @@ class UserController
                 header('Location: /cabinet');
             }
         }
-        $view = new View();
-        $view->render('register.php', $dataPage);
+
+        $this->view->render('register.php', $dataPage);
         return true;
     }
 
@@ -63,16 +61,13 @@ class UserController
      * @return bool
      */
 
-    public function actionLogin()
+    public function actionLogin():bool
     {
         $dataPage = [];
 
          if(isset($_POST['submitLog'])){
-
-
             $email = $_POST['email'];
             $password = $_POST['password'];
-           // var_dump(password_hash($password, PASSWORD_BCRYPT));
             $errors = new CheckUser();
             $dataPage['errors'] = $errors = $errors->checkAuthorisation($email, hash( "md5",$password));
 
@@ -88,8 +83,7 @@ class UserController
 
             }
         }
-        $view = new View();
-        $view->render('login.php', $dataPage);
+        $this->view->render('login.php', $dataPage);
         return true;
     }
 
@@ -97,7 +91,7 @@ class UserController
      * Action for exit the page
      * @return bool
      */
-    public function actionLogout()
+    public function actionLogout():bool
     {
         $user = new Authenticate();
         $user->logout();

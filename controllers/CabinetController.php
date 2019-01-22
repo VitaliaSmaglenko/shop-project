@@ -5,16 +5,15 @@
 use Model\Authenticate;
 use Model\User;
 use Model\CheckUser;
-use App\View;
+use Base\Controller;
 
-class CabinetController
+class CabinetController extends Controller
 {
-
     /**
      * Action for show user cabinet
      * @return bool
      */
-    public function actionIndex()
+    public function actionIndex():bool
     {
         $user = new Authenticate();
         $userId = $user->checkLogged();
@@ -22,9 +21,10 @@ class CabinetController
             header('Location: /login');
         }
         $user = new User();
-        $dataPage['user'] = $user=$user->getById($userId);
-        $view = new View();
-        $view->render('cabinet.php',  $dataPage);
+        $user = $user->getById($userId);
+        $dataPage['user'] = $user;
+
+        $this->view->render('cabinet.php',  $dataPage);
         return true;
     }
 
@@ -32,7 +32,7 @@ class CabinetController
      * Action for edit data
      * @return bool
      */
-    public function actionEdit()
+    public function actionEdit():bool
     {
         $user = new Authenticate();
         $userId = $user->checkLogged();
@@ -40,14 +40,16 @@ class CabinetController
             header('Location: /login');
         }
         $user = new User();
-        $dataPage['user'] = $user = $user->getById($userId);
+        $user = $user->getById($userId);
+        $dataPage['user'] = $user;
 
         $firstName = '';
         $lastName = '';
         $password='';
         $phone='';
 
-        $dataPage['result'] = $result = false;
+        $result = false;
+        $dataPage['result'] = $result;
         if(isset($_POST['submitSave'])){
 
             $firstName = $_POST['firstName'];
@@ -63,12 +65,13 @@ class CabinetController
                 $user->setLastName($lastName);
                 $user->setPassword((hash( "md5",$password)));
                 $user->setPhone($phone);
-                $dataPage['result'] = $result = $user->updateUser($userId);
+                $result = $user->updateUser($userId);
+                $dataPage['result'] = $result;
 
             }
         }
-        $view = new View();
-        $view->render('edit.php',  $dataPage);
+
+        $this->view->render('edit.php',  $dataPage);
         return true;
 
     }

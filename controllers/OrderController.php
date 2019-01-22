@@ -10,11 +10,11 @@ use Model\Authenticate;
 use Model\User;
 use Model\CheckUser;
 use Model\Buyers;
-use App\View;
+use Base\Controller;
 
-class OrderController
+class OrderController extends Controller
 {
-    public function actionCheckout()
+    public function actionCheckout():bool
     {
         $cart = new Cart();
         $cartProduct = $cart->getProducts();
@@ -92,12 +92,9 @@ class OrderController
             }
 
         } else{
-            /// form not submit
-            /// if products has'nt in cart
             if($cartProduct == false){
                 header('Location: /');
            } else{
-                //if in cart exists products
                 $productsIds = array_keys($cartProduct);
                 $items = $product->getByIds($productsIds);
                 $price = $cart->getPrice($items);
@@ -128,8 +125,8 @@ class OrderController
             }
         }
 
-        $view = new View();
-        $view->render('checkout.php',  $dataPage);
+
+        $this->view->render('checkout.php',  $dataPage);
         return true;
     }
 

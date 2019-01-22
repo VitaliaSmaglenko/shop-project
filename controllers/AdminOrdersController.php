@@ -1,44 +1,72 @@
 <?php
-
-use App\View;
-use Model\Products;
-use Model\Category;
+/**
+ * Controller AdminOrdersController
+ */
+use Base\Controller;
 use Model\Orders;
 use Model\ProductOrder;
 use Model\Buyers;
+use Model\Authenticate;
+use Model\User;
 
-class AdminOrdersController extends App\Admin
+class AdminOrdersController extends Controller
 {
-    public function actionIndex()
+    /**
+     * AdminOrdersController constructor.
+     */
+    public function __construct()
     {
-        $this->checkAdmin();
+        parent::__construct();
+        $isUser = new Authenticate();
+        $userId = $isUser->checkLogged();
+        if($userId == false){
+            header('Location: /login');
+        }
+        $user = new User();
+        $user = $user->getById($userId);
+        if($user->getRole() == "admin"){
+            return true;
+        }
+        die("Access denied");
+    }
+
+    /**
+     * @return bool
+     */
+    public function actionIndex():bool
+    {
         $buyers = new Buyers();
         $buyers = $buyers->get();
-        $orders = new Orders();
         $dataPage["buyers"] = $buyers;
-        $view = new View();
-        $view->render('admin/orders.php', $dataPage);
+
+        $this->view->render('admin/orders.php', $dataPage);
         return true;
 
     }
 
-    public function actionDelete($id)
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function actionDelete(int $id):bool
     {
-        $this->checkAdmin();
         $pageData['id'] = $id;
         if(isset($_POST['submitDelete'])){
             $buyers = new Buyers();
             $buyers->deleteById($id);
             header('Location: /admin/orders');
         }
-        $view = new View();
-        $view->render('admin/deleteOrders.php', $pageData);
+
+        $this->view->render('admin/deleteOrders.php', $pageData);
         return true;
     }
 
-    public function actionShow($id)
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function actionShow(int $id):bool
     {
-        $this->checkAdmin();
         $order = new Orders();
         $orders = $order->getById($id);
         $buyers = new Buyers();
@@ -50,14 +78,17 @@ class AdminOrdersController extends App\Admin
         $dataPage['orders'] = $orders;
         $dataPage['productOrder'] = $productOrder;
         $dataPage['status'] = $status;
-        $view = new View();
-        $view->render('admin/showOrder.php', $dataPage);
+
+        $this->view->render('admin/showOrder.php', $dataPage);
         return true;
     }
 
-    public function actionUpdate($id)
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function actionUpdate(int $id):bool
     {
-        $this->checkAdmin();
         $buyer = new Buyers();
         $buyers = $buyer->getById($id);
         $dataPage["buyers"] = $buyers;
@@ -91,8 +122,8 @@ class AdminOrdersController extends App\Admin
             }
         }
         unset($_POST);
-        $view = new View();
-        $view->render('admin/updateOrders.php', $dataPage);
+
+        $this->view->render('admin/updateOrders.php', $dataPage);
         return true;
 
     }

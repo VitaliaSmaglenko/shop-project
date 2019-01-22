@@ -3,16 +3,37 @@
 /**
  * Controller AdminController
  */
-use App\View;
+use Base\Controller;
+use Model\Authenticate;
+use Model\User;
 
-
-class AdminController extends App\Admin
+class AdminController extends Controller
 {
-    public function actionIndex()
+    /**
+     * AdminController constructor.
+     */
+    public function __construct()
     {
-        $this->checkAdmin();
-        $view = new View();
-        $view->render('admin/index.php');
+        parent::__construct();
+        $isUser = new Authenticate();
+        $userId = $isUser->checkLogged();
+        if($userId == false){
+            header('Location: /login');
+        }
+        $user = new User();
+        $user = $user->getById($userId);
+        if($user->getRole() == "admin"){
+            return true;
+        }
+        die("Access denied");
+    }
+
+    /**
+     * @return bool
+     */
+    public function actionIndex():bool
+    {
+        $this->view->render('admin/index.php');
         return true;
     }
 }

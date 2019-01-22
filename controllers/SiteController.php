@@ -2,35 +2,36 @@
 /**
  * Controller SiteController
  */
-
+use Base\Controller;
 use Model\Category;
 use Model\Products;
-use App\View;
 
-class SiteController
+class SiteController extends Controller
 {
 
     /**
      * Action for main page
      * @return bool
      */
-    public function actionIndex(){
+    public function actionIndex():bool
+    {
         $categories = new Category();
         $categories = $categories->get();
         $dataPage['categories'] = $categories;
         $productList = new Products();
         $productList = $productList->get();
         $dataPage['productList'] =  $productList;
-        $view = new View();
-        $view->render('index.php',  $dataPage);
 
+        $this->view->render('index.php',  $dataPage);
         return true;
     }
 
-    public function actionNotFound()
+    /**
+     * @return bool
+     */
+    public function actionNotFound():bool
     {
-        $view = new View();
-        $view->render('404.php');
+        $this->view->render('404.php');
         return true;
     }
 

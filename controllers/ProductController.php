@@ -2,23 +2,27 @@
 /**
  * Controller ProductController
  */
+use Base\Controller;
 use Model\Products;
-use App\View;
-class ProductController
+
+class ProductController extends Base\Controller
 {
     /**
      * Action for the product review page
-     * @param $id
+     * @param int $id
      * @return bool
      */
 
-    public function actionView($id){
+    public function actionView(int $id):bool
+    {
         $product = new Products();
-        $dataPage['product'] = $product=$product->getById($id);
+        $product = $product->getById($id);
+        $dataPage['product'] = $product;
         $cart = new Model\Cart();
-        $dataPage['cart'] = $cart = $cart->isProduct($id);
-        $view = new View();
-        $view->render('product.php',  $dataPage);
+        $cart = $cart->isProduct($id);
+        $dataPage['cart'] = $cart;
+
+        $this->view->render('product.php',  $dataPage);
         return true;
     }
 
