@@ -47,6 +47,7 @@ return array(
     //cabinet
     'cabinet'=> 'cabinet/index',
     'edit'=> 'cabinet/edit',
+    '([A-Za-z0-9]+)' => 'site/notFound',
     //main page:
     '' => 'site/index',
 );

@@ -28,7 +28,7 @@ class Router
      * @return array
      */
 
-    public function run()
+    public function run():array
     {
 
         if (!empty ($_SERVER['REQUEST_URI'])) {
@@ -38,19 +38,17 @@ class Router
         foreach ($this->routes as $request => $path) {
 
             if (preg_match("~$request~", $uri)) {
-
              $fullPath = preg_replace("~$request~", $path, $uri);
              $separators = explode('/', $fullPath);
+
              $controllerName = ucfirst(array_shift($separators)) . 'Controller';
              $actionName = 'action' . ucfirst((array_shift($separators)));
+
              $parameters = $separators;
-             //echo $controllerName;
-             //echo $actionName;
              $result = array($controllerName,$actionName, $parameters);
-             return $result;}
-
-
+             return $result;
             }
         }
+    }
 
 }

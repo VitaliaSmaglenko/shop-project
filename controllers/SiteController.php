@@ -27,4 +27,11 @@ class SiteController
         return true;
     }
 
+    public function actionNotFound()
+    {
+        $view = new View();
+        $view->render('404.php');
+        return true;
+    }
+
 }
