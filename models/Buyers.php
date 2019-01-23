@@ -72,10 +72,11 @@ class Buyers extends Model
      */
     public function get():array
     {
-        $sql = "SELECT buyers.id, last_name, first_name, phone, updated_at, created_at, user_id, comment, status FROM buyers" .
+        $sql = "SELECT buyers.id, last_name, first_name, phone, updated_at, created_at, user_id, comment, orders.status FROM buyers" .
             " INNER JOIN orders ON buyers.id = orders.id_buyers";
         $pdo = new PDODB();
         $result = $pdo->queryData($sql);
+
         $order = new Orders();
         $buyersList = array();
         for($i=0; $i<count($result); $i++){
@@ -105,7 +106,7 @@ class Buyers extends Model
     {
         $sql = 'UPDATE buyers '.
             ' INNER JOIN orders ON buyers.id = orders.id_buyers ' .
-            ' SET last_name = :last_name, first_name = :first_name, phone = :phone, status = :status '.
+            ' SET last_name = :last_name, first_name = :first_name, phone = :phone, orders.status = :status '.
             '  WHERE buyers.id = :id';
 
         $pdo = new PDODB();
@@ -134,7 +135,7 @@ class Buyers extends Model
      */
     public function getById(int $id):Buyers
     {
-        $sql = 'SELECT buyers.id, status, first_name, last_name, phone, comment, user_id, created_at, updated_at '.
+        $sql = 'SELECT buyers.id, orders.status, first_name, last_name, phone, comment, user_id, created_at, updated_at '.
             ' FROM buyers INNER JOIN orders  ON orders.id_buyers=buyers.id WHERE buyers.id = :id';
         $pdo = new PDODB();
         $objBuyers = new Buyers();
@@ -237,7 +238,7 @@ class Buyers extends Model
         return $this->userId;
     }
 
-    public function setStatusOrder(int $orderStatus)
+    public function setStatusOrder( $orderStatus)
     {
         $this->orderStatus = $orderStatus;
     }

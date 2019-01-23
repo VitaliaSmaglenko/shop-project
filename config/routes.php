@@ -49,5 +49,6 @@ return array(
     'edit'=> 'cabinet/edit',
     '([A-Za-z0-9]+)' => 'site/notFound',
     //main page:
+    'mysite' => 'site/index',
     '' => 'site/index',
 );

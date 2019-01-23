@@ -18,6 +18,7 @@ class PDODB
      * @var Log
      */
     private $logger;
+    private $pdo;
 
     /**
      * PDODB constructor.
@@ -32,7 +33,7 @@ class PDODB
      * @return PDO
      */
 
-    public  function connect():PDO
+    public  function connect()
     {
         $conf = include ('config/db.php');
         $host = $conf['host'];
@@ -50,7 +51,7 @@ class PDODB
         try {
           $pdo = new PDO($dsn, $user, $pass, $opt);
           $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-          return $pdo;
+         return $pdo;
         } catch (PDOException $e) {
             die('Подключение не удалось: ' . $this->logger->error($e->getMessage()));
         }
@@ -59,15 +60,26 @@ class PDODB
     }
 
 
+    public  function getPDO()
+    {
+
+        if ($this->pdo != null) {
+            return $this->pdo;
+        }
+        $this->pdo = $this->connect();
+        return $this->pdo;
+    }
+
     /**
      * Executes queries
      * @param $sql
      * @param string $method
      * @return array
      */
-    public function queryData(string $sql, string $method=''):array
+    public function queryData(string $sql, string $method = ''):array
     {
-        $pdo = $this->connect();
+
+        $pdo = $this->getPDO();
 
         try{
             $result = $pdo->query($sql);
@@ -91,7 +103,8 @@ class PDODB
      */
     public function prepareData(string $sql, array $data, string $method)
     {
-        $pdo = $this->connect();
+        $pdo=$this->getPDO();
+
         try {
             $result = $pdo->prepare($sql);
             foreach ($data as $k => $v){

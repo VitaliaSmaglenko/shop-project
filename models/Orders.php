@@ -26,7 +26,7 @@ class Orders
                 'VALUES (:idBuyers, :totalPrice, :totalCount);';
             $pdo = new PDODB();
             $data = array(':idBuyers' => $this->getIdBuyers(), ':totalPrice' => $this->getTotalPrice(),
-                '::totalCount' => $this->getTotalCount());
+                ':totalCount' => $this->getTotalCount());
             $result = $pdo->prepareData($sql,$data, 'execute');
             return $result;
     }
@@ -54,7 +54,7 @@ class Orders
 
     public function getById($id)
     {
-        $sql = 'SELECT orders.id, id_buyers, total_price, total_count, status'.
+        $sql = 'SELECT orders.id, id_buyers, total_price, total_count, orders.status'.
             ' FROM orders INNER JOIN buyers  ON orders.id_buyers=buyers.id WHERE orders.id_buyers = :id';
         $pdo = new PDODB();
         $data = array('id' => $id);
