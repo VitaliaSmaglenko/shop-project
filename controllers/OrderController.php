@@ -68,20 +68,22 @@ class OrderController extends Controller
                 $buyer->setComment($comment);
                 $buyer->setData();
                 $buyer->setUserId($userId);
-
-
                 $result = $buyer->createBuyers();
+
                 $dataPage['result'] = $result;
                 $order->setIdBuyers($buyer->getBuyersId());
                 $order->setTotalCount($quantity);
                 $order->setTotalPrice( $price);
                 $order->createOrder();
+
                 foreach($cartProduct as $cartPr) {
                     $productOrder->setIdOrders($order->getOrdersId());
                     $item = $product->getById(key($cartProduct));
                     next($cartProduct);
                     $productOrder->setIdProduct($item->getId());
                     $productOrder->setPrice($item->getPrice());
+                    $value = $product->setNewQuantity($cartPr, $item->getAvailability());
+                    $product->updateQuantity($value, $item->getId());
                     $productOrder->setQuantity($cartPr);
                     $productOrder->createProductOrder();
                 }

@@ -41,9 +41,20 @@ class CartController extends Controller
     public function actionAdd(int $id):bool
     {
         $cart = new Cart();
-        $result = $cart->addProduct($id);
-        $path = ('/product/'.$id);
-        header('Location:'.$path);
+     //   $product = new Products();
+      //  $item = $product->getById($id);
+        //$cart->setAvailability($item->getAvailability());
+       // $count = $cart->updateAvailability();
+        var_dump($_SESSION['availability'.$id]);
+        if($_SESSION['availability'.$id] > 0) {
+            $count = $cart->updateAvailability($id);
+           // var_dump($count);
+            $result = $cart->addProduct($id);
+
+
+        }
+        $path = ('/product/' . $id);
+        header('Location:' . $path);
         return true;
     }
 

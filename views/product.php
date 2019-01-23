@@ -22,6 +22,7 @@
                     <div class="col-md-7 order-md-2">
                         <h3 class="featurette-heading"> <?php echo  $product->getName();?></h3>
                         <h4><span class="text-muted"><?php echo $product->getPrice();?></span></h4>
+                        <h4><span class="text-muted">In stock: <?php echo $product->getAvailability();?></span></h4>
                         <p class="lead">Product character:</p>
                         <ul class="list-group list-group-flush">
                             <?php for($i=0; $i < count(explode(';', $product->getSpecifications())); $i++){?>
@@ -48,11 +49,16 @@
                 <td colspan="2" class="td-sub"><p class="lead font-weight-bold">Item in cart</p> </td>
                 </tr>
             <tr>
+                <?php  if($countProduct != 0) {?>
                 <td colspan="2" class="td-sub">
                     <a href="../add/<?php echo $product->getId();?>" class="btn btn-info my-2 my-sm-0" name="view-btn">Add one more</a>
                 </td>
+                <?php } else {    ?>
+                <td colspan="2" class="td-sub">
+                    <p class="lead font-weight-bold">Product ended</p>
+                </td>
             </tr>
-        <?php } ?>
+        <?php } }?>
     </table>
 
 </div>

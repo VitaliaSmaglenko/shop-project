@@ -278,6 +278,22 @@ class Products extends Model
         return $result;
     }
 
+    public function updateQuantity(int $value, int $id):bool
+    {
+        $sql = 'UPDATE products SET availability = :availability  WHERE id = :id';
+        $data = array(':availability' => $value, ':id' => $id);
+        $result = $this->pdo->prepareData($sql, $data, 'execute');
+        return $result;
+    }
+
+    public function setNewQuantity(int $value, int $availability):int
+    {
+        if($availability > $value) {
+            $newValue = $availability - $value;
+            return $newValue;
+        }
+
+    }
 
     public function setName($name)
     {

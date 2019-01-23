@@ -30,6 +30,7 @@ class Cart
     public function addProduct($id)
     {
         $products = array();
+
         if($this->isCart()) {
             $products = $_SESSION['products'];
         }
@@ -154,5 +155,17 @@ class Cart
         $this->session->set('products', $cartProduct);
         return;
 
+    }
+
+    public function setAvailability($count, $id)
+    {
+       $this->session->set('availability'.$id, $count);
+
+    }
+
+    public function updateAvailability($id)
+    {
+        $this->session->set('availability'.$id, $_SESSION['availability'.$id]-1);
+        return $_SESSION['availability'.$id];
     }
 }
