@@ -10,9 +10,7 @@ namespace Model;
 
 use App\PDODB;
 
-
 class ProductImages
-
 {
     private $image;
     private $productId;
@@ -30,10 +28,9 @@ class ProductImages
     public function updateById($id)
     {
         $sql = 'UPDATE  product_images SET image = :image WHERE product_id = :id';
-
         $pdo = new PDODB();
         $data= array(':image' => $this->getImage(), ':id' => $id);
-        $result=$pdo->prepareData($sql, $data,'execute');
+        $result = $pdo->prepareData($sql, $data, 'execute');
         return $result;
     }
 

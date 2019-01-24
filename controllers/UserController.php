@@ -22,9 +22,7 @@ class UserController extends Controller
         $dataPage['email'] = $email = '';
         $password = '';
         $dataPage['phone'] = $phone = '';
-
-        if(isset($_POST['submitReg'])){
-
+        if (isset($_POST['submitReg'])) {
             $dataPage['firstName']  = $firstName = $_POST['firstName'];
             $dataPage['lastName'] = $lastName = $_POST['lastName'];
             $dataPage['userName'] = $userName = $_POST['userName'];
@@ -35,14 +33,13 @@ class UserController extends Controller
             $errors = new CheckUser();
             $errors = $errors->checkRegistration($email, $password, $userName, $firstName, $lastName, $phone);
             $dataPage['errors'] =  $errors;
-            if(empty($errors)){
-
+            if (empty($errors)) {
                 $user = new User();
                 $user->setUserName($userName);
                 $user->setFirstName($firstName);
                 $user->setLastName($lastName);
                 $user->setEmail($email);
-                $user->setPassword(hash( "md5",$password));
+                $user->setPassword(hash("md5", $password));
                 $user->setPhone($phone);
                 $user->createUser();
                 $user = $user->get();
@@ -51,7 +48,6 @@ class UserController extends Controller
                 header('Location: /cabinet');
             }
         }
-
         $this->view->render('register.php', $dataPage);
         return true;
     }
@@ -64,23 +60,20 @@ class UserController extends Controller
     public function actionLogin():bool
     {
         $dataPage = [];
-
-         if(isset($_POST['submitLog'])){
+        if (isset($_POST['submitLog'])) {
             $email = $_POST['email'];
             $password = $_POST['password'];
             $errors = new CheckUser();
-            $dataPage['errors'] = $errors = $errors->checkAuthorisation($email, hash( "md5",$password));
+            $dataPage['errors'] = $errors = $errors->checkAuthorisation($email, hash("md5", $password));
 
-            if(empty($errors)){
+            if (empty($errors)) {
                 $user = new User();
                 $user->setEmail($email);
-                $user->setPassword(hash( "md5",$password));
-
+                $user->setPassword(hash("md5", $password));
                 $user = $user->get();
                 $auth = new Authenticate();
                 $auth->auth($user);
                 header('Location: /cabinet');
-
             }
         }
         $this->view->render('login.php', $dataPage);

@@ -10,23 +10,21 @@
     </nav>
     <br> <h1 class="h3 mb-3 font-weight-normal">Sing up</h1>
     <hr class="featurette-divider">
-    <?php
-        if(isset($errors) && !empty($errors)) {
+    <?php if (isset($errors) && !empty($errors)) {
             echo '<ul>';
-                for($i=0; $i<count($errors); $i++) {
+        for ($i=0; $i<count($errors); $i++) {
                     echo '<li>';
                         echo $errors[$i];
                     echo '</li>';
-                }
-            echo '</ul>';
         }
-    ?>
+            echo '</ul>';
+    } ?>
     <form method="post" class="validation" novalidate  action="#">
-
         <div class="form-row">
             <div class="col-md-4 mb-3">
                 <label for="validationCustom01">First name</label>
-                <input type="text" name="firstName" class="form-control" id="validationCustom01" placeholder="First name" value="<?php echo $firstName;?>" required>
+                <input type="text" name="firstName" class="form-control"
+                       id="validationCustom01" placeholder="First name" value="<?php echo $firstName;?>" required>
                 <div class="invalid-feedback">
                     Please choose a first name.
                 </div>
@@ -34,7 +32,8 @@
 
             <div class="col-md-4 mb-3">
                 <label for="validationCustom02">Last name</label>
-                <input type="text" name="lastName" class="form-control" id="validationCustom02" placeholder="Last name" value="<?php echo $lastName;?>" required>
+                <input type="text" name="lastName" class="form-control" id="validationCustom02"
+                       placeholder="Last name" value="<?php echo $lastName;?>" required>
                 <div class="invalid-feedback">
                     Please choose a last name.
                 </div>
@@ -45,7 +44,9 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
                     </div>
-                    <input type="text" name="userName" class="form-control" id="validationCustomUsername" value="<?php echo $userName;?>"  placeholder="User name" aria-describedby="inputGroupPrepend" required>
+                    <input type="text" name="userName" class="form-control" id="validationCustomUsername"
+                    value="<?php echo $userName;?>"  placeholder="User name"
+                           aria-describedby="inputGroupPrepend" required>
                     <div class="invalid-feedback">
                         Please choose a user name.
                     </div>
@@ -76,7 +77,8 @@
 
         <div class="col-md-4 mb-3">
             <label for="validationCustomUsername">Password</label>
-            <input type="password" name="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" required>
+            <input type="password" name="password" data-minlength="6"
+                   class="form-control" id="inputPassword" placeholder="Password" required>
             <div class="invalid-feedback feedback-pos">
                 Please input password
             </div>

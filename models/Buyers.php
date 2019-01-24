@@ -30,7 +30,7 @@ class Buyers extends Model
      */
     public function createBuyers():bool
     {
-        if($this->getUserId()==false) {
+        if ($this->getUserId()==false) {
             $sql = 'INSERT INTO buyers (first_name, last_name, comment, phone,  updated_at, created_at) '
                 . 'VALUES (:firstName, :lastName, :comment, :phone, :updatedAt, :createdAt);';
             $pdo = new PDODB();
@@ -72,14 +72,15 @@ class Buyers extends Model
      */
     public function get():array
     {
-        $sql = "SELECT buyers.id, last_name, first_name, phone, updated_at, created_at, user_id, comment, orders.status FROM buyers" .
+        $sql = "SELECT buyers.id, last_name, first_name, phone, updated_at, created_at, user_id, comment, ".
+            "orders.status FROM buyers" .
             " INNER JOIN orders ON buyers.id = orders.id_buyers";
         $pdo = new PDODB();
         $result = $pdo->queryData($sql);
 
         $order = new Orders();
         $buyersList = array();
-        for($i=0; $i<count($result); $i++){
+        for ($i=0; $i<count($result); $i++) {
             $objBuyers = new Buyers();
             $objBuyers->setId($result[$i]['id']);
             $objBuyers->setLastName($result[$i]["last_name"]);
@@ -91,11 +92,8 @@ class Buyers extends Model
             $objBuyers->setComment($result[$i]["comment"]);
             $objBuyers->setStatusOrder($order->getStatusText($result[$i]["status"]));
             $buyersList[] = $objBuyers;
-
         }
-
-       return $buyersList;
-
+        return $buyersList;
     }
 
     /**
@@ -110,7 +108,8 @@ class Buyers extends Model
             '  WHERE buyers.id = :id';
 
         $pdo = new PDODB();
-        $data= array(':last_name' => $this->getLastName(), ':first_name' => $this->getFirstName(), ':phone' => $this->getPhone(),
+        $data = array(':last_name' => $this->getLastName(), ':first_name' => $this->getFirstName(),
+            ':phone' => $this->getPhone(),
             ':status' => $this->getStatusOrder(), ':id' => $id);
         $result=$pdo->prepareData($sql, $data, 'execute');
         return $result;
@@ -135,13 +134,13 @@ class Buyers extends Model
      */
     public function getById(int $id):Buyers
     {
-        $sql = 'SELECT buyers.id, orders.status, first_name, last_name, phone, comment, user_id, created_at, updated_at '.
-            ' FROM buyers INNER JOIN orders  ON orders.id_buyers=buyers.id WHERE buyers.id = :id';
+        $sql = 'SELECT buyers.id, orders.status, first_name, last_name, phone, comment, user_id, created_at, '.
+            ' updated_at FROM buyers INNER JOIN orders  ON orders.id_buyers=buyers.id WHERE buyers.id = :id';
         $pdo = new PDODB();
         $objBuyers = new Buyers();
         $data = array('id' => $id);
         $result = $pdo->prepareData($sql, $data, 'fetchAll');
-        for($i=0; $i<count($result); $i++){
+        for ($i=0; $i<count($result); $i++) {
             $objBuyers->setId($result[$i]['id']);
             $objBuyers->setLastName($result[$i]["last_name"]);
             $objBuyers->setFirstName($result[$i]["first_name"]);
@@ -151,10 +150,8 @@ class Buyers extends Model
             $objBuyers->setUserId($result[$i]["user_id"]);
             $objBuyers->setComment($result[$i]["comment"]);
             $objBuyers->setStatusOrder(($result[$i]["status"]));
-
         }
         return  $objBuyers;
-
     }
 
     public function setId(int $id)
@@ -211,8 +208,8 @@ class Buyers extends Model
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-
     }
+
     public function getUpdatedAt()
     {
         return $this->updatedAt;
@@ -221,8 +218,8 @@ class Buyers extends Model
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-
     }
+
     public function getCreatedAt()
     {
         return $this->createdAt;
@@ -238,7 +235,7 @@ class Buyers extends Model
         return $this->userId;
     }
 
-    public function setStatusOrder( $orderStatus)
+    public function setStatusOrder($orderStatus)
     {
         $this->orderStatus = $orderStatus;
     }
@@ -253,6 +250,4 @@ class Buyers extends Model
         $this->createdAt = date('Y-m-d');
         $this->updatedAt = date('Y-m-d');
     }
-
-
 }

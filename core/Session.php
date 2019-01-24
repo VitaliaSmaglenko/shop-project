@@ -5,7 +5,6 @@
 
 namespace App;
 
-
 class Session
 {
     /**
@@ -13,10 +12,11 @@ class Session
      */
     public function start()
     {
-        if(!$this->sessionExist()){
+        if (!$this->sessionExist()) {
             session_start();
-           }
-        else return;
+        } else {
+            return;
+        }
     }
 
     /**
@@ -36,10 +36,11 @@ class Session
      */
     public function set($key, $val)
     {
-        if($this->sessionExist()){
+        if ($this->sessionExist()) {
             $_SESSION[$key] = $val;
+        } else {
+            return;
         }
-        else return;
     }
 
     /**
@@ -48,10 +49,11 @@ class Session
      */
     public function get($key)
     {
-        if($this->sessionExist()){
+        if ($this->sessionExist()) {
             return $_SESSION[$key];
+        } else {
+            return;
         }
-        else return;
     }
 
     /**
@@ -61,10 +63,11 @@ class Session
 
     public function setName($name)
     {
-        if(!$this->sessionExist()){
+        if (!$this->sessionExist()) {
             session_name($name);
+        } else {
+            return;
         }
-        else return;
     }
 
     /**
@@ -74,23 +77,23 @@ class Session
 
     public function getName()
     {
-        if($this->sessionExist()){
+        if ($this->sessionExist()) {
             return session_name();
+        } else {
+            return;
         }
-        else return;
     }
-
-
     /**
      * Checks cookie existence
      * @return bool
      */
     public function cookieExists()
     {
-        if(isset($_COOKIE['PHPSESSID'])){
+        if (isset($_COOKIE['PHPSESSID'])) {
             return true;
+        } else {
+            return false;
         }
-        else return false;
     }
 
     /**
@@ -98,16 +101,11 @@ class Session
      */
     public function destroy()
     {
-
-        if(!$this->sessionExist() && !$this->cookieExists()){
+        if (!$this->sessionExist() && !$this->cookieExists()) {
             return;
-        }
-        else
-        {
+        } else {
             session_unset();
             session_destroy();
         }
-
     }
-
 }

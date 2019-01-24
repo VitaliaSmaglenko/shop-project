@@ -5,10 +5,11 @@
  */
 
 namespace Model;
+
 use App\PDODB;
 
-class Category{
-
+class Category
+{
     /**
      * @param string $category
      * @param int $status
@@ -29,7 +30,6 @@ class Category{
             ':update_at' => $this->getUpdatedAt(), ':created_at' => $this->getCreatedAt());
         $result=$pdo->prepareData($sql, $data, 'execute');
         return $result;
-
     }
 
     /**
@@ -37,14 +37,13 @@ class Category{
      * @return  array
      */
 
-    public function get() {
+    public function get()
+    {
         $sql ='SELECT  category, id, status FROM category  WHERE status = "1"';
         $pdo = new PDODB();
         $category=$pdo->queryData($sql);
-
         $categoryList = array();
-
-        for ($i=0; $i<count($category); $i++){
+        for ($i=0; $i<count($category); $i++) {
             $objCategory = new Category();
             $objCategory->setCategory($category[$i]['category']);
             $objCategory->setId($category[$i]['id']);
@@ -54,14 +53,15 @@ class Category{
         return $categoryList;
     }
 
-    public function getAdmin() {
+    public function getAdmin()
+    {
         $sql ='SELECT  category, id, status FROM category';
         $pdo = new PDODB();
         $category=$pdo->queryData($sql);
 
         $categoryList = array();
 
-        for ($i=0; $i<count($category); $i++){
+        for ($i=0; $i<count($category); $i++) {
             $objCategory = new Category();
             $objCategory->setCategory($category[$i]['category']);
             $objCategory->setId($category[$i]['id']);
@@ -71,17 +71,18 @@ class Category{
         return $categoryList;
     }
 
-    public function getById($id) {
+    public function getById($id)
+    {
         $sql ='SELECT  category, id, status FROM category WHERE id = :id';
         $pdo = new PDODB();
         $data = array('id' => $id);
         $category=$pdo->prepareData($sql, $data, 'fetchAll');
         $objCategory = new Category();
-        for ($i=0; $i<count($category); $i++){
+        for ($i=0; $i<count($category); $i++) {
             $objCategory->setCategory($category[$i]['category']);
             $objCategory->setId($category[$i]['id']);
             $objCategory->setStatus($category[$i]['status']);
-          }
+        }
         return $objCategory;
     }
 
@@ -106,35 +107,41 @@ class Category{
         return $category;
     }
 
-    public function setId($id){
+    public function setId($id)
+    {
         $this->id = $id;
     }
 
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setCategory($category){
+    public function setCategory($category)
+    {
         $this->category = $category;
-
     }
-    public function getCategory(){
+
+    public function getCategory()
+    {
         return $this->category;
     }
 
-    public function setStatus($status){
+    public function setStatus($status)
+    {
         $this->status = $status;
-
     }
-    public function getStatus(){
+
+    public function getStatus()
+    {
         return $this->status;
     }
 
     public function setUpdatedAt()
     {
         $this->updatedAt = date('Y-m-d');
-
     }
+
     public function getUpdatedAt()
     {
         return $this->updatedAt;
@@ -143,11 +150,10 @@ class Category{
     public function setCreatedAt()
     {
         $this->createdAt = date('Y-m-d');
-
     }
+
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
-
 }

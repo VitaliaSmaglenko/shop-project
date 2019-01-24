@@ -10,7 +10,6 @@ namespace Model;
 
 use App\PDODB;
 
-
 class ProductOrder
 {
     private $idProduct;
@@ -39,7 +38,7 @@ class ProductOrder
         $data = array('id' => $id);
         $result = $pdo->prepareData($sql, $data, 'fetchAll');
         $productOrderList = array();
-        for($i=0; $i<count($result); $i++){
+        for ($i=0; $i<count($result); $i++) {
             $objProductOrder = new ProductOrder();
             $objProductOrder->setIdProduct($result[$i]["id_product"]);
             $objProductOrder->setNameProduct($result[$i]["name"]);
@@ -50,36 +49,35 @@ class ProductOrder
         return $productOrderList;
     }
 
-     public function setIdProduct($idProduct)
-     {
+    public function setIdProduct($idProduct)
+    {
          $this->idProduct = $idProduct;
-     }
+    }
 
     public function getIdProduct()
     {
-       return $this->idProduct;
-     }
+        return $this->idProduct;
+    }
 
     public function setIdOrders($idOrders)
     {
         $this->idOrders = $idOrders;
-     }
+    }
 
     public function getIdOrders()
     {
         return $this->idOrders;
-     }
+    }
 
     public function setPrice($price)
     {
         $this->price = $price;
-     }
+    }
 
     public function getPrice()
     {
         return $this->price;
-     }
-
+    }
 
     public function setNameProduct($nameProduct)
     {
@@ -95,10 +93,10 @@ class ProductOrder
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
-     }
+    }
 
     public function getQuantity()
     {
         return $this->quantity;
-     }
+    }
 }

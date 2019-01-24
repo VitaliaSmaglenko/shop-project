@@ -25,25 +25,20 @@ class SiteController extends Controller
         //var_dump($productList);
 
         $cart = new Model\Cart();
-
         $visible[] = array();
-
-        for($i =0; $i < count($productList); $i++) {
-            if(!isset($_SESSION['availability'.$productList[$i]->getId()])) {
+        for ($i =0; $i < count($productList); $i++) {
+            if (!isset($_SESSION['availability'.$productList[$i]->getId()])) {
                 $cart->setAvailability($productList[$i]->getAvailability(), $productList[$i]->getId());
-
             }
-            if( $_SESSION['availability'.$productList[$i]->getId()] == 0){
+            if ($_SESSION['availability'.$productList[$i]->getId()] == 0) {
                 $visible[$i] = false;
             } else {
                 $visible[$i] = true;
             }
 
         }
-
         $dataPage['visible'] = $visible;
-
-        $this->view->render('index.php',  $dataPage);
+        $this->view->render('index.php', $dataPage);
         return true;
     }
 
@@ -55,5 +50,4 @@ class SiteController extends Controller
         $this->view->render('404.php');
         return true;
     }
-
 }

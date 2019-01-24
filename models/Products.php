@@ -4,6 +4,7 @@
  */
 
 namespace Model;
+
 use Base\Model;
 
 class Products extends Model
@@ -31,22 +32,21 @@ class Products extends Model
      * @param $page
      * @return array
      */
-    public function getByCategory($id=false, int $page=1):array
+    public function getByCategory($id = false, int $page = 1):array
     {
         $limit = self::LIMIT;
         $offset = ($page - 1) * self::LIMIT;
-        if($id){
-            $sql = 'SELECT  name, products.id, price, product_images.image, description, specifications, availability, brand, products.status'.
-                  ' FROM products  LEFT JOIN category  ON products.category_id = category.id'.
-                    ' LEFT JOIN product_images ON products.id = product_images.product_id  '.
-                  '  WHERE category.id=:id  AND products.status = "1" ORDER by products.id ASC LIMIT :limit OFFSET :offset  ';
+        if ($id) {
+            $sql = 'SELECT  name, products.id, price, product_images.image, description, specifications, '.
+                ' availability, brand, products.status'.
+                ' FROM products  LEFT JOIN category  ON products.category_id = category.id'.
+                ' LEFT JOIN product_images ON products.id = product_images.product_id  '.
+              ' WHERE category.id=:id  AND products.status = "1" ORDER by products.id ASC LIMIT :limit OFFSET :offset ';
 
             $data = array(':id' => $id, ':limit' => $limit, ':offset' => $offset);
             $product = $this->pdo->prepareData($sql, $data, 'fetchAll');
-
             $productList = array();
-
-            for ($i = 0; $i<count($product); $i++){
+            for ($i = 0; $i<count($product); $i++) {
                 $objProduct = new Products();
                 $objProduct->setName($product[$i]['name']);
                 $objProduct->setDescription($product[$i]['description']);
@@ -59,12 +59,9 @@ class Products extends Model
                 $objProduct->setStatus($product[$i]['status']);
                 $productList[$i] = $objProduct;
             }
-
-
         }
         return $productList;
     }
-
 
     /**
      * Returns an array of goods
@@ -72,13 +69,15 @@ class Products extends Model
      */
     public function get():array
     {
-        $sql = 'SELECT  name, products.id, price, product_images.image, is_new, category_id, description, specifications, availability, brand, status'.
-            ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id WHERE products.status = "1" ORDER by products.id ASC ';
+        $sql = 'SELECT  name, products.id, price, product_images.image, is_new, category_id, description, '.
+            'specifications, availability, brand, status'.
+            ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id '.
+            ' WHERE products.status = "1" ORDER by products.id ASC ';
 
         $product = $this->pdo->queryData($sql);
         $productList = array();
 
-        for ($i = 0; $i < count($product); $i++){
+        for ($i = 0; $i < count($product); $i++) {
             $objProduct = new Products();
             $objProduct->setName($product[$i]['name']);
             $objProduct->setDescription($product[$i]['description']);
@@ -94,7 +93,6 @@ class Products extends Model
 
         return $productList;
     }
-
     /**
      * @return array
      */
@@ -102,11 +100,9 @@ class Products extends Model
     {
         $sql = 'SELECT  name, id, price, image, description, specifications, availability, brand, status'.
             ' FROM products';
-
         $product = $this->pdo->queryData($sql);
         $productList = array();
-
-        for ($i = 0; $i < count($product); $i++){
+        for ($i = 0; $i < count($product); $i++) {
             $objProduct = new Products();
             $objProduct->setName($product[$i]['name']);
             $objProduct->setDescription($product[$i]['description']);
@@ -119,7 +115,6 @@ class Products extends Model
             $objProduct->setStatus($product[$i]['status']);
             $productList[$i] = $objProduct;
         }
-
         return $productList;
     }
 
@@ -130,13 +125,14 @@ class Products extends Model
 
     public function getById(int $id):Products
     {
-        $sql = 'SELECT  name, products.id, price, product_images.image, is_new, category_id, description, specifications, availability, brand, status'.
-             ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id WHERE products.id = :id';
+        $sql = 'SELECT  name, products.id, price, product_images.image, is_new, category_id, description,'.
+            ' specifications, availability, brand, status'.
+           ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id WHERE products.id = :id';
 
         $data = array (':id' => $id);
         $product = $this->pdo->prepareData($sql, $data, 'fetchAll');
         $objProduct = new Products();
-        for ($i = 0; $i < count($product); $i++){
+        for ($i = 0; $i < count($product); $i++) {
             $objProduct->setName($product[$i]['name']);
             $objProduct->setDescription($product[$i]['description']);
             $objProduct->setImage($product[$i]['image']);
@@ -149,7 +145,6 @@ class Products extends Model
             $objProduct->setCategoryId($product[$i]['category_id']);
             $objProduct->setIsNew($product[$i]['is_new']);
         }
-
         return $objProduct;
     }
 
@@ -162,12 +157,13 @@ class Products extends Model
     {
         $ids = implode(',', $idsArray);
 
-        $sql = 'SELECT  name, products.id, price, products.image, description, specifications, availability, brand, status'.
-            ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id WHERE status="1" AND products.id IN ('.$ids.')';
+        $sql = 'SELECT  name, products.id, price, products.image, description, specifications, availability, brand,'.
+          ' status FROM products LEFT JOIN product_images ON products.id = product_images.product_id WHERE status="1" '.
+          ' AND products.id IN ('.$ids.')';
 
         $product = $this->pdo->queryData($sql, 'setFetchMode');
         $productList = array();
-        for ($i = 0; $i < count($product); $i++){
+        for ($i = 0; $i < count($product); $i++) {
             $objProduct = new Products();
             $objProduct->setName($product[$i]['name']);
             $objProduct->setDescription($product[$i]['description']);
@@ -179,9 +175,7 @@ class Products extends Model
             $objProduct->setBrand($product[$i]['brand']);
             $objProduct->setStatus($product[$i]['status']);
             $productList[$i] = $objProduct;
-
         }
-
         return $productList;
     }
 
@@ -190,10 +184,9 @@ class Products extends Model
      * @return int
      */
 
-    public  function getTotalProduct(int $id):int
+    public function getTotalProduct(int $id):int
     {
         $sql = "SELECT count(id) AS count FROM products WHERE status='1' AND category_id = '".$id."'";
-
         $product = $this->pdo->queryData($sql, 'setFetchMode');
         return $product[0]['count'];
     }
@@ -203,13 +196,14 @@ class Products extends Model
      */
     public function getSortingByPrice():array
     {
-        $sql = 'SELECT  name, products.id, price, products.image, description, specifications, availability, brand, status'.
-            ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id WHERE status = "1" ORDER BY price ASC' ;
+        $sql = 'SELECT  name, products.id, price, products.image, description, specifications, availability, brand, '.
+            ' status FROM products LEFT JOIN product_images ON products.id = product_images.product_id '.
+            'WHERE status = "1" ORDER BY price ASC' ;
 
         $product = $this->pdo->queryData($sql);
         $productList = array();
 
-        for ($i = 0; $i < count($product); $i++){
+        for ($i = 0; $i < count($product); $i++) {
             $objProduct = new Products();
             $objProduct->setName($product[$i]['name']);
             $objProduct->setDescription($product[$i]['description']);
@@ -233,7 +227,6 @@ class Products extends Model
     public function deleteById(int $id):bool
     {
         $sql = "DELETE FROM products WHERE id = :id";
-
         $data = array( ':id' => $id);
         $product = $this->pdo->prepareData($sql, $data, 'execute');
         return $product;
@@ -249,14 +242,15 @@ class Products extends Model
             ' VALUES (:name, :category_id, :price, :availability, :brand, '.
             ' :description, :status, :update_at, :created_at, :specifications, :is_new)';
 
-        $data = array(':name' => $this->getName(), ':category_id' => $this->getCategoryId(), ':price' => $this->getPrice(),
-           ':availability' => $this->getAvailability(), ':brand' => $this->getBrand(), ':description' => $this->getDescription(),
-           ':status' => $this->getStatus(), ':update_at' => $this->getUpdatedAt(), ':created_at' => $this->getCreatedAt(),
+        $data = array(':name' => $this->getName(), ':category_id' => $this->getCategoryId(),
+           ':price' => $this->getPrice(), ':availability' => $this->getAvailability(),
+           ':brand' => $this->getBrand(), ':description' => $this->getDescription(),
+           ':status' => $this->getStatus(), ':update_at' => $this->getUpdatedAt(),
+           ':created_at' => $this->getCreatedAt(),
            ':specifications' => $this->getSpecifications(), ':is_new' => $this->getIsNew());
         $result=$this->pdo->prepareData($sql, $data, 'lastId');
         return $result;
-
-     }
+    }
 
     /**
      * @param int $id
@@ -269,9 +263,9 @@ class Products extends Model
            ' update_at = :update_at,  specifications = :specifications, ' .
            ' is_new = :is_new WHERE id = :id';
 
-
-        $data = array(':name' => $this->getName(), ':category_id' => $this->getCategoryId(), ':price' => $this->getPrice(),
-           ':availability' => $this->getAvailability(), ':brand' => $this->getBrand(), ':description' => $this->getDescription(),
+        $data = array(':name' => $this->getName(), ':category_id' => $this->getCategoryId(),
+           ':price' => $this->getPrice(), ':availability' => $this->getAvailability(),
+            ':brand' => $this->getBrand(), ':description' => $this->getDescription(),
            ':status' => $this->getStatus(), ':update_at' => $this->getUpdatedAt(),
            ':specifications' => $this->getSpecifications(), ':is_new' => $this->getIsNew(), ':id' => $id);
         $result = $this->pdo->prepareData($sql, $data, 'execute');
@@ -288,11 +282,10 @@ class Products extends Model
 
     public function setNewQuantity(int $value, int $availability):int
     {
-        if($availability > $value) {
+        if ($availability > $value) {
             $newValue = $availability - $value;
             return $newValue;
         }
-
     }
 
     public function setName($name)
@@ -330,7 +323,8 @@ class Products extends Model
         $this->price = $price;
     }
 
-    public function getPrice(){
+    public function getPrice()
+    {
         return $this->price;
     }
     public function setId($id)
@@ -355,7 +349,7 @@ class Products extends Model
 
     public function setAvailability($availability)
     {
-       $this->availability = $availability;
+        $this->availability = $availability;
     }
 
     public function getAvailability()
@@ -395,8 +389,8 @@ class Products extends Model
     public function setUpdatedAt()
     {
         $this->updatedAt = date('Y-m-d');
-
     }
+
     public function getUpdatedAt()
     {
         return $this->updatedAt;
@@ -405,8 +399,8 @@ class Products extends Model
     public function setCreatedAt()
     {
         $this->createdAt = date('Y-m-d');
-
     }
+
     public function getCreatedAt()
     {
         return $this->createdAt;

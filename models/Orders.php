@@ -10,7 +10,6 @@ namespace Model;
 
 use App\PDODB;
 
-
 class Orders
 {
     private $idBuyers;
@@ -27,7 +26,7 @@ class Orders
             $pdo = new PDODB();
             $data = array(':idBuyers' => $this->getIdBuyers(), ':totalPrice' => $this->getTotalPrice(),
                 ':totalCount' => $this->getTotalCount());
-            $result = $pdo->prepareData($sql,$data, 'execute');
+            $result = $pdo->prepareData($sql, $data, 'execute');
             return $result;
     }
 
@@ -72,7 +71,7 @@ class Orders
 
     public function getStatusText($status)
     {
-        switch ($status){
+        switch ($status) {
             case '1':
                 return "New orders";
                 break;
@@ -97,26 +96,32 @@ class Orders
         return $this->id;
     }
 
-    public function setIdBuyers($id){
+    public function setIdBuyers($id)
+    {
         $this->idBuyers = $id;
     }
 
-    public function getIdBuyers(){
+    public function getIdBuyers()
+    {
         return $this->idBuyers;
     }
 
-    public function setTotalPrice($totalPrice){
+    public function setTotalPrice($totalPrice)
+    {
         $this->totalPrice = $totalPrice;
     }
 
-    public function getTotalPrice(){
+    public function getTotalPrice()
+    {
         return $this->totalPrice;
     }
-    public function setTotalCount($totalCount){
+    public function setTotalCount($totalCount)
+    {
         $this->totalCount = $totalCount;
     }
 
-    public function getTotalCount(){
+    public function getTotalCount()
+    {
         return $this->totalCount;
     }
     public function setStatus($status)

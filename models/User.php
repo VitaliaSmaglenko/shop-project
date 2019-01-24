@@ -3,11 +3,11 @@
  * Class User component for working with users
  */
 namespace Model;
+
 use App\PDODB;
 use Model\Authenticate;
 
 class User
-
 {
     /**
      * @var
@@ -37,7 +37,6 @@ class User
         $result=$pdo->prepareData($sql, $data, 'execute');
 
         return $result;
-
     }
 
     /**
@@ -46,14 +45,15 @@ class User
      * @return User
      */
 
-    public function get(){
-        $sql ='SELECT  user_name, first_name, last_name, email, id, password, phone FROM user  WHERE email = :email AND password = :password';
+    public function get()
+    {
+        $sql ='SELECT  user_name, first_name, last_name, email, id, password, phone FROM user '.
+            ' WHERE email = :email AND password = :password';
         $pdo = new PDODB();
         $data = array(':email' => $this->getEmail(), ':password' => $this->getPassword());
-        $user=$pdo->prepareData($sql, $data, 'fetch' );
+        $user = $pdo->prepareData($sql, $data, 'fetch');
         $objUser = new User();
-
-        for ($i=0; $i<count($user); $i++){
+        for ($i=0; $i<count($user); $i++) {
             $objUser->setEmail($user['email']);
             $objUser->setFirstName($user['first_name']);
             $objUser->setLastName($user['last_name']);
@@ -61,10 +61,8 @@ class User
             $objUser->setId($user['id']);
             $objUser->setUserName($user['user_name']);
             $objUser->setPhone($user['phone']);
-           }
-
+        }
         return $objUser;
-
     }
 
     /**
@@ -72,13 +70,14 @@ class User
      * @param $id
      * @return User
      */
-    public function getById($id){
+    public function getById($id)
+    {
         $sql ='SELECT  user_name, first_name, last_name, email, id, password, phone, role FROM user  WHERE id = :id';
         $pdo = new PDODB();
         $data = array(':id' => $id);
         $user = $pdo-> prepareData($sql, $data, 'fetchAll');
         $objUser = new User();
-        for ($i=0; $i<count($user); $i++){
+        for ($i=0; $i<count($user); $i++) {
             $objUser->setEmail($user[$i]['email']);
             $objUser->setFirstName($user[$i]['first_name']);
             $objUser->setLastName($user[$i]['last_name']);
@@ -89,7 +88,6 @@ class User
             $objUser->setRole($user[$i]['role']);
         }
           return $objUser;
-
     }
 
     /**

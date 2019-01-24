@@ -1,8 +1,8 @@
 <?php
 
 namespace Base;
-use Base\View;
 
+use Base\View;
 
 abstract class Controller
 {

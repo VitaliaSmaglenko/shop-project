@@ -4,14 +4,15 @@
         <div class="row">
             <?php include("views/include/nav_admin.php"); ?>
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="d-flex justify-content-between flex-wrap
+                flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Dashboard</h1>
 
                 </div>
 
-                <?php  if(isset($errors) && !empty($errors)) {
+                <?php  if (isset($errors) && !empty($errors)) {
                     echo '<ul>';
-                    for($i=0; $i<count($errors); $i++) {
+                    for ($i=0; $i<count($errors); $i++) {
                         echo '<li>';
                         echo $errors[$i];
                         echo '</li>';
@@ -27,7 +28,8 @@
                         <div class="col-md-4 mb-3">
                             <label for="name">Category name </label>
                             <br>
-                            <input type="text" id="name" name="category" value="<?php echo $categories->getCategory(); ?>">
+                            <input type="text" id="name"
+                                   name="category" value="<?php echo $categories->getCategory(); ?>">
                         </div>
                     </div>
 
@@ -36,7 +38,8 @@
                             <label for="status">Status</label>
                             <br>
                             <select name="status">
-                                <option value="1" <?php if($categories->getStatus() == 1){ echo 'selected="selected"';};?>>Displayed</option>
+                                <option value="1"
+                                <?php if($categories->getStatus() == 1){ echo 'selected="selected"';};?>>Displayed</option>
                                 <option value="0" <?php if($categories->getStatus() == 0){ echo 'selected="selected"';};?>>Not displayed</option>
                             </select>
                         </div>

@@ -19,12 +19,12 @@ class AdminOrdersController extends Controller
         parent::__construct();
         $isUser = new Authenticate();
         $userId = $isUser->checkLogged();
-        if($userId == false){
+        if ($userId == false) {
             header('Location: /login');
         }
         $user = new User();
         $user = $user->getById($userId);
-        if($user->getRole() == "admin"){
+        if ($user->getRole() == "admin") {
             return true;
         }
         die("Access denied");
@@ -41,7 +41,6 @@ class AdminOrdersController extends Controller
 
         $this->view->render('admin/orders.php', $dataPage);
         return true;
-
     }
 
     /**
@@ -51,7 +50,7 @@ class AdminOrdersController extends Controller
     public function actionDelete(int $id):bool
     {
         $pageData['id'] = $id;
-        if(isset($_POST['submitDelete'])){
+        if (isset($_POST['submitDelete'])) {
             $buyers = new Buyers();
             $buyers->deleteById($id);
             header('Location: /admin/orders');
@@ -93,39 +92,34 @@ class AdminOrdersController extends Controller
         $buyers = $buyer->getById($id);
         $dataPage["buyers"] = $buyers;
 
-        if(isset($_POST["submitEdit"])){
+        if (isset($_POST["submitEdit"])) {
             $options['last_name'] = $_POST["last_name"];
             $options['first_name'] = $_POST["first_name"];
             $options['phone'] = $_POST["phone"];
             $options['status'] = $_POST["status"];
-
             $errors = false;
 
-            foreach ($options as $option){
-                if(!isset($option) || strlen ($option)== 0){
+            foreach ($options as $option) {
+                if (!isset($option) || strlen($option) == 0) {
                     $errors[] = "Fill in the field ".key($options);
-
                 }
                 next($options);
             }
             $dataPage['errors'] = $errors;
 
-            if($errors == false){
-                $buyer->setLastName( $options['last_name']);
-                $buyer->setFirstName( $options['first_name']);
+            if ($errors == false) {
+                $buyer->setLastName($options['last_name']);
+                $buyer->setFirstName($options['first_name']);
                 $buyer->setPhone($options['phone']);
                 $buyer->setStatusOrder($options['status']);
                 $buyer->updateById($id);
 
                 header("Location: /admin/orders");
-
             }
         }
         unset($_POST);
 
         $this->view->render('admin/updateOrders.php', $dataPage);
         return true;
-
     }
-
 }

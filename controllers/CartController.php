@@ -20,16 +20,14 @@ class CartController extends Controller
         $cart = $cartProducts->getProducts();
         $dataPage['cart'] = $cart;
         $products = new Products();
-        if($cart) {
+        if ($cart) {
             $productsId = array_keys($cart);
             $products = $products->getByIds($productsId);
             $dataPage['products'] = $products;
             $price = $cartProducts->getPrice($products);
             $dataPage['price'] = $price;
-
         }
-
-        $this->view->render('cart.php',  $dataPage);
+        $this->view->render('cart.php', $dataPage);
         return true;
     }
 
@@ -46,12 +44,10 @@ class CartController extends Controller
         //$cart->setAvailability($item->getAvailability());
        // $count = $cart->updateAvailability();
         var_dump($_SESSION['availability'.$id]);
-        if($_SESSION['availability'.$id] > 0) {
+        if ($_SESSION['availability'.$id] > 0) {
             $count = $cart->updateAvailability($id);
            // var_dump($count);
             $result = $cart->addProduct($id);
-
-
         }
         $path = ('/product/' . $id);
         header('Location:' . $path);

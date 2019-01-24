@@ -5,7 +5,6 @@
 
 namespace App;
 
-
 class Router
 {
     /*
@@ -30,26 +29,22 @@ class Router
 
     public function run():array
     {
-
-        if (!empty ($_SERVER['REQUEST_URI'])) {
+        if (!empty($_SERVER['REQUEST_URI'])) {
             $uri = trim($_SERVER['REQUEST_URI'], '/');
         }
-
         foreach ($this->routes as $request => $path) {
-
             if (preg_match("~$request~", $uri)) {
-             $fullPath = preg_replace("~$request~", $path, $uri);
-             $separators = explode('/', $fullPath);
+                $fullPath = preg_replace("~$request~", $path, $uri);
+                $separators = explode('/', $fullPath);
 
-             $controllerName = ucfirst(array_shift($separators)) . 'Controller';
-             $actionName = 'action' . ucfirst((array_shift($separators)));
+                $controllerName = ucfirst(array_shift($separators)) . 'Controller';
+                $actionName = 'action' . ucfirst((array_shift($separators)));
 
-             $parameters = $separators;
-             $result = array('controllerName' => $controllerName,
+                $parameters = $separators;
+                $result = array('controllerName' => $controllerName,
                               'actionName' => $actionName, 'parameters' => $parameters);
-             return $result;
+                return $result;
             }
         }
     }
-
 }

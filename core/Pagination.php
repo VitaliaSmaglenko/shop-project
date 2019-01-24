@@ -8,7 +8,6 @@
 
 namespace App;
 
-
 class Pagination
 {
     /**
@@ -47,10 +46,12 @@ class Pagination
             }
         }
         if (!is_null($links)) {
-            if ($this->current_page > 1)
+            if ($this->current_page > 1) {
                 $links = $this->generateHtml(1, '&lt;') . $links;
-            if ($this->current_page < $this->amount)
+            }
+            if ($this->current_page < $this->amount) {
                 $links .= $this->generateHtml($this->amount, '&gt;');
+            }
         }
         $html .= $links . '</ul>';
         return $html;
@@ -64,8 +65,9 @@ class Pagination
      */
     private function generateHtml($page, $text = null)
     {
-        if (!$text)
+        if (!$text) {
             $text = $page;
+        }
         $currentURI = rtrim($_SERVER['REQUEST_URI'], '/') . '/';
         $currentURI = preg_replace('~/page-[0-9]+~', '', $currentURI);
         return
@@ -98,10 +100,12 @@ class Pagination
     {
         $this->current_page = $currentPage;
         if ($this->current_page > 0) {
-            if ($this->current_page > $this->amount)
+            if ($this->current_page > $this->amount) {
                 $this->current_page = $this->amount;
-        } else
+            }
+        } else {
             $this->current_page = 1;
+        }
     }
 
     /**
@@ -112,5 +116,4 @@ class Pagination
     {
         return ceil($this->total / $this->limit);
     }
-
 }

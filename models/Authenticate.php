@@ -4,6 +4,7 @@
  */
 
 namespace Model;
+
 use App\Session;
 use Model\User;
 
@@ -45,9 +46,11 @@ class Authenticate
     {
 
         $this->session->start();
-        if(isset($_SESSION['userId'])){
+        if (isset($_SESSION['userId'])) {
             return true;
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -56,10 +59,9 @@ class Authenticate
     public function checkLogged()
     {
         $this->session->start();
-        if($this->isAuth()){
+        if ($this->isAuth()) {
             return $_SESSION['userId'];
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -70,9 +72,11 @@ class Authenticate
      */
     public function setCookie($key, $val)
     {
-        if($this->session->cookieExists()){
-          setcookie($key, $val, time()+3600);
-        } else return;
+        if ($this->session->cookieExists()) {
+            setcookie($key, $val, time()+3600);
+        } else {
+            return;
+        }
     }
 
     /**
@@ -80,13 +84,14 @@ class Authenticate
      */
     public function getCookie($key)
     {
-        if($this->session->cookieExists()){
+        if ($this->session->cookieExists()) {
             return $_COOKIE[$key];
+        } else {
+            return;
         }
-        else return;
     }
 
-     public function logout()
+    public function logout()
     {
         $this->session->start();
         $this->session->destroy();

@@ -12,9 +12,9 @@
     <hr class="featurette-divider">
     <?php
 
-    if(isset($errors) && !empty($errors)) {
+    if (isset($errors) && !empty($errors)) {
         echo '<ul>';
-        for($i=0; $i<count($errors); $i++) {
+        for ($i=0; $i<count($errors); $i++) {
             echo '<li>';
             echo $errors[$i];
             echo '</li>';
@@ -22,17 +22,18 @@
         echo '</ul>';
     }
     ?>
-    <?php  if($result){
+    <?php  if ($result) {
         echo ' <br> <h1 class="h3 mb-3 font-weight-normal">Data save</h1>';
         echo ' <a class="btn btn-sm btn-outline-secondary" href="/cabinet">Back to cabinet</a>';
-    } else{
-    ?>
+    } else {
+        ?>
     <form method="post" class="validation" novalidate  action="#">
 
         <div class="form-row">
             <div class="col-md-4 mb-3">
                 <label for="validationCustom01">First name</label>
-                <input type="text" name="firstName" class="form-control" id="validationCustom01" placeholder="First name" value="<?php echo $user->getFirstName();?>" required>
+                <input type="text" name="firstName" class="form-control"
+                id="validationCustom01" placeholder="First name" value="<?php echo $user->getFirstName();?>" required>
                 <div class="invalid-feedback">
                     Please choose a first name.
                 </div>
@@ -40,7 +41,8 @@
 
             <div class="col-md-4 mb-3">
                 <label for="validationCustom02">Last name</label>
-                <input type="text" name="lastName" class="form-control" id="validationCustom02" placeholder="Last name" value="<?php echo $user->getLastName();?>" required>
+                <input type="text" name="lastName" class="form-control" id="validationCustom02"
+                 placeholder="Last name" value="<?php echo $user->getLastName();?>" required>
                 <div class="invalid-feedback">
                     Please choose a last name.
                 </div>
@@ -51,7 +53,8 @@
 
             <div class="col-md-4 mb-3">
                 <label for="validationCustomUsername">Password</label>
-                <input type="password" name="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" value="" required>
+                <input type="password" name="password" data-minlength="6"
+                 class="form-control" id="inputPassword" placeholder="Password" value="" required>
                 <div class="invalid-feedback feedback-pos">
                     Please input password
                 </div>

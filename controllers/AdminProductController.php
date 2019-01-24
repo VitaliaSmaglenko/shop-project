@@ -19,12 +19,12 @@ class AdminProductController extends Controller
         parent::__construct();
         $isUser = new Authenticate();
         $userId = $isUser->checkLogged();
-        if($userId == false){
+        if ($userId == false) {
             header('Location: /login');
         }
         $user = new User();
         $user = $user->getById($userId);
-        if($user->getRole() == "admin"){
+        if ($user->getRole() == "admin") {
             return true;
         }
         die("Access denied");
@@ -52,7 +52,7 @@ class AdminProductController extends Controller
         $category = new Category();
         $categories = $category->getAdmin();
         $dataPage['categories'] = $categories;
-        if(isset($_POST["submitSave"])){
+        if (isset($_POST["submitSave"])) {
             $options['name'] = $_POST['name'];
             $options['price'] = $_POST['price'];
             $options['category_id'] = $_POST['category_id'];
@@ -65,17 +65,15 @@ class AdminProductController extends Controller
 
             $errors = false;
 
-            foreach ($options as $option){
-                if(!isset($option) || strlen ($option)== 0){
+            foreach ($options as $option) {
+                if (!isset($option) || strlen($option)== 0) {
                     $errors[] = "Fill in the field ".key($options);
-
                 }
                 next($options);
             }
             $dataPage['errors'] = $errors;
 
-            if ($errors == false){
-
+            if ($errors == false) {
                 $product->setName($options['name']);
                 $product->setPrice($options['price']);
                 $product->setCategoryId($options['category_id']);
@@ -89,17 +87,16 @@ class AdminProductController extends Controller
                 $product->setCreatedAt();
                 $lastId = $product->create();
 
-                if($lastId){
-                    if(is_uploaded_file($_FILES['image']["tmp_name"])){
+                if ($lastId) {
+                    if (is_uploaded_file($_FILES['image']["tmp_name"])) {
                         move_uploaded_file($_FILES['image']["tmp_name"],
-                            $_SERVER['DOCUMENT_ROOT']."/components/img/".$lastId.".jpg");
+                        $_SERVER['DOCUMENT_ROOT']."/components/img/".$lastId.".jpg");
                         $productImages = new ProductImages();
                         $productImages->setImage("img/".$lastId.".jpg");
                         $productImages->setProductId($lastId);
                         $productImages->create();
-
                     }
-                   }
+                }
                 header("Location: /admin/product");
             }
         }
@@ -122,7 +119,7 @@ class AdminProductController extends Controller
         $categories = $category->getAdmin();
         $dataPage['categories'] = $categories;
 
-        if(isset($_POST["submitEdit"])){
+        if (isset($_POST["submitEdit"])) {
             $options['name'] = $_POST['name'];
             $options['price'] = $_POST['price'];
             $options['category_id'] = $_POST['category_id'];
@@ -134,15 +131,15 @@ class AdminProductController extends Controller
             $options['status'] = $_POST['status'];
             $errors = false;
 
-            foreach ($options as $option){
-                if(!isset($option) || strlen ($option)== 0){
+            foreach ($options as $option) {
+                if (!isset($option) || strlen($option)== 0) {
                     $errors[] = "Fill in the field ".key($options);
                 }
                 next($options);
             }
             $dataPage['errors'] = $errors;
 
-            if ($errors == false){
+            if ($errors == false) {
                 $product->setName($options['name']);
                 $product->setPrice($options['price']);
                 $product->setCategoryId($options['category_id']);
@@ -154,14 +151,13 @@ class AdminProductController extends Controller
                 $product->setStatus($options['status']);
                 $product->setUpdatedAt();
                 $product->updateById($id);
-                    if(is_uploaded_file($_FILES['image']["tmp_name"])){
+                if (is_uploaded_file($_FILES['image']["tmp_name"])) {
                         move_uploaded_file($_FILES['image']["tmp_name"],
                             $_SERVER['DOCUMENT_ROOT']."/components/img/".$id.".jpg");
                         $productImages = new ProductImages();
                         $productImages->setImage("img/".$id.".jpg");
                         $productImages->updateById($id);
-
-                    }
+                }
                 header("Location: /admin/product");
             }
         }
@@ -178,12 +174,11 @@ class AdminProductController extends Controller
     public function actionDelete(int $id):bool
     {
         $pageData['id'] = $id;
-        if(isset($_POST['submitDelete'])){
+        if (isset($_POST['submitDelete'])) {
             $product = new Products();
             $product->deleteById($id);
             header('Location: /admin/product');
         }
-
         $this->view->render('admin/delete.php', $pageData);
         return true;
     }

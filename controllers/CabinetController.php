@@ -17,14 +17,14 @@ class CabinetController extends Controller
     {
         $user = new Authenticate();
         $userId = $user->checkLogged();
-        if($userId == false){
+        if ($userId == false) {
             header('Location: /login');
         }
         $user = new User();
         $user = $user->getById($userId);
         $dataPage['user'] = $user;
 
-        $this->view->render('cabinet.php',  $dataPage);
+        $this->view->render('cabinet.php', $dataPage);
         return true;
     }
 
@@ -36,7 +36,7 @@ class CabinetController extends Controller
     {
         $user = new Authenticate();
         $userId = $user->checkLogged();
-        if($userId == false){
+        if ($userId == false) {
             header('Location: /login');
         }
         $user = new User();
@@ -50,30 +50,24 @@ class CabinetController extends Controller
 
         $result = false;
         $dataPage['result'] = $result;
-        if(isset($_POST['submitSave'])){
-
+        if (isset($_POST['submitSave'])) {
             $firstName = $_POST['firstName'];
             $lastName = $_POST['lastName'];
             $password=$_POST['password'];
             $phone = $_POST['phone'];
-
             $errors = new CheckUser();
-            $errors = $errors->checkEdit((hash( "md5",$password)), $firstName, $lastName, $phone);
+            $errors = $errors->checkEdit((hash("md5", $password)), $firstName, $lastName, $phone);
             $dataPage['errors'] = $errors;
-            if(empty($errors)){
+            if (empty($errors)) {
                 $user->setFirstName($firstName);
                 $user->setLastName($lastName);
-                $user->setPassword((hash( "md5",$password)));
+                $user->setPassword((hash("md5", $password)));
                 $user->setPhone($phone);
                 $result = $user->updateUser($userId);
                 $dataPage['result'] = $result;
-
             }
         }
-
-        $this->view->render('edit.php',  $dataPage);
+        $this->view->render('edit.php', $dataPage);
         return true;
-
     }
-
 }

@@ -32,6 +32,4 @@ class RouterTest extends TestCase
         $result=$this->router->run();
         $this->assertEquals($expect, $result);
     }
-
 }
-

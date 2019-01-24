@@ -4,6 +4,7 @@
  */
 
 namespace Model;
+
 use App\Session;
 
 class Cart
@@ -30,16 +31,14 @@ class Cart
     public function addProduct($id)
     {
         $products = array();
-
-        if($this->isCart()) {
+        if ($this->isCart()) {
             $products = $_SESSION['products'];
         }
-        if(array_key_exists($id, $products)){
+        if (array_key_exists($id, $products)) {
             $products[$id] ++;
-            } else {
+        } else {
             $products[$id] = 1;
         }
-
         $this->session->set('products', $products);
         return true;
     }
@@ -50,7 +49,7 @@ class Cart
      */
     public function getProducts()
     {
-        if($this->isCart()) {
+        if ($this->isCart()) {
               return $this->session->get('products');
         } else {
             return false;
@@ -63,16 +62,15 @@ class Cart
      */
     public function countProducts()
     {
-        if($this->isCart()) {
+        if ($this->isCart()) {
             $count = 0;
-            foreach ($_SESSION['products'] as $id=>$amount){
+            foreach ($_SESSION['products'] as $id => $amount) {
                  $count = $count + $amount;
             }
             return $count;
         } else {
             return 0;
         }
-
     }
 
     /**
@@ -81,9 +79,11 @@ class Cart
      */
     public function isCart()
     {
-       if(isset($_SESSION['products'])){
+        if (isset($_SESSION['products'])) {
             return true;
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -93,9 +93,11 @@ class Cart
      */
     public function isProduct($id)
     {
-        if(isset($_SESSION['products'][$id])){
+        if (isset($_SESSION['products'][$id])) {
             return true;
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -107,18 +109,17 @@ class Cart
     {
         $cartProducts = $this->getProducts();
         $price = 0;
-        if($cartProducts){
-            for ($i=0; $i<count($products); $i++){
+        if ($cartProducts) {
+            for ($i=0; $i<count($products); $i++) {
                  $price += $products[$i]->getPrice() * $cartProducts[$products[$i]->getId()];
             }
-         }
+        }
         return $price;
     }
 
     public function clear()
     {
-
-        if($this->isCart()){
+        if ($this->isCart()) {
             unset($_SESSION['products']);
         }
     }
@@ -134,33 +135,28 @@ class Cart
     public function minusProduct($id)
     {
         $cartProduct = $this->getProducts();
-
-        if($cartProduct[$id] != 1){
+        if ($cartProduct[$id] != 1) {
             $cartProduct[$id] --;
         } else {
             unset($cartProduct[$id]);
         }
         $this->session->set('products', $cartProduct);
         return;
-
     }
 
     public function plusProduct($id)
     {
         $cartProduct = $this->getProducts();
-
-        if($cartProduct[$id]){
+        if ($cartProduct[$id]) {
             $cartProduct[$id] ++;
         }
         $this->session->set('products', $cartProduct);
         return;
-
     }
 
     public function setAvailability($count, $id)
     {
-       $this->session->set('availability'.$id, $count);
-
+        $this->session->set('availability'.$id, $count);
     }
 
     public function updateAvailability($id)

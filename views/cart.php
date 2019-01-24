@@ -14,7 +14,7 @@ include("views/include/header.php");
     <br> <hr class="featurette-divider">
 
     <h2 class="text-center">Your cart is empty</h2>
-    <?php if($cart) {?>
+    <?php if ($cart) {?>
     <table class="tab-cart" align="center" valign="center">
         <tr>
             <td class="font-weight-bold text-info">Name of product</td>
@@ -24,7 +24,7 @@ include("views/include/header.php");
             <td class="font-weight-bold text-info">Delete</td>
         </tr>
 
-        <?php  for($i=0; $i<count($products); $i++){ ?>
+        <?php  for ($i=0; $i<count($products); $i++) { ?>
             <tr>
                 <td><?php echo  $products[$i]->getName();?> </td>
                 <td><?php echo  $products[$i]->getPrice();?> грн </td>
@@ -38,7 +38,8 @@ include("views/include/header.php");
                     <a href="/plus/<?php echo  $products[$i]->getId();?>"
                        class="btn btn-info my-2 my-sm-0" name="view-btn">+</a>
 
-                <td> <a href="/delete/<?php echo  $products[$i]->getId();?>" class="btn btn-info my-2 my-sm-0" name="view-btn">Delete</a>
+                <td> <a href="/delete/<?php echo  $products[$i]->getId();?>"
+                        class="btn btn-info my-2 my-sm-0" name="view-btn">Delete</a>
                         </button></td>
             </tr>
         <?php } ?>
@@ -48,7 +49,7 @@ include("views/include/header.php");
         <tr><td  class="td-sub" colspan="5">
                 <a href="/checkout" class="btn btn-info my-2 my-sm-0" name="view-btn">Checkout</a>
             </td></tr>
-        <?php } ?>
+    <?php } ?>
     </table>
 
     <hr class="featurette-divider"><br>

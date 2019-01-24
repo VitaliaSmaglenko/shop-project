@@ -26,8 +26,8 @@ class OrderController extends Controller
         $productOrder = new ProductOrder();
         $result = false;
         $dataPage['result'] = $result;
-        if($cartProduct == false){
-         unset($_POST);
+        if ($cartProduct == false) {
+            unset($_POST);
         }
 
         if (isset($_POST['submitSave'])) {
@@ -41,7 +41,7 @@ class OrderController extends Controller
             $dataPage['firstName'] = $firstName;
 
             $errors = new CheckUser();
-            $errors = $errors->checkCheckout( $firstName, $lastName, $phone);
+            $errors = $errors->checkCheckout($firstName, $lastName, $phone);
             $dataPage ['errors'] = $errors;
             $productsIds = array_keys($cartProduct);
             $items = $product->getByIds($productsIds);
@@ -49,19 +49,15 @@ class OrderController extends Controller
             $dataPage['price'] = $price;
             $quantity = $cart->countProducts();
             $dataPage['quantity'] = $quantity;
-            if(empty($errors)){
-
-
-                if(!$isUser->isAuth()){
+            if (empty($errors)) {
+                if (!$isUser->isAuth()) {
                         $userId = false;
                 } else {
                     $userId = $isUser->checkLogged();
-                    if($userId == false){
+                    if ($userId == false) {
                         header('Location: /login');
                     }
                 }
-
-
                 $buyer->setLastName($lastName);
                 $buyer->setFirstName($firstName);
                 $buyer->setPhone($phone);
@@ -73,10 +69,10 @@ class OrderController extends Controller
                 $dataPage['result'] = $result;
                 $order->setIdBuyers($buyer->getBuyersId());
                 $order->setTotalCount($quantity);
-                $order->setTotalPrice( $price);
+                $order->setTotalPrice($price);
                 $order->createOrder();
 
-                foreach($cartProduct as $cartPr) {
+                foreach ($cartProduct as $cartPr) {
                     $productOrder->setIdOrders($order->getOrdersId());
                     $item = $product->getById(key($cartProduct));
                     next($cartProduct);
@@ -87,16 +83,14 @@ class OrderController extends Controller
                     $productOrder->setQuantity($cartPr);
                     $productOrder->createProductOrder();
                 }
-                if($result){
+                if ($result) {
                     $cart->clear();
-
                 }
             }
-
-        } else{
-            if($cartProduct == false){
+        } else {
+            if ($cartProduct == false) {
                 header('Location: /');
-           } else{
+            } else {
                 $productsIds = array_keys($cartProduct);
                 $items = $product->getByIds($productsIds);
                 $price = $cart->getPrice($items);
@@ -111,9 +105,9 @@ class OrderController extends Controller
                 $dataPage['lastName'] = $lastName;
                 $dataPage['firstName'] = $firstName;
 
-                if($isUser->isAuth()){
+                if ($isUser->isAuth()) {
                     $userId = $isUser->checkLogged();
-                    if($userId == false){
+                    if ($userId == false) {
                         header('Location: /login');
                     }
                     $user = $user->getById($userId);
@@ -126,10 +120,7 @@ class OrderController extends Controller
                 }
             }
         }
-
-
-        $this->view->render('checkout.php',  $dataPage);
+        $this->view->render('checkout.php', $dataPage);
         return true;
     }
-
 }

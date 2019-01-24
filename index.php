@@ -1,5 +1,5 @@
 <?php
-require_once (__DIR__."/vendor/autoload.php");
+require_once(__DIR__."/vendor/autoload.php");
 
 use App\Router;
 use App\Controller;
@@ -22,4 +22,3 @@ $result=$router ->run();
 
 $controloller = new Controller();
 $controloller->start($result);
-

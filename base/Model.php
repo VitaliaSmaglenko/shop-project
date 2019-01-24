@@ -7,6 +7,7 @@
  */
 
 namespace Base;
+
 use App\PDODB;
 
 abstract class Model

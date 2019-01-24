@@ -17,12 +17,12 @@ class AdminCategoryController extends Controller
         parent::__construct();
         $isUser = new Authenticate();
         $userId = $isUser->checkLogged();
-        if($userId == false){
+        if ($userId == false) {
             header('Location: /login');
         }
         $user = new User();
         $user = $user->getById($userId);
-        if($user->getRole() == "admin"){
+        if ($user->getRole() == "admin") {
             return true;
         }
         die("Access denied");
@@ -31,7 +31,7 @@ class AdminCategoryController extends Controller
     /**
      * @return bool
      */
-    public  function  actionIndex():bool
+    public function actionIndex():bool
     {
         $category = new Category();
         $categories = $category->getAdmin();
@@ -49,28 +49,26 @@ class AdminCategoryController extends Controller
         $category = new Category();
         $dataPage[] = '';
 
-        if(isset($_POST["submitSave"])){
+        if (isset($_POST["submitSave"])) {
             $options['category'] = $_POST['category'];
             $options['status'] = $_POST['status'];
 
             $errors = false;
-              if(!isset($options['category']) || empty($options['category'])){
+            if (!isset($options['category']) || empty($options['category'])) {
                     $errors[] = "Fill in the field ".$options['category'];
-              }
+            }
               $dataPage['errors'] = $errors;
-              if ($errors == false){
+            if ($errors == false) {
                   $category->setCategory($options['category']);
-                  $category->setStatus( $options['status']);
+                  $category->setStatus($options['status']);
                   $category->setCreatedAt();
                   $category->setUpdatedAt();
                   $category->create();
                   header("Location: /admin/category");
-              }
-
-
+            }
         }
         unset($_POST);
-        $this->view->render('admin/addCategory.php',  $dataPage);
+        $this->view->render('admin/addCategory.php', $dataPage);
         return true;
     }
 
@@ -84,17 +82,17 @@ class AdminCategoryController extends Controller
         $categories = $category->getById($id);
         $dataPage['categories'] = $categories;
 
-        if(isset($_POST["submitSave"])){
+        if (isset($_POST["submitSave"])) {
             $options['category'] = $_POST['category'];
             $options['status'] = $_POST['status'];
             $errors = false;
-            if(!isset($options['category']) || empty($options['category'])){
+            if (!isset($options['category']) || empty($options['category'])) {
                 $errors[] = "Fill in the field ".$options['category'];
             }
             $dataPage['errors'] = $errors;
-            if ($errors == false){
+            if ($errors == false) {
                 $category->setCategory($options['category']);
-                $category->setStatus( $options['status']);
+                $category->setStatus($options['status']);
                 $category->setUpdatedAt();
                 $category->updateById($id);
                 header("Location: /admin/category");
@@ -102,9 +100,8 @@ class AdminCategoryController extends Controller
         }
         unset($_POST);
 
-        $this->view->render('admin/updateCategory.php',  $dataPage);
+        $this->view->render('admin/updateCategory.php', $dataPage);
         return true;
-
     }
 
     /**
@@ -114,7 +111,7 @@ class AdminCategoryController extends Controller
     public function actionDelete(int $id):bool
     {
         $pageData['id'] = $id;
-        if(isset($_POST['submitDelete'])){
+        if (isset($_POST['submitDelete'])) {
             $category = new Category();
             $category->deleteById($id);
             header('Location: /admin/category');

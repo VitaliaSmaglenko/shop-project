@@ -3,6 +3,7 @@
  *  Class CheckUser component for data validation
  */
 namespace Model;
+
 use App\PDODB;
 
 class CheckUser
@@ -23,8 +24,8 @@ class CheckUser
      * @param $phone
      * @return array
      */
-        public function checkRegistration($email, $password, $userName, $firstName, $lastName, $phone)
-        {
+    public function checkRegistration($email, $password, $userName, $firstName, $lastName, $phone)
+    {
             $this->checkEmail($email);
             $this->checkEmailExists($email);
             $this->checkPassword($password);
@@ -35,7 +36,7 @@ class CheckUser
             $this->checkPhone($phone);
 
             return $this->errors;
-        }
+    }
 
     /**
      * Validates authorisation data
@@ -43,15 +44,13 @@ class CheckUser
      * @param $password
      * @return array
      */
-        public function checkAuthorisation($email, $password)
-        {
+    public function checkAuthorisation($email, $password)
+    {
             $this->checkEmail($email);
             $this->checkPassword($password);
             $this->checkUserExists($email, $password);
-
             return $this->errors;
-
-        }
+    }
 
     /**
      * Validates data when it editing
@@ -61,24 +60,24 @@ class CheckUser
      * @param $phone
      * @return array
      */
-        public function checkEdit($password, $firstName, $lastName, $phone)
-        {
+    public function checkEdit($password, $firstName, $lastName, $phone)
+    {
             $this->checkPassword($password);
             $this->checkFirstName($firstName);
             $this->checkLastName($lastName);
             $this->checkPhone($phone);
 
             return $this->errors;
-        }
+    }
 
-        public function checkCheckout($firstName, $lastName, $phone)
-        {
+    public function checkCheckout($firstName, $lastName, $phone)
+    {
             $this->checkFirstName($firstName);
             $this->checkLastName($lastName);
             $this->checkPhone($phone);
 
             return $this->errors;
-        }
+    }
 
     /**
      * Checks userName length
@@ -87,7 +86,7 @@ class CheckUser
      */
     public function checkUserName($userName)
     {
-        if(strlen($userName) >=5){
+        if (strlen($userName) >=5) {
             return true;
         }
         $this->errors[] = 'User name must not be shorter than 5 characters';
@@ -101,7 +100,7 @@ class CheckUser
      */
     public function checkLastName($lastName)
     {
-        if(strlen($lastName) >=2){
+        if (strlen($lastName) >=2) {
             return true;
         }
         $this->errors[] = 'Last name must not be shorter than 2 characters';
@@ -115,7 +114,7 @@ class CheckUser
      */
     public function checkFirstName($firstName)
     {
-        if(strlen($firstName) >=2){
+        if (strlen($firstName) >=2) {
             return true;
         }
         $this->errors[] = 'First Name must not be shorter than 2 characters';
@@ -127,9 +126,9 @@ class CheckUser
      * @param $email
      * @return bool
      */
-    public  function checkEmail($email)
+    public function checkEmail($email)
     {
-        if(filter_var($email, FILTER_VALIDATE_EMAIL)){
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return true;
         }
         $this->errors[] = 'Invalid email';
@@ -141,9 +140,9 @@ class CheckUser
      * @param $password
      * @return bool
      */
-    public  function checkPassword($password)
+    public function checkPassword($password)
     {
-        if(strlen($password) >=6){
+        if (strlen($password) >=6) {
             return true;
         }
         $this->errors[] = 'Password must not be shorter than 6 characters';
@@ -158,7 +157,7 @@ class CheckUser
 
     public function checkPhone($phone)
     {
-        if(strlen($phone) >=10 && strlen($phone) <= 13){
+        if (strlen($phone) >=10 && strlen($phone) <= 13) {
             return true;
         }
         $this->errors[] = 'Invalid phone number';
@@ -170,14 +169,14 @@ class CheckUser
      * @param $email
      * @return bool
      */
-    public  function checkEmailExists($email)
+    public function checkEmailExists($email)
     {
         $sql ='SELECT  COUNT(*) FROM user  WHERE email = :email';
         $pdo = new PDODB();
         $data = array(':email' => $email);
         $result=$pdo->prepareData($sql, $data, 'fetchColumn');
 
-        if($result){
+        if ($result) {
             $this->errors[] = 'This email already exists.';
             return false;
         }
@@ -189,14 +188,14 @@ class CheckUser
      * @param $userName
      * @return bool
      */
-    public  function checkUserNameExists($userName)
+    public function checkUserNameExists($userName)
     {
         $sql ='SELECT  COUNT(*) FROM user  WHERE user_name = :userName';
         $pdo = new PDODB();
         $data = array(':userName'=> $userName);
         $result=$pdo->prepareData($sql, $data, 'fetchColumn');
 
-        if($result){
+        if ($result) {
             $this->errors[] = 'This user name already exists.';
             return false;
         }
@@ -209,17 +208,16 @@ class CheckUser
      * @param $password
      * @return bool
      */
-    public  function checkUserExists($email, $password)
+    public function checkUserExists($email, $password)
     {
         $sql ='SELECT  user_name FROM user  WHERE email = :email AND password = :password';
         $pdo = new PDODB();
         $data = array('email' => $email, 'password' => $password);
         $result=$pdo->prepareData($sql, $data, 'fetch');
-        if($result){
+        if ($result) {
             return true;
         }
         $this->errors[] = 'Wrong email or password';
         return false;
     }
-
 }

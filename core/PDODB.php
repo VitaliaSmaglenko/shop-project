@@ -5,14 +5,12 @@
  */
 
 namespace App;
+
 use PDO;
 use PDOException;
 use Logger\Log;
 
-
-
 class PDODB
-
 {
     /**
      * @var Log
@@ -26,16 +24,16 @@ class PDODB
     public function __construct()
     {
         $this->logger = new Log('pdo');
-      }
+    }
 
     /**
      * Establishes a database connection
      * @return PDO
      */
 
-    public  function connect()
+    public function connect()
     {
-        $conf = include ('config/db.php');
+        $conf = include('config/db.php');
         $host = $conf['host'];
         $db   = $conf['db'];
         $user = $conf['user'];
@@ -49,20 +47,16 @@ class PDODB
         ];
 
         try {
-          $pdo = new PDO($dsn, $user, $pass, $opt);
-          $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-         return $pdo;
+            $pdo = new PDO($dsn, $user, $pass, $opt);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $pdo;
         } catch (PDOException $e) {
             die('Подключение не удалось: ' . $this->logger->error($e->getMessage()));
         }
-
-
     }
 
-
-    public  function getPDO()
+    public function getPDO()
     {
-
         if ($this->pdo != null) {
             return $this->pdo;
         }
@@ -78,20 +72,16 @@ class PDODB
      */
     public function queryData(string $sql, string $method = ''):array
     {
-
         $pdo = $this->getPDO();
-
-        try{
+        try {
             $result = $pdo->query($sql);
-            if($method == "setFetchMode"){
+            if ($method == "setFetchMode") {
                 $result->setFetchMode(PDO::FETCH_ASSOC);
             }
-            return $result->fetchAll( );
-
-        }catch (PDOException $e){
+            return $result->fetchAll();
+        } catch (PDOException $e) {
             die("You have errors: {$e->getMessage()}\n");
         }
-
     }
 
     /**
@@ -104,32 +94,25 @@ class PDODB
     public function prepareData(string $sql, array $data, string $method)
     {
         $pdo=$this->getPDO();
-
         try {
             $result = $pdo->prepare($sql);
-            foreach ($data as $k => $v){
+            foreach ($data as $k => $v) {
                 $result->bindValue($k, $v);
             }
-
-            if($result->execute()){
-                  if ($method == 'fetchAll') {
+            if ($result->execute()) {
+                if ($method == 'fetchAll') {
                       return $result->fetchAll();
-
-                  } elseif ($method == 'fetch') {
+                } elseif ($method == 'fetch') {
                        return $result->fetch();
-
-                  } elseif ($method == 'fetchColumn') {
+                } elseif ($method == 'fetchColumn') {
                         return $result->fetchColumn();
-
-                  } elseif ($method == 'lastId') {
+                } elseif ($method == 'lastId') {
                         return $pdo->lastInsertId();
-                  }
+                }
                 return true;
             }
-
             return false;
-
-        }catch (PDOException $e ){
+        } catch (PDOException $e) {
             die("You have errors: {$e->getMessage()}\n");
         }
     }

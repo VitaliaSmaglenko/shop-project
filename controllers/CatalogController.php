@@ -85,5 +85,4 @@ class CatalogController extends Controller
         $this->view->render('catalog.php', $dataPage);
         return true;
     }
-
 }

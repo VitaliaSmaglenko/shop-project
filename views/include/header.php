@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="../components/css/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="../components/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="../components/css/bootstrap-grid.css" type="text/css">
@@ -42,15 +43,13 @@
 
                 </a>
                     </span>
-                     <?php
-                     $checkAuth = new Model\Authenticate();
-                     if(!$checkAuth->isAuth()) { ?>
+                        <?php $checkAuth = new Model\Authenticate();
+                        if (!$checkAuth->isAuth()) { ?>
                 <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
                 <a class="btn btn-sm btn-outline-secondary" href="/register">Sign up</a>
-                <?php }
-                else {?>
+                        <?php } else {?>
                 <a class="btn btn-sm btn-outline-secondary" href="/logout">Log out</a>
-                <?php }?>
+                        <?php }?>
             </div>
 
         </div>

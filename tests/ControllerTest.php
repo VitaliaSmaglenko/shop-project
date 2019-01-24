@@ -25,7 +25,5 @@ class ControllerTest extends TestCase
             'actionName' => 'example', 'parameters' => array());
 
         $this->controller ->start($result);
-
     }
-
 }

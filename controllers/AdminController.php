@@ -17,12 +17,12 @@ class AdminController extends Controller
         parent::__construct();
         $isUser = new Authenticate();
         $userId = $isUser->checkLogged();
-        if($userId == false){
+        if ($userId == false) {
             header('Location: /login');
         }
         $user = new User();
         $user = $user->getById($userId);
-        if($user->getRole() == "admin"){
+        if ($user->getRole() == "admin") {
             return true;
         }
         die("Access denied");

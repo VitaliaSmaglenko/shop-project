@@ -15,7 +15,8 @@
             <td width="50%" rowspan="1">
                 <div class="col-md-5 order-md-1">
 
-                    <img class="featurette-image img-fluid mx-auto" src="../components/<?php echo $product->getImage();?>" alt="Generic placeholder image">
+                <img class="featurette-image img-fluid mx-auto"
+                src="../components/<?php echo $product->getImage();?>" alt="Generic placeholder image">
                 </div> </td> <td width="50%">
 
                 <div class="row featurette">
@@ -25,10 +26,10 @@
                         <h4><span class="text-muted">In stock: <?php echo $product->getAvailability();?></span></h4>
                         <p class="lead">Product character:</p>
                         <ul class="list-group list-group-flush">
-                            <?php for($i=0; $i < count(explode(';', $product->getSpecifications())); $i++){?>
-                                <li class="list-group-item"><?php echo explode(';', $product ->getSpecifications())[$i];?></li>
-                            <?php }
-                            ?>
+                            <?php for ($i=0; $i < count(explode(';', $product->getSpecifications())); $i++) {?>
+                                <li class="list-group-item">
+                                    <?php echo explode(';', $product ->getSpecifications())[$i];?></li>
+                            <?php } ?>
                         </ul>
                     </div>
             </td>
@@ -37,33 +38,34 @@
         <tr>
             <td colspan="2"> <p class="lead"><?php echo $product->getDescription();?></p></td>
         </tr>
-        <?php if(!$cart){?>
+        <?php if (!$cart) {?>
         <tr>
             <td colspan="2" class="td-sub">
-                <a href="../add/<?php echo $product->getId();?>" class="btn btn-info my-2 my-sm-0" name="view-btn">Add to cart</a>
+                <a href="../add/<?php echo $product->getId();?>"
+                class="btn btn-info my-2 my-sm-0" name="view-btn">Add to cart</a>
             </td>
         </tr>
 
-        <?php } else{?>
+        <?php } else {?>
             <tr>
                 <td colspan="2" class="td-sub"><p class="lead font-weight-bold">Item in cart</p> </td>
                 </tr>
             <tr>
-                <?php  if($countProduct != 0) {?>
+                <?php  if ($countProduct != 0) {?>
                 <td colspan="2" class="td-sub">
-                    <a href="../add/<?php echo $product->getId();?>" class="btn btn-info my-2 my-sm-0" name="view-btn">Add one more</a>
+                    <a href="../add/<?php echo $product->getId();?>"
+                    class="btn btn-info my-2 my-sm-0" name="view-btn">Add one more</a>
                 </td>
                 <?php } else {    ?>
                 <td colspan="2" class="td-sub">
                     <p class="lead font-weight-bold">Product ended</p>
                 </td>
             </tr>
-        <?php } }?>
+                <?php }
+        }?>
     </table>
 
 </div>
-
-
 </div>
 
 <hr class="featurette-divider"><br>

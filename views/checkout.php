@@ -11,9 +11,9 @@
 
     <?php
 
-    if(isset($errors) && !empty($errors)) {
+    if (isset($errors) && !empty($errors)) {
         echo '<ul>';
-        for($i=0; $i<count($errors); $i++) {
+        for ($i=0; $i<count($errors); $i++) {
             echo '<li>';
             echo $errors[$i];
             echo '</li>';
@@ -22,11 +22,11 @@
     }
     ?>
     <?php
-    if($result){
+    if ($result) {
         echo"<p> Order is processed. We will call you back<p>";
     } else {
         echo"<p> You choose goods -".$quantity." cost- ".$price."<p>";
-    ?>
+        ?>
 
     <form method="post" class="validation" novalidate  action="#">
     <table class="form-sign" align="center" valign="center" width="1000px">
@@ -35,7 +35,8 @@
 
                 <div class="col-md-4 mb-3">
                     <label for="validationCustom01">First name</label>
-                    <input type="text" name="firstName" class="form-control" id="validationCustom01" placeholder="First name"
+                    <input type="text" name="firstName" class="form-control"
+                           id="validationCustom01" placeholder="First name"
                       value="<?php echo  $firstName?>" required>
                     <div class="invalid-feedback">
                         Please choose a first name.
@@ -74,7 +75,8 @@
 
                     <div class="col-md-4 mb-3">
                         <label for="validationCustomUsername">Comment</label>
-                        <textarea name="comment"  class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Comment" value=""  required> </textarea>
+                        <textarea name="comment"  class="form-control"
+                        id="exampleFormControlTextarea1" rows="3" placeholder="Comment" value=""  required> </textarea>
                         <div class="invalid-feedback feedback-pos">
                             Please input password
                         </div>
