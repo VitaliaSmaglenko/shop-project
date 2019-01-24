@@ -20,17 +20,7 @@ class ProductController extends Base\Controller
         $dataPage['product'] = $product;
         $cartObj = new Model\Cart();
         $cart = $cartObj->isProduct($id);
-        if (!isset($_SESSION['availability'.$id])) {
-            $cartObj->setAvailability($product->getAvailability(), $id);
-            $count = $product->getAvailability();
-            var_dump($count);
-            $dataPage['count'] = $count;
-        } else {
-            $count = $_SESSION['availability'.$id];
-            $dataPage['countProduct'] = $count;
-        }
         $dataPage['cart'] = $cart;
-        //$dataPage['count'] = $count;
         $this->view->render('product.php', $dataPage);
         return true;
     }

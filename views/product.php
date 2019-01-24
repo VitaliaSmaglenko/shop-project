@@ -51,7 +51,7 @@
                 <td colspan="2" class="td-sub"><p class="lead font-weight-bold">Item in cart</p> </td>
                 </tr>
             <tr>
-                <?php  if ($countProduct != 0) {?>
+                <?php  if ($product->getAvailability() != 0) {?>
                 <td colspan="2" class="td-sub">
                     <a href="../add/<?php echo $product->getId();?>"
                     class="btn btn-info my-2 my-sm-0" name="view-btn">Add one more</a>

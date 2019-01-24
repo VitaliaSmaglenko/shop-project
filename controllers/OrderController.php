@@ -78,8 +78,6 @@ class OrderController extends Controller
                     next($cartProduct);
                     $productOrder->setIdProduct($item->getId());
                     $productOrder->setPrice($item->getPrice());
-                    $value = $product->setNewQuantity($cartPr, $item->getAvailability());
-                    $product->updateQuantity($value, $item->getId());
                     $productOrder->setQuantity($cartPr);
                     $productOrder->createProductOrder();
                 }

@@ -30,8 +30,7 @@
                             <br>
 
                             <textarea name="name"
-                            class="form-control" id="exampleFormControlTextarea1" rows="3">
-                                <?php echo $product->getName();?></textarea>
+                            class="form-control" id="exampleFormControlTextarea1" rows="3"><?php echo $product->getName();?></textarea>
 
                         </div>
                     </div>

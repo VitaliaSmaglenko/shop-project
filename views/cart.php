@@ -34,10 +34,10 @@ include("views/include/header.php");
 
                     <input disabled type="text"   class="count-product arrow"
                      value="<?php echo  $cart[$products[$i]->getId()];?>">
-
+                    <?php if ($products[$i]->getAvailability() != 0) {?>
                     <a href="/plus/<?php echo  $products[$i]->getId();?>"
                        class="btn btn-info my-2 my-sm-0" name="view-btn">+</a>
-
+                    <?php }?>
                 <td> <a href="/delete/<?php echo  $products[$i]->getId();?>"
                         class="btn btn-info my-2 my-sm-0" name="view-btn">Delete</a>
                         </button></td>

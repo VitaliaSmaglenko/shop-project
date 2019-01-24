@@ -39,6 +39,9 @@ class Cart
         } else {
             $products[$id] = 1;
         }
+        $product = new Products();
+        $value = -1;
+        $product->updateQuantity($id, $value);
         $this->session->set('products', $products);
         return true;
     }
@@ -127,6 +130,8 @@ class Cart
     public function deleteProduct($id)
     {
         $cartProduct = $this->getProducts();
+        $product = new Products();
+        $product->updateQuantity($id, $cartProduct[$id]);
         unset($cartProduct[$id]);
         $this->session->set('products', $cartProduct);
         return;
@@ -140,6 +145,9 @@ class Cart
         } else {
             unset($cartProduct[$id]);
         }
+        $product = new Products();
+        $value = 1;
+        $product->updateQuantity($id, $value);
         $this->session->set('products', $cartProduct);
         return;
     }
@@ -149,6 +157,9 @@ class Cart
         $cartProduct = $this->getProducts();
         if ($cartProduct[$id]) {
             $cartProduct[$id] ++;
+            $product = new Products();
+            $value = -1;
+            $product->updateQuantity($id, $value);
         }
         $this->session->set('products', $cartProduct);
         return;

@@ -29,7 +29,7 @@
                             <label >Buyers Last Name: </label>
                             <br>
                             <input type="text" name="last_name"
-                                       value=" <?php echo $buyers->getLastName();?>">
+                                       value="<?php echo $buyers->getLastName();?>">
 
                         </div>
                     </div>
