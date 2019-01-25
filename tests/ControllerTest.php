@@ -23,7 +23,6 @@ class ControllerTest extends TestCase
         $this->expectException(Exception::class);
         $result = array('controllerName' => 'example',
             'actionName' => 'example', 'parameters' => array());
-
         $this->controller ->start($result);
     }
 }

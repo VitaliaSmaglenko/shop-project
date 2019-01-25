@@ -22,13 +22,17 @@ class RouterTest extends TestCase
     {
         $uri = 'admin/product/add';
         $_SERVER['REQUEST_URI']=$uri;
-        $expect = array('AdminProductController', 'actionCreate', array());
+        $expect = array('controllerName' => 'AdminProductController',
+            'actionName' => 'actionCreate', 'parameters' => array());
+
+
         $result=$this->router->run();
         $this->assertEquals($expect, $result);
 
         $uri = 'sdasdasd';
         $_SERVER['REQUEST_URI']=$uri;
-        $expect = array('SiteController', 'actionNotFound', array());
+        $expect = array('controllerName' => 'SiteController',  'actionName' => 'actionNotFound',
+            'parameters' => array());
         $result=$this->router->run();
         $this->assertEquals($expect, $result);
     }
