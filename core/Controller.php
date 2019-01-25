@@ -24,13 +24,16 @@ class Controller
         $controllerFile = 'controllers/'.$controllerName.'.php';
         try {
             if (!file_exists($controllerFile)) {
-                throw new \Exception("File doesn't exist");
+                throw new \InvalidArgumentException("File doesn't exist");
             }
             include_once($controllerFile);
-        } catch (\Exception $e) {
+
+            $controllerObject = new $controllerName;
+            $controller = call_user_func_array(array($controllerObject,$actionName), $parameters);
+
+        } catch (\InvalidArgumentException $e) {
             echo("You have errors: {$e->getMessage()}\n");
         }
-        $controllerObject = new $controllerName;
-        $controller = call_user_func_array(array($controllerObject,$actionName), $parameters);
+
     }
 }
