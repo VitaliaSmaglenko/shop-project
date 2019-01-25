@@ -6,6 +6,9 @@ use Model\Authenticate;
 use Model\User;
 use Model\CheckUser;
 use Base\Controller;
+use Model\Buyers;
+use Model\Orders;
+use Model\ProductOrder;
 
 class CabinetController extends Controller
 {
@@ -23,7 +26,11 @@ class CabinetController extends Controller
         $user = new User();
         $user = $user->getById($userId);
         $dataPage['user'] = $user;
-
+        $role = false;
+        if ($user->getRole() == "admin") {
+            $role = true;
+        }
+        $dataPage['role'] = $role;
         $this->view->render('cabinet.php', $dataPage);
         return true;
     }
@@ -68,6 +75,30 @@ class CabinetController extends Controller
             }
         }
         $this->view->render('edit.php', $dataPage);
+        return true;
+    }
+
+    public function actionOrders():bool
+    {
+        $user = new Authenticate();
+        $userId = $user->checkLogged();
+
+        $buyers = new Buyers();
+
+        $buyersId = $buyers->getUserById($userId);
+        $dataPage['buyers'] = $buyersId;
+        $ordersData = array();
+        for ($i = 0; $i < count($buyersId); $i++) {
+               $orders = new Orders();
+               $ordersData[$i] = $orders->getByBuyersId($buyersId[$i]->getId());
+        }
+        $dataPage['orders'] = $ordersData;
+        $productOrder = new ProductOrder();
+        for ($i = 0; $i < count($ordersData); $i++) {
+            $productOrderData[$i] = $productOrder->getByOrdersId($ordersData[$i]->getId());
+        }
+        $dataPage['productOrder'] = $productOrderData;
+        $this->view->render('orders.php', $dataPage);
         return true;
     }
 }

@@ -69,6 +69,23 @@ class Orders
         return $objOrder;
     }
 
+    public function getByBuyersId($id)
+    {
+        $sql = 'SELECT id, total_price, total_count, id_buyers, status FROM orders WHERE id_buyers = :id';
+        $pdo = new PDODB();
+        $data = array(':id' => $id);
+        $result = $pdo->prepareData($sql, $data, 'fetchAll');
+        $objOrder = new Orders();
+        for ($i=0; $i<count($result); $i++) {
+            $objOrder ->setId($result[$i]['id']);
+            $objOrder ->setIdBuyers($result[$i]['id_buyers']);
+            $objOrder ->setStatus($this->getStatusText($result[$i]['status']));
+            $objOrder -> setTotalPrice($result[$i]['total_price']);
+            $objOrder ->setTotalCount($result[$i]['total_count']);
+        }
+        return $objOrder;
+    }
+
     public function getStatusText($status)
     {
         switch ($status) {

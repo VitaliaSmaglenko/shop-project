@@ -154,6 +154,23 @@ class Buyers extends Model
         return  $objBuyers;
     }
 
+    public function getUserById(int $id)
+    {
+        $sql = 'SELECT id, created_at from buyers WHERE user_id = :id';
+        $pdo = new PDODB();
+        $data = array(':id' => $id);
+        $result = $pdo->prepareData($sql, $data, 'fetchAll');
+
+        $buyersList = array();
+        for ($i = 0; $i < count($result); $i++) {
+                $objBuyers = new Buyers();
+                $objBuyers->setId($result[$i]['id']);
+                $objBuyers->setCreatedAt($result[$i]['created_at']);
+                $buyersList[$i] = $objBuyers;
+        }
+        return $buyersList;
+    }
+
     public function setId(int $id)
     {
         $this->id = $id;

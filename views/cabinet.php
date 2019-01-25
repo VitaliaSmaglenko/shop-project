@@ -22,6 +22,15 @@
         <p class="h4  font-weight-normal ">May be you want to
         <a class=" h4  font-weight-normal link-edit" href="/edit">Edit data</a>
         ?</p>
+
+        <br>
+        <a class=" h4  font-weight-normal link-edit" href="/cabinet/orders">Your orders</a>
+
+        <?php if ($role == true) {?>
+            <br>
+            <br>
+            <a class=" h4  font-weight-normal link-edit" href="/admin">Admin panel</a>
+        <?php }?>
     </form>
 
 </div>

@@ -45,6 +45,7 @@ return array(
     'login' => 'user/login',
     'logout' => 'user/logout',
     //cabinet
+    'cabinet/orders' => 'cabinet/orders',
     'cabinet'=> 'cabinet/index',
     'edit'=> 'cabinet/edit',
     '([A-Za-z0-9]+)' => 'site/notFound',

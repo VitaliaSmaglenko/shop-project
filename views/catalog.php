@@ -49,8 +49,12 @@ include("views/include/header.php");
                                         <h6 class="card-title"><?php echo $productList[$i]->getPrice();?> грн</h6>
                                         <a href="product/<?php echo  $productList[$i]->getId();?>"
                                            class="btn btn-primary" name="view-btn">View</a> <br>
-                                        <a href="add/<?php echo  $productList[$i]->getId();?>"
-                                           class="link-add-to-cart">Add to cart</a>
+                                        <?php if ($productList[$i]->getAvailability() != 0) {?>
+                                            <a href="add/<?php echo $productList[$i]->getId();?>"
+                                               class="link-add-to-cart">Add to cart</a>
+                                        <?php } else { ?>
+                                            <p class="card-text"> Product ended </p>
+                                        <?php }?>
                                     </div>
                                 </div>
                             </div>

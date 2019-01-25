@@ -8,14 +8,10 @@
 
 namespace Base;
 
-use App\PDODB;
-
 abstract class Model
 {
-    public $pdo;
 
     public function __construct()
     {
-        $this->pdo = new PDODB();
     }
 }

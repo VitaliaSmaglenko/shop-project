@@ -165,14 +165,4 @@ class Cart
         return;
     }
 
-    public function setAvailability($count, $id)
-    {
-        $this->session->set('availability'.$id, $count);
-    }
-
-    public function updateAvailability($id)
-    {
-        $this->session->set('availability'.$id, $_SESSION['availability'.$id]-1);
-        return $_SESSION['availability'.$id];
-    }
 }

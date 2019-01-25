@@ -49,6 +49,26 @@ class ProductOrder
         return $productOrderList;
     }
 
+    public function getByOrdersId($id)
+    {
+        $sql = 'SELECT id_product, id_orders, name, product_order.price, quantity  FROM product_order '.
+            ' INNER JOIN products  ON product_order.id_product=products.id WHERE id_orders = :id';
+        $pdo = new PDODB();
+        $data = array(':id' => $id);
+        $result = $pdo->prepareData($sql, $data, 'fetchAll');
+        $productOrderList = array();
+        for ($i=0; $i<count($result); $i++) {
+            $objProductOrder = new ProductOrder();
+            $objProductOrder->setIdProduct($result[$i]["id_product"]);
+            $objProductOrder->setPrice($result[$i]["price"]);
+            $objProductOrder->setNameProduct($result[$i]["name"]);
+            $objProductOrder->setQuantity($result[$i]["quantity"]);
+            $productOrderList[]=$objProductOrder;
+        }
+        return  $productOrderList;
+    }
+
+
     public function setIdProduct($idProduct)
     {
          $this->idProduct = $idProduct;

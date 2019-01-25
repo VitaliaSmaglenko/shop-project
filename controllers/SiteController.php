@@ -21,10 +21,6 @@ class SiteController extends Controller
         $productList = new Products();
         $productList = $productList->get();
         $dataPage['productList'] =  $productList;
-
-        //var_dump($productList);
-
-        $cart = new Model\Cart();
         $this->view->render('index.php', $dataPage);
         return true;
     }
