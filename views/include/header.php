@@ -65,9 +65,6 @@
                         <a class="nav-link text-white font-weight-bold" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white font-weight-bold" href="#">Products</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link text-white  font-weight-bold" href="/catalog">Catalog</a>
                     </li>
                     <li class="nav-item">
@@ -77,6 +74,9 @@
                     <li class="nav-item">
                         <a class="nav-link text-white font-weight-bold" href="/cabinet">Cabinet</a>
 
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white font-weight-bold" href="/feedback">Feedback</a>
                     </li>
 
 

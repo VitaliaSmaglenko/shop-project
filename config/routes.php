@@ -1,6 +1,8 @@
 <?php
 
 return array(
+    //feedback:
+    'feedback' => 'feedback/sender',
     //admin:
     'admin/orders/view/([0-9]+)' => 'adminOrders/show/$1',
     'admin/orders/delete/([0-9]+)' => 'adminOrders/delete/$1',

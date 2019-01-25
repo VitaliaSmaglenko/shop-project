@@ -33,7 +33,7 @@ class Router
             $uri = trim($_SERVER['REQUEST_URI'], '/');
         }
         foreach ($this->routes as $request => $path) {
-            if (preg_match("~$request~", $uri)) {
+             if (preg_match("~$request~", $uri)) {
                 $fullPath = preg_replace("~$request~", $path, $uri);
                 $separators = explode('/', $fullPath);
 
