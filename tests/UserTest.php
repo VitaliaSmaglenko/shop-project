@@ -42,6 +42,7 @@ class UserTest extends TestCase
         $this->assertEquals($expect, $result);
     }
 
+    /*
     public function testGetIsCorrect()
     {
         $objUser = new User;
@@ -56,9 +57,26 @@ class UserTest extends TestCase
         $expect = $objUser;
 
         $userTest = new User();
-        $userTest->setEmail('dream@gmail.com');
-        $userTest->setPassword(hash("md5", 'foxfox'));
+        $userTest->setEmail('usertest@gmail.com');
+        $userTest->setPassword(hash("md5", 'testuser'));
         $result = $this->user->get();
         $this->assertEquals($expect, $result);
     }
+    */
+
+    public function testUpdateUser()
+    {
+        $id = 17;
+        $objUser = new User;
+        $objUser->setFirstName('NewtestUser');
+        $objUser->setLastName('test');
+        $objUser->setPassword((hash("md5", 'testuser')));
+        $objUser->setPhone('+380501700086');
+        $expect = true;
+        $result = $this->user->updateUser($id);
+        $this->assertEquals($expect, $result);
+
+    }
+
+
 }
