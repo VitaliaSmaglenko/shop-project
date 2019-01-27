@@ -14,6 +14,10 @@ use Base\Controller;
 
 class OrderController extends Controller
 {
+    /**
+     * Action for make an order
+     * @return bool
+     */
     public function actionCheckout():bool
     {
         $cart = new Cart();

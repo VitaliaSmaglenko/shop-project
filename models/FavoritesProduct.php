@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Виталия
- * Date: 26.01.2019
- * Time: 14:06
+ * Model FavoritesProduct
  */
 
 namespace Model;
@@ -12,6 +9,9 @@ use App\PDODB;
 
 class FavoritesProduct
 {
+    /**
+     * @var
+     */
     private $idProduct;
     private $idUser;
     private $productName;
@@ -20,7 +20,10 @@ class FavoritesProduct
     private $description;
     private $image;
 
-    public function create()
+    /**
+     * @return bool
+     */
+    public function create():bool
     {
         $sql ='INSERT INTO favorites_products (id_product, id_user) '.
             ' VALUES (:id_product, :id_user)';
@@ -30,7 +33,10 @@ class FavoritesProduct
         return $result;
     }
 
-    public function exist()
+    /**
+     * @return int
+     */
+    public function exist():int
     {
         $sql ='SELECT EXISTS(SELECT id_product, id_user FROM favorites_products'.
             ' WHERE id_product = :id_product AND id_user = :id_user)';
@@ -40,7 +46,10 @@ class FavoritesProduct
         return $result;
     }
 
-    public function get()
+    /**
+     * @return array
+     */
+    public function get():array
     {
         $sql ='SELECT name, products.id, price, brand, description, product_images.image FROM favorites_products'.
             ' INNER JOIN products ON favorites_products.id_product=products.id '.
@@ -63,7 +72,10 @@ class FavoritesProduct
         return  $favProductList;
     }
 
-    public function delete()
+    /**
+     * @return bool
+     */
+    public function delete():bool
     {
         $sql ='DELETE  FROM favorites_products'.
             ' WHERE id_product = :id_product ';

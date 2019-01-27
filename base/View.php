@@ -1,10 +1,18 @@
 <?php
-
+/**
+ * Class View
+ */
 namespace Base;
 
 class View
 {
-    public function render($views, $data = null)
+    /**
+     * Method for render html
+     * @param string $views
+     * @param array|null $data
+     * @return bool
+     */
+    public function render(string $views, array $data = null):bool
     {
          $path = "views/";
         if (file_exists($path.$views)) {

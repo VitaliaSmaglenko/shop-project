@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Виталия
- * Date: 15.01.2019
- * Time: 12:45
+ * Model Order
  */
 
 namespace Model;
@@ -12,13 +9,19 @@ use App\PDODB;
 
 class Orders
 {
+    /**
+     * @var
+     */
     private $idBuyers;
     private $id;
     private $totalPrice;
     private $totalCount;
     private $status;
 
-    public function createOrder()
+    /**
+     * @return bool
+     */
+    public function createOrder():bool
     {
 
             $sql = 'INSERT INTO orders (id_buyers, total_price, total_count) '.
@@ -30,7 +33,10 @@ class Orders
             return $result;
     }
 
-    public function getOrdersId()
+    /**
+     * @return int
+     */
+    public function getOrdersId():int
     {
         $sql = "SELECT id FROM orders  ORDER BY id DESC LIMIT 1";
         $pdo = new PDODB();
@@ -42,7 +48,11 @@ class Orders
         return $this->getId();
     }
 
-    public function deleteById($id)
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function deleteById(int $id):bool
     {
         $sql = "DELETE FROM orders WHERE id = :id";
         $pdo = new PDODB();
@@ -51,7 +61,11 @@ class Orders
         return $buyer;
     }
 
-    public function getById($id)
+    /**
+     * @param int $id
+     * @return int
+     */
+    public function getById(int $id):int
     {
         $sql = 'SELECT orders.id, id_buyers, total_price, total_count, orders.status'.
             ' FROM orders INNER JOIN buyers  ON orders.id_buyers=buyers.id WHERE orders.id_buyers = :id';
@@ -69,7 +83,11 @@ class Orders
         return $objOrder;
     }
 
-    public function getByBuyersId($id)
+    /**
+     * @param int $id
+     * @return Orders
+     */
+    public function getByBuyersId(int $id):Orders
     {
         $sql = 'SELECT id, total_price, total_count, id_buyers, status FROM orders WHERE id_buyers = :id';
         $pdo = new PDODB();
@@ -86,7 +104,11 @@ class Orders
         return $objOrder;
     }
 
-    public function getStatusText($status)
+    /**
+     * @param int $status
+     * @return string
+     */
+    public function getStatusText(int $status):string
     {
         switch ($status) {
             case '1':
@@ -103,50 +125,50 @@ class Orders
                 break;
         }
     }
-    public function setId($id)
+    public function setId(int $id):void
     {
         $this->id = $id;
     }
 
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
-    public function setIdBuyers($id)
+    public function setIdBuyers(int $id):void
     {
         $this->idBuyers = $id;
     }
 
-    public function getIdBuyers()
+    public function getIdBuyers():int
     {
         return $this->idBuyers;
     }
 
-    public function setTotalPrice($totalPrice)
+    public function setTotalPrice(int $totalPrice):void
     {
         $this->totalPrice = $totalPrice;
     }
 
-    public function getTotalPrice()
+    public function getTotalPrice():int
     {
         return $this->totalPrice;
     }
-    public function setTotalCount($totalCount)
+    public function setTotalCount(int $totalCount):void
     {
         $this->totalCount = $totalCount;
     }
 
-    public function getTotalCount()
+    public function getTotalCount():int
     {
         return $this->totalCount;
     }
-    public function setStatus($status)
+    public function setStatus(int $status):void
     {
         $this->status = $status;
     }
 
-    public function getStatus()
+    public function getStatus():int
     {
         return $this->status;
     }

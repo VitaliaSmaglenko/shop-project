@@ -40,6 +40,11 @@ class ProductController extends Controller
         return true;
     }
 
+    /**
+     * Action for add to favorites
+     * @param int $id
+     * @return bool
+     */
     public function actionFavorites(int $id):bool
     {
         $user = new Authenticate();

@@ -79,6 +79,10 @@ class CabinetController extends Controller
         return true;
     }
 
+    /**
+     * Action for display orders
+     * @return bool
+     */
     public function actionOrders():bool
     {
         $user = new Authenticate();
@@ -106,6 +110,10 @@ class CabinetController extends Controller
         return true;
     }
 
+    /**
+     * Action for display favorites products
+     * @return bool
+     */
     public function actionFavorites():bool
     {
         $user = new Authenticate();
@@ -122,6 +130,11 @@ class CabinetController extends Controller
         return true;
     }
 
+    /**
+     * Action for delete favorites products
+     * @param int $id
+     * @return bool
+     */
     public function actionDelete(int $id):bool
     {
         $favoritesProduct = new FavoritesProduct();

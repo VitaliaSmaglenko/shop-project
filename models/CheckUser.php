@@ -24,7 +24,7 @@ class CheckUser
      * @param $phone
      * @return array
      */
-    public function checkRegistration($email, $password, $userName, $firstName, $lastName, $phone)
+    public function checkRegistration($email, $password, $userName, $firstName, $lastName, $phone):array
     {
             $this->checkEmail($email);
             $this->checkEmailExists($email);
@@ -44,7 +44,7 @@ class CheckUser
      * @param $password
      * @return array
      */
-    public function checkAuthorisation($email, $password)
+    public function checkAuthorisation($email, $password):array
     {
             $this->checkEmail($email);
             $this->checkPassword($password);
@@ -60,7 +60,7 @@ class CheckUser
      * @param $phone
      * @return array
      */
-    public function checkEdit($password, $firstName, $lastName, $phone)
+    public function checkEdit($password, $firstName, $lastName, $phone):array
     {
             $this->checkPassword($password);
             $this->checkFirstName($firstName);
@@ -70,7 +70,7 @@ class CheckUser
             return $this->errors;
     }
 
-    public function checkCheckout($firstName, $lastName, $phone)
+    public function checkCheckout($firstName, $lastName, $phone):array
     {
             $this->checkFirstName($firstName);
             $this->checkLastName($lastName);
@@ -84,7 +84,7 @@ class CheckUser
      * @param $userName
      * @return bool
      */
-    public function checkUserName($userName)
+    public function checkUserName($userName):bool
     {
         if (strlen($userName) >=5) {
             return true;
@@ -98,7 +98,7 @@ class CheckUser
      * @param $lastName
      * @return bool
      */
-    public function checkLastName($lastName)
+    public function checkLastName($lastName):bool
     {
         if (strlen($lastName) >=2) {
             return true;
@@ -112,7 +112,7 @@ class CheckUser
      * @param $firstName
      * @return bool
      */
-    public function checkFirstName($firstName)
+    public function checkFirstName($firstName):bool
     {
         if (strlen($firstName) >=2) {
             return true;
@@ -126,7 +126,7 @@ class CheckUser
      * @param $email
      * @return bool
      */
-    public function checkEmail($email)
+    public function checkEmail($email):bool
     {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return true;
@@ -140,7 +140,7 @@ class CheckUser
      * @param $password
      * @return bool
      */
-    public function checkPassword($password)
+    public function checkPassword($password):bool
     {
         if (strlen($password) >=6) {
             return true;
@@ -155,7 +155,7 @@ class CheckUser
      * @return bool
      */
 
-    public function checkPhone($phone)
+    public function checkPhone($phone):bool
     {
         if (strlen($phone) >=10 && strlen($phone) <= 13) {
             return true;
@@ -169,7 +169,7 @@ class CheckUser
      * @param $email
      * @return bool
      */
-    public function checkEmailExists($email)
+    public function checkEmailExists($email):bool
     {
         $sql ='SELECT  COUNT(*) FROM user  WHERE email = :email';
         $pdo = new PDODB();
@@ -188,7 +188,7 @@ class CheckUser
      * @param $userName
      * @return bool
      */
-    public function checkUserNameExists($userName)
+    public function checkUserNameExists($userName):bool
     {
         $sql ='SELECT  COUNT(*) FROM user  WHERE user_name = :userName';
         $pdo = new PDODB();
@@ -208,7 +208,7 @@ class CheckUser
      * @param $password
      * @return bool
      */
-    public function checkUserExists($email, $password)
+    public function checkUserExists($email, $password):bool
     {
         $sql ='SELECT  user_name FROM user  WHERE email = :email AND password = :password';
         $pdo = new PDODB();

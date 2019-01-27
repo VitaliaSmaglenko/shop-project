@@ -154,6 +154,10 @@ class Buyers extends Model
         return  $objBuyers;
     }
 
+    /**
+     * @param int $id
+     * @return array
+     */
     public function getUserById(int $id)
     {
         $sql = 'SELECT id, created_at from buyers WHERE user_id = :id';
@@ -171,98 +175,98 @@ class Buyers extends Model
         return $buyersList;
     }
 
-    public function setId(int $id)
+    public function setId(int $id):void
     {
         $this->id = $id;
     }
 
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
-    public function setLastName(string $lastName)
+    public function setLastName(string $lastName):void
     {
         $this->lastName = $lastName;
     }
 
-    public function getLastName()
+    public function getLastName():string
     {
         return $this->lastName;
     }
 
-    public function setFirstName(string $firstName)
+    public function setFirstName(string $firstName):void
     {
         $this->firstName = $firstName;
     }
 
-    public function getFirstName()
+    public function getFirstName():string
     {
         return $this->firstName;
     }
 
-    public function setPhone(string $phone)
+    public function setPhone(string $phone):void
     {
         $this->phone = $phone;
     }
 
-    public function getPhone()
+    public function getPhone():string
     {
         return $this->phone;
     }
 
-    public function setComment(string $comment)
+    public function setComment(string $comment):void
     {
         $this->comment = $comment;
     }
 
-    public function getComment()
+    public function getComment():string
     {
         return $this->comment;
     }
 
 
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt($updatedAt):void
     {
         $this->updatedAt = $updatedAt;
     }
 
-    public function getUpdatedAt()
+    public function getUpdatedAt():string
     {
         return $this->updatedAt;
     }
 
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt($createdAt):void
     {
         $this->createdAt = $createdAt;
     }
 
-    public function getCreatedAt()
+    public function getCreatedAt():string
     {
         return $this->createdAt;
     }
 
-    public function setUserId(int $userId)
+    public function setUserId(int $userId):void
     {
         $this->userId = $userId;
     }
 
-    public function getUserId()
+    public function getUserId():int
     {
         return $this->userId;
     }
 
-    public function setStatusOrder($orderStatus)
+    public function setStatusOrder(int $orderStatus):void
     {
         $this->orderStatus = $orderStatus;
     }
 
-    public function getStatusOrder()
+    public function getStatusOrder():int
     {
         return $this->orderStatus;
     }
 
-    public function setData()
+    public function setData():void
     {
         $this->createdAt = date('Y-m-d');
         $this->updatedAt = date('Y-m-d');

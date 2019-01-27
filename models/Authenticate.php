@@ -91,7 +91,7 @@ class Authenticate
         }
     }
 
-    public function logout()
+    public function logout():void
     {
         $this->session->start();
         $this->session->destroy();

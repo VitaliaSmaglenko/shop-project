@@ -55,7 +55,10 @@ class PDODB
         }
     }
 
-    public function getPDO()
+    /**
+     * @return PDO
+     */
+    public function getPDO():pdo
     {
         if ($this->pdo != null) {
             return $this->pdo;

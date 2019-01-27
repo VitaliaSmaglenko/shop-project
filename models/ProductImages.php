@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Виталия
- * Date: 20.01.2019
- * Time: 19:06
+ * Model ProductImages
  */
 
 namespace Model;
@@ -12,10 +9,16 @@ use App\PDODB;
 
 class ProductImages
 {
+    /**
+     * @var
+     */
     private $image;
     private $productId;
 
-    public function create()
+    /**
+     * @return bool
+     */
+    public function create():bool
     {
         $sql ='INSERT INTO product_images (product_id, image) '.
             ' VALUES (:product_id, :image)';
@@ -25,7 +28,11 @@ class ProductImages
         return $result;
     }
 
-    public function updateById($id)
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function updateById(int $id):bool
     {
         $sql = 'UPDATE  product_images SET image = :image WHERE product_id = :id';
         $pdo = new PDODB();
@@ -34,22 +41,22 @@ class ProductImages
         return $result;
     }
 
-    public function setImage($image)
+    public function setImage(string $image):void
     {
         $this->image = $image;
     }
 
-    public function getImage()
+    public function getImage():string
     {
         return $this->image;
     }
 
-    public function setProductId($productId)
+    public function setProductId(int $productId):void
     {
         $this->productId = $productId;
     }
 
-    public function getProductId()
+    public function getProductId():int
     {
         return $this->productId;
     }

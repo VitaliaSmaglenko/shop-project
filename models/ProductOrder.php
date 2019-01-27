@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Виталия
- * Date: 15.01.2019
- * Time: 12:45
+ * Model ProductOrder
  */
 
 namespace Model;
@@ -12,13 +9,19 @@ use App\PDODB;
 
 class ProductOrder
 {
+    /**
+     * @var
+     */
     private $idProduct;
     private $idOrders;
     private $price;
     private $quantity;
     private $nameProduct;
 
-    public function createProductOrder()
+    /**
+     * @return bool
+     */
+    public function createProductOrder():bool
     {
         $sql = 'INSERT INTO product_order(id_product, id_orders, price, quantity) ' .
                ' VALUES (:idProduct, :idOrders, :price, :quantity);';
@@ -29,7 +32,12 @@ class ProductOrder
 
         return $result;
     }
-    public function getById($id)
+
+    /**
+     * @param int $id
+     * @return array
+     */
+    public function getById(int $id):array
     {
         $sql = 'SELECT id_product, id_orders, product_order.price, quantity, name '.
             ' FROM product_order INNER JOIN products  ON product_order.id_product=products.id WHERE '.
@@ -49,7 +57,11 @@ class ProductOrder
         return $productOrderList;
     }
 
-    public function getByOrdersId($id)
+    /**
+     * @param int $id
+     * @return array
+     */
+    public function getByOrdersId(int $id):array
     {
         $sql = 'SELECT id_product, id_orders, name, product_order.price, quantity  FROM product_order '.
             ' INNER JOIN products  ON product_order.id_product=products.id WHERE id_orders = :id';
@@ -69,53 +81,53 @@ class ProductOrder
     }
 
 
-    public function setIdProduct($idProduct)
+    public function setIdProduct(int $idProduct):void
     {
          $this->idProduct = $idProduct;
     }
 
-    public function getIdProduct()
+    public function getIdProduct():int
     {
         return $this->idProduct;
     }
 
-    public function setIdOrders($idOrders)
+    public function setIdOrders(int $idOrders):void
     {
         $this->idOrders = $idOrders;
     }
 
-    public function getIdOrders()
+    public function getIdOrders():int
     {
         return $this->idOrders;
     }
 
-    public function setPrice($price)
+    public function setPrice(int $price):void
     {
         $this->price = $price;
     }
 
-    public function getPrice()
+    public function getPrice():int
     {
         return $this->price;
     }
 
-    public function setNameProduct($nameProduct)
+    public function setNameProduct(string $nameProduct):void
     {
         $this->nameProduct = $nameProduct;
     }
 
-    public function getNameProduct()
+    public function getNameProduct():string
     {
         return $this->nameProduct;
     }
 
 
-    public function setQuantity($quantity)
+    public function setQuantity(int $quantity):bool
     {
         $this->quantity = $quantity;
     }
 
-    public function getQuantity()
+    public function getQuantity():int
     {
         return $this->quantity;
     }
