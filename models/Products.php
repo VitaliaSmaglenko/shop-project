@@ -314,12 +314,12 @@ class Products extends Model
         return $this->description;
     }
 
-    public function setImage(string $image):void
+    public function setImage($image):void
     {
         $this->image = $image;
     }
 
-    public function getImage():string
+    public function getImage()
     {
         return $this->image;
     }
