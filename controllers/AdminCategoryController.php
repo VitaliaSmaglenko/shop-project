@@ -7,6 +7,7 @@ use Model\User;
 use Base\Controller;
 use Model\Category;
 use App\Response;
+use App\Request;
 
 class AdminCategoryController extends Controller
 {
@@ -49,10 +50,10 @@ class AdminCategoryController extends Controller
     {
         $category = new Category();
         $dataPage[] = '';
-
-        if (isset($_POST["submitSave"])) {
-            $options['category'] = $_POST['category'];
-            $options['status'] = $_POST['status'];
+        $request = new Request();
+        if (null !== $request->post("submitSave")) {
+            $options['category'] = $request->post('category');
+            $options['status'] = $request->post('status');
 
             $errors = false;
             if (!isset($options['category']) || empty($options['category'])) {
@@ -82,10 +83,10 @@ class AdminCategoryController extends Controller
         $category = new Category();
         $categories = $category->getById($id);
         $dataPage['categories'] = $categories;
-
-        if (isset($_POST["submitSave"])) {
-            $options['category'] = $_POST['category'];
-            $options['status'] = $_POST['status'];
+        $request = new Request();
+        if (null !== $request->post("submitSave")) {
+            $options['category'] = $request->post('category');
+            $options['status'] = $request->post('status');
             $errors = false;
             if (!isset($options['category']) || empty($options['category'])) {
                 $errors[] = "Fill in the field ".$options['category'];
@@ -112,7 +113,8 @@ class AdminCategoryController extends Controller
     public function actionDelete(int $id):bool
     {
         $pageData['id'] = $id;
-        if (isset($_POST['submitDelete'])) {
+        $request = new Request();
+        if (null !== $request->post('submitDelete')) {
             $category = new Category();
             $category->deleteById($id);
             Response::redirect('/admin/category');

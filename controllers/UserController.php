@@ -7,6 +7,7 @@ use Model\User;
 use Model\CheckUser;
 use Model\Authenticate;
 use App\Response;
+use App\Request;
 
 class UserController extends Controller
 {
@@ -22,13 +23,14 @@ class UserController extends Controller
         $dataPage['email'] = $email = '';
         $password = '';
         $dataPage['phone'] = $phone = '';
-        if (isset($_POST['submitReg'])) {
-            $dataPage['firstName']  = $firstName = $_POST['firstName'];
-            $dataPage['lastName'] = $lastName = $_POST['lastName'];
-            $dataPage['userName'] = $userName = $_POST['userName'];
-            $dataPage['email'] = $email = $_POST['email'];
-            $password=$_POST['password'];
-            $dataPage['phone'] = $phone= $_POST['phone'];
+        $request = new Request();
+        if (null !== $request->post('submitReg')) {
+            $dataPage['firstName']  = $firstName = $request->post('firstName');
+            $dataPage['lastName'] = $lastName = $request->post('lastName');
+            $dataPage['userName'] = $userName = $request->post('userName');
+            $dataPage['email'] = $email = $request->post('email');
+            $password = $request->post('password');
+            $dataPage['phone'] = $phone = $request->post('phone');
 
             $errors = new CheckUser();
             $errors = $errors->checkRegistration($email, $password, $userName, $firstName, $lastName, $phone);
@@ -59,10 +61,11 @@ class UserController extends Controller
 
     public function actionLogin():bool
     {
+        $request = new Request();
         $dataPage = [];
-        if (isset($_POST['submitLog'])) {
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+        if (null !== $request->post('submitLog')) {
+            $email = $request->post('email');
+            $password = $request->post('password');
             $errors = new CheckUser();
             $dataPage['errors'] = $errors = $errors->checkAuthorisation($email, hash("md5", $password));
 

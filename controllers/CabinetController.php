@@ -11,6 +11,7 @@ use Model\Orders;
 use Model\ProductOrder;
 use Model\FavoritesProduct;
 use App\Response;
+use App\Request;
 
 class CabinetController extends Controller
 {
@@ -59,11 +60,12 @@ class CabinetController extends Controller
 
         $result = false;
         $dataPage['result'] = $result;
-        if (isset($_POST['submitSave'])) {
-            $firstName = $_POST['firstName'];
-            $lastName = $_POST['lastName'];
-            $password=$_POST['password'];
-            $phone = $_POST['phone'];
+        $request = new Request();
+        if (null !== $request->post('submitSave')) {
+            $firstName = $request->post('firstName');
+            $lastName = $request->post('lastName');
+            $password = $request->post('password');
+            $phone = $request->post('phone');
             $errors = new CheckUser();
             $errors = $errors->checkEdit((hash("md5", $password)), $firstName, $lastName, $phone);
             $dataPage['errors'] = $errors;

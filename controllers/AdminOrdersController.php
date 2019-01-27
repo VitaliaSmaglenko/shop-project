@@ -9,6 +9,7 @@ use Model\Buyers;
 use Model\Authenticate;
 use Model\User;
 use App\Response;
+use App\Request;
 
 class AdminOrdersController extends Controller
 {
@@ -51,7 +52,8 @@ class AdminOrdersController extends Controller
     public function actionDelete(int $id):bool
     {
         $pageData['id'] = $id;
-        if (isset($_POST['submitDelete'])) {
+        $request = new Request();
+        if (null !== $request->post('submitDelete')) {
             $buyers = new Buyers();
             $buyers->deleteById($id);
             Response::redirect('/admin/orders');
@@ -92,12 +94,12 @@ class AdminOrdersController extends Controller
         $buyer = new Buyers();
         $buyers = $buyer->getById($id);
         $dataPage["buyers"] = $buyers;
-
-        if (isset($_POST["submitEdit"])) {
-            $options['last_name'] = $_POST["last_name"];
-            $options['first_name'] = $_POST["first_name"];
-            $options['phone'] = $_POST["phone"];
-            $options['status'] = $_POST["status"];
+        $request = new Request();
+        if (null !== $request->post("submitEdit")) {
+            $options['last_name'] = $request->post("last_name");
+            $options['first_name'] = $request->post("first_name");
+            $options['phone'] = $request->post("phone");
+            $options['status'] = $request->post("status");
             $errors = false;
 
             foreach ($options as $option) {
