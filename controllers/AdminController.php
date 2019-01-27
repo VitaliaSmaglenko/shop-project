@@ -6,6 +6,7 @@
 use Base\Controller;
 use Model\Authenticate;
 use Model\User;
+use App\Response;
 
 class AdminController extends Controller
 {
@@ -18,7 +19,7 @@ class AdminController extends Controller
         $isUser = new Authenticate();
         $userId = $isUser->checkLogged();
         if ($userId == false) {
-            header('Location: /login');
+            Response::redirect('/login');
         }
         $user = new User();
         $user = $user->getById($userId);

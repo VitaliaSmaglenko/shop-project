@@ -10,9 +10,8 @@ class View
      * Method for render html
      * @param string $views
      * @param array|null $data
-     * @return bool
      */
-    public function render(string $views, array $data = null):bool
+    public function render(string $views, array $data = null):void
     {
          $path = "views/";
         if (file_exists($path.$views)) {

@@ -8,6 +8,7 @@ use Model\Category;
 use Model\ProductImages;
 use Model\Authenticate;
 use Model\User;
+use App\Response;
 
 class AdminProductController extends Controller
 {
@@ -20,7 +21,7 @@ class AdminProductController extends Controller
         $isUser = new Authenticate();
         $userId = $isUser->checkLogged();
         if ($userId == false) {
-            header('Location: /login');
+            Response::redirect('/login');
         }
         $user = new User();
         $user = $user->getById($userId);
@@ -97,7 +98,7 @@ class AdminProductController extends Controller
                         $productImages->create();
                     }
                 }
-                header("Location: /admin/product");
+                Response::redirect('/admin/product');
             }
         }
         unset($_POST);
@@ -158,7 +159,7 @@ class AdminProductController extends Controller
                         $productImages->setImage("img/".$id.".jpg");
                         $productImages->updateById($id);
                 }
-                header("Location: /admin/product");
+                Response::redirect('/admin/product');
             }
         }
         unset($_POST);
@@ -177,7 +178,7 @@ class AdminProductController extends Controller
         if (isset($_POST['submitDelete'])) {
             $product = new Products();
             $product->deleteById($id);
-            header('Location: /admin/product');
+            Response::redirect('/admin/product');
         }
         $this->view->render('admin/delete.php', $pageData);
         return true;

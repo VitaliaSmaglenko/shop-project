@@ -7,6 +7,7 @@
 use Model\Cart;
 use Model\Products;
 use Base\Controller;
+use App\Response;
 
 class CartController extends Controller
 {
@@ -41,7 +42,7 @@ class CartController extends Controller
         $cart = new Cart();
         $result = $cart->addProduct($id);
         $path = ('/product/' . $id);
-        header('Location:' . $path);
+        Response::redirect($path);
         return true;
     }
 
@@ -55,7 +56,7 @@ class CartController extends Controller
         $cart = new Cart();
         $cart->deleteProduct($id);
         $path = ('/cart');
-        header('Location:'.$path);
+        Response::redirect($path);
         return true;
     }
 
@@ -69,7 +70,7 @@ class CartController extends Controller
         $cart = new Cart();
         $cart->plusProduct($id);
         $path = ('/cart');
-        header('Location:'.$path);
+        Response::redirect($path);
         return true;
     }
 
@@ -83,7 +84,7 @@ class CartController extends Controller
         $cart = new Cart();
         $cart->minusProduct($id);
         $path = ('/cart');
-        header('Location:'.$path);
+        Response::redirect($path);
         return true;
     }
 }

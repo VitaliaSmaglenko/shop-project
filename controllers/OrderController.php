@@ -11,6 +11,7 @@ use Model\User;
 use Model\CheckUser;
 use Model\Buyers;
 use Base\Controller;
+use App\Response;
 
 class OrderController extends Controller
 {
@@ -91,7 +92,7 @@ class OrderController extends Controller
             }
         } else {
             if ($cartProduct == false) {
-                header('Location: /');
+                Response::redirect('/');
             } else {
                 $productsIds = array_keys($cartProduct);
                 $items = $product->getByIds($productsIds);
@@ -110,7 +111,7 @@ class OrderController extends Controller
                 if ($isUser->isAuth()) {
                     $userId = $isUser->checkLogged();
                     if ($userId == false) {
-                        header('Location: /login');
+                        Response::redirect('/login');
                     }
                     $user = $user->getById($userId);
                     $firstName = $user->getFirstName();

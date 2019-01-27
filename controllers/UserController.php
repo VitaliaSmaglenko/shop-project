@@ -6,7 +6,7 @@ use Base\Controller;
 use Model\User;
 use Model\CheckUser;
 use Model\Authenticate;
-
+use App\Response;
 
 class UserController extends Controller
 {
@@ -45,7 +45,7 @@ class UserController extends Controller
                 $user = $user->get();
                 $auth = new Authenticate();
                 $auth->auth($user);
-                header('Location: /cabinet');
+                Response::redirect('/cabinet');
             }
         }
         $this->view->render('register.php', $dataPage);
@@ -73,7 +73,7 @@ class UserController extends Controller
                 $user = $user->get();
                 $auth = new Authenticate();
                 $auth->auth($user);
-                header('Location: /cabinet');
+                Response::redirect('/cabinet');
             }
         }
         $this->view->render('login.php', $dataPage);
@@ -88,7 +88,7 @@ class UserController extends Controller
     {
         $user = new Authenticate();
         $user->logout();
-        header('Location: /');
+        Response::redirect('/');
         return true;
     }
 }

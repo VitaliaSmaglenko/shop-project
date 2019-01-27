@@ -6,6 +6,7 @@ use Base\Controller;
 use Model\Products;
 use Model\Authenticate;
 use Model\FavoritesProduct;
+use App\Response;
 
 class ProductController extends Controller
 {
@@ -35,7 +36,7 @@ class ProductController extends Controller
             $favoritesProduct->setIdUser($userId);
             $favorites = $favoritesProduct->exist();
         }
-        $dataPage['favorites'] =$favorites;
+        $dataPage['favorites'] = $favorites;
         $this->view->render('product.php', $dataPage);
         return true;
     }
@@ -54,7 +55,7 @@ class ProductController extends Controller
         $favoritesProduct->setIdUser($userId);
         $favoritesProduct->create();
         $path = ('/product/'.$id);
-        header('Location:'.$path);
+        Response::redirect($path);
         return true;
     }
 }

@@ -10,6 +10,7 @@ use Model\Buyers;
 use Model\Orders;
 use Model\ProductOrder;
 use Model\FavoritesProduct;
+use App\Response;
 
 class CabinetController extends Controller
 {
@@ -22,7 +23,7 @@ class CabinetController extends Controller
         $user = new Authenticate();
         $userId = $user->checkLogged();
         if ($userId == false) {
-            header('Location: /login');
+            Response::redirect('/login');
         }
         $user = new User();
         $user = $user->getById($userId);
@@ -45,7 +46,7 @@ class CabinetController extends Controller
         $user = new Authenticate();
         $userId = $user->checkLogged();
         if ($userId == false) {
-            header('Location: /login');
+            Response::redirect('/login');
         }
         $user = new User();
         $user = $user->getById($userId);
@@ -119,7 +120,7 @@ class CabinetController extends Controller
         $user = new Authenticate();
         $userId = $user->checkLogged();
         if ($userId == false) {
-            header('Location: /login');
+            Response::redirect('/login');
         }
         $favoritesProduct = new FavoritesProduct();
         $favoritesProduct->setIdUser($userId);
@@ -141,7 +142,7 @@ class CabinetController extends Controller
         $favoritesProduct->setIdProduct($id);
         $favoritesProduct->delete();
         $path = ('/cabinet/favorites');
-        header('Location:'.$path);
+        Response::redirect($path);
         return true;
     }
 }

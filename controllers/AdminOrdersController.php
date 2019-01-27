@@ -8,6 +8,7 @@ use Model\ProductOrder;
 use Model\Buyers;
 use Model\Authenticate;
 use Model\User;
+use App\Response;
 
 class AdminOrdersController extends Controller
 {
@@ -20,7 +21,7 @@ class AdminOrdersController extends Controller
         $isUser = new Authenticate();
         $userId = $isUser->checkLogged();
         if ($userId == false) {
-            header('Location: /login');
+            Response::redirect('/login');
         }
         $user = new User();
         $user = $user->getById($userId);
@@ -53,7 +54,7 @@ class AdminOrdersController extends Controller
         if (isset($_POST['submitDelete'])) {
             $buyers = new Buyers();
             $buyers->deleteById($id);
-            header('Location: /admin/orders');
+            Response::redirect('/admin/orders');
         }
 
         $this->view->render('admin/deleteOrders.php', $pageData);
@@ -113,8 +114,7 @@ class AdminOrdersController extends Controller
                 $buyer->setPhone($options['phone']);
                 $buyer->setStatusOrder($options['status']);
                 $buyer->updateById($id);
-
-                header("Location: /admin/orders");
+                Response::redirect('/admin/orders');
             }
         }
         unset($_POST);
