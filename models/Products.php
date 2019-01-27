@@ -161,7 +161,7 @@ class Products extends Model
     {
         $ids = implode(',', $idsArray);
 
-        $sql = 'SELECT  name, products.id, price, products.image, description, specifications, availability, brand,'.
+        $sql = 'SELECT  name, products.id, price,  product_images.image, description, specifications, availability, brand,'.
           ' status FROM products LEFT JOIN product_images ON products.id = product_images.product_id WHERE status="1" '.
           ' AND products.id IN ('.$ids.')';
         $pdo = new PDODB();

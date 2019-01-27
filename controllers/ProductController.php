@@ -4,8 +4,10 @@
  */
 use Base\Controller;
 use Model\Products;
+use Model\Authenticate;
+use Model\FavoritesProduct;
 
-class ProductController extends Base\Controller
+class ProductController extends Controller
 {
     /**
      * Action for the product review page
@@ -21,7 +23,33 @@ class ProductController extends Base\Controller
         $cartObj = new Model\Cart();
         $cart = $cartObj->isProduct($id);
         $dataPage['cart'] = $cart;
+
+        $user = new Authenticate();
+        $userId = $user->checkLogged();
+        $dataPage['userId'] = $userId;
+        $favorites = 0;
+        $dataPage['favorites'] =$favorites;
+        if ($userId != false) {
+            $favoritesProduct = new FavoritesProduct();
+            $favoritesProduct->setIdProduct($id);
+            $favoritesProduct->setIdUser($userId);
+            $favorites = $favoritesProduct->exist();
+        }
+        $dataPage['favorites'] =$favorites;
         $this->view->render('product.php', $dataPage);
+        return true;
+    }
+
+    public function actionFavorites(int $id):bool
+    {
+        $user = new Authenticate();
+        $userId = $user->checkLogged();
+        $favoritesProduct = new FavoritesProduct();
+        $favoritesProduct->setIdProduct($id);
+        $favoritesProduct->setIdUser($userId);
+        $favoritesProduct->create();
+        $path = ('/product/'.$id);
+        header('Location:'.$path);
         return true;
     }
 }

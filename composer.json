@@ -14,7 +14,8 @@
     "autoload": {
         "psr-4": {"App\\": "core/",
                   "Model\\": "models/",
-                  "Base\\": "base/"
+                  "Base\\": "base/",
+                  "Controller\\" : "Controller/"
         }
     },
     "require-dev": {

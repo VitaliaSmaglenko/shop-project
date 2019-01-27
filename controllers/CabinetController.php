@@ -9,6 +9,7 @@ use Base\Controller;
 use Model\Buyers;
 use Model\Orders;
 use Model\ProductOrder;
+use Model\FavoritesProduct;
 
 class CabinetController extends Controller
 {
@@ -87,18 +88,47 @@ class CabinetController extends Controller
 
         $buyersId = $buyers->getUserById($userId);
         $dataPage['buyers'] = $buyersId;
-        $ordersData = array();
-        for ($i = 0; $i < count($buyersId); $i++) {
-               $orders = new Orders();
-               $ordersData[$i] = $orders->getByBuyersId($buyersId[$i]->getId());
+
+        if ($buyersId) {
+            $ordersData = array();
+            for ($i = 0; $i < count($buyersId); $i++) {
+                $orders = new Orders();
+                $ordersData[$i] = $orders->getByBuyersId($buyersId[$i]->getId());
+            }
+            $dataPage['orders'] = $ordersData;
+            $productOrder = new ProductOrder();
+            for ($i = 0; $i < count($ordersData); $i++) {
+                $productOrderData[$i] = $productOrder->getByOrdersId($ordersData[$i]->getId());
+            }
+            $dataPage['productOrder'] = $productOrderData;
         }
-        $dataPage['orders'] = $ordersData;
-        $productOrder = new ProductOrder();
-        for ($i = 0; $i < count($ordersData); $i++) {
-            $productOrderData[$i] = $productOrder->getByOrdersId($ordersData[$i]->getId());
-        }
-        $dataPage['productOrder'] = $productOrderData;
         $this->view->render('orders.php', $dataPage);
+        return true;
+    }
+
+    public function actionFavorites():bool
+    {
+        $user = new Authenticate();
+        $userId = $user->checkLogged();
+        if ($userId == false) {
+            header('Location: /login');
+        }
+        $favoritesProduct = new FavoritesProduct();
+        $favoritesProduct->setIdUser($userId);
+        $product = $favoritesProduct->get();
+
+        $dataPage['products'] = $product;
+        $this->view->render('favorites.php', $dataPage);
+        return true;
+    }
+
+    public function actionDelete(int $id):bool
+    {
+        $favoritesProduct = new FavoritesProduct();
+        $favoritesProduct->setIdProduct($id);
+        $favoritesProduct->delete();
+        $path = ('/cabinet/favorites');
+        header('Location:'.$path);
         return true;
     }
 }
