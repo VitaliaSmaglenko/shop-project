@@ -72,9 +72,85 @@
                 <?php }
         }?>
     </table>
+    <div class="comments">
+
+        <h3 class="title-comments">Комментарии (<?php echo $countComment?>)</h3>
+
+        <br>
+         <?php if ($userId != false) { ?>
+        <form method="post">
+            <textarea rows="4" cols="100" name="text"></textarea>
+            <br>  <br>
+            <button class="btn btn-primary" name="submitAdd" type="submit">Add comment</button>
+            <br>
+        </form>
+        <br>
+        <?php } else {?>
+             <p class="lead">Log in to leave a comment.</p>
+        <?php } ?>
+        <?php if ($comment) {?>
+         <?php for ($i = 0; $i < count($comment); $i++) {?>
+        <ul class="media-list">
+            <!-- Комментарий (уровень 1) -->
+            <li class="media">
+
+                <div class="media-body">
+                    <div class="media-heading">
+                        <div class="author"><?php echo $comment[$i]->getUsername();?></div>
+                        <div class="metadata">
+                            <span class="date"><?php echo $comment[$i]->getCreatedAt();?></span>
+                        </div>
+                    </div> <br>
+                    <div class="media-text text-justify"><?php echo $comment[$i]->getText();?></div>
+
+                    <?php  if ($show == false) {?>
+                          <form method="post">
+                            <div class="footer-comment">
+                                  <span class="comment-reply"> <button name="subReplay.<?php echo $comment[$i]->getId()?>" class="reply btn-primary"> ответить
+
+                                    </button>  </span>
+                            </div>
+                            <br>
+                        </form>
+                        <?php } else {?>
+                        <br>
+                        <form method="post">
+                            <textarea rows="2" cols="90" name="textReplay"></textarea>
+                            <br>  <br>
+
+                            <button class="reply " name="submitAddReplay.<?php echo $comment[$i]->getId()?>" type="submit">Add replay</button>
+                            <br>
+                        </form>
+                        <br>
+                     <?php } ?>
+
+                    <div class="media two-level" >
+
+                        <div class="media-body">
+                            <div class="media-heading">
+                                <div class="author">Пётр</div>
+                                <div class="metadata">
+                                    <span class="date">19 ноября 2015, 10:28</span>
+                                </div>
+                            </div>
+                            <div class="media-text text-justify">Dolor sit, ametsci velre veritatis et quasi architecm, nisi ut labore et aut reiciendis.</div>
+                            <div class="footer-comment"> <span class="comment-reply"> <a href="#" class="reply">ответить</a> <br> </span></div>
+                    </div>
+                </div>
+
+                </div>
+            </li>
+        </ul>
+            <?php }?>
+        <?php }?>
+
+    </div>
+</div>
 
 </div>
-</div>
+
+
+
 
 <hr class="featurette-divider"><br>
 <?php include("views/include/footer.php"); ?>

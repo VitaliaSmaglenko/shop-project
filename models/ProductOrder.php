@@ -122,7 +122,7 @@ class ProductOrder
     }
 
 
-    public function setQuantity(int $quantity):bool
+    public function setQuantity(int $quantity):void
     {
         $this->quantity = $quantity;
     }

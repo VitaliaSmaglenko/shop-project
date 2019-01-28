@@ -7,6 +7,10 @@ use Model\Products;
 use Model\Authenticate;
 use Model\FavoritesProduct;
 use App\Response;
+use Model\CommentProduct;
+use App\Request;
+use Model\NestedComment;
+
 
 class ProductController extends Controller
 {
@@ -30,12 +34,47 @@ class ProductController extends Controller
         $dataPage['userId'] = $userId;
         $favorites = 0;
         $dataPage['favorites'] =$favorites;
-        if ($userId != false) {
+        $comment = new CommentProduct();
+
+        $commentList = $comment->get($id);
+        $count = $comment->count($id);
+        var_dump($_POST);
+        $dataPage['countComment'] = $count;
+        $dataPage['comment'] = $commentList;
+         if ($userId != false) {
             $favoritesProduct = new FavoritesProduct();
             $favoritesProduct->setIdProduct($id);
             $favoritesProduct->setIdUser($userId);
             $favorites = $favoritesProduct->exist();
+
+            $request = new Request();
+            if (null !== $request->post('submitAdd')) {
+                $comment->setUserId($userId);
+                $comment->setProductId($id);
+                $comment->setData();
+                $comment->setText($request->post('text'));
+                $comment->create();
+                Response::redirect('/product/'.$id);
+
+            }
+            $show = false;
+
+            var_dump(explode("_", $request->post('subReplay')));
+             if (null !==  explode("_", $request->post('subReplay'))) {
+                 var_dump($request->post('commentId'));
+                 $show = true;
+
+              }
+             $dataPage['show'] = $show;
+
+             if (null !== explode("_", $request->post('submitAddReplay'))) {
+                 var_dump($request->post('commentId'));
+                // Response::redirect('/product/'.$id);
+
+             }
+
         }
+
         $dataPage['favorites'] = $favorites;
         $this->view->render('product.php', $dataPage);
         return true;
@@ -55,6 +94,15 @@ class ProductController extends Controller
         $favoritesProduct->setIdUser($userId);
         $favoritesProduct->create();
         $path = ('/product/'.$id);
+        Response::redirect($path);
+        return true;
+    }
+
+    public function actionReplay(int $idProd, int $idComm)
+    {
+        $nesComment = new NestedComment();
+
+        $path = ('/product/'.$idProd);
         Response::redirect($path);
         return true;
     }

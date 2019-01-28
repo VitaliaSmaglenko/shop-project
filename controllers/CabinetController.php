@@ -107,7 +107,7 @@ class CabinetController extends Controller
             for ($i = 0; $i < count($ordersData); $i++) {
                 $productOrderData[$i] = $productOrder->getByOrdersId($ordersData[$i]->getId());
             }
-            $dataPage['productOrder'] = $productOrderData;
+          $dataPage['productOrder'] = $productOrderData;
         }
         $this->view->render('orders.php', $dataPage);
         return true;

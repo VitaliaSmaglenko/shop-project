@@ -30,6 +30,7 @@ return array(
     'category/product/([0-9])+' => 'product/view/$1',
         //'category/[a-z]+/([0-9])+' => 'catalog/category/$1',
     //products:
+    'replay/([0-9]+)/([0-9]+)' => 'product/replay/$1/$2',
     'product/([0-9]+)' => 'product/view/$1',
     'favorites/([0-9]+)' => 'product/favorites/$1',
      //'catalog/page-([0-9]+)' => 'catalog/',

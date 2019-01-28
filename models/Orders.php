@@ -65,7 +65,7 @@ class Orders
      * @param int $id
      * @return int
      */
-    public function getById(int $id):int
+    public function getById(int $id)
     {
         $sql = 'SELECT orders.id, id_buyers, total_price, total_count, orders.status'.
             ' FROM orders INNER JOIN buyers  ON orders.id_buyers=buyers.id WHERE orders.id_buyers = :id';
@@ -130,7 +130,7 @@ class Orders
         $this->id = $id;
     }
 
-    public function getId():int
+    public function getId()
     {
         return $this->id;
     }
@@ -163,12 +163,12 @@ class Orders
     {
         return $this->totalCount;
     }
-    public function setStatus(int $status):void
+    public function setStatus($status):void
     {
         $this->status = $status;
     }
 
-    public function getStatus():int
+    public function getStatus()
     {
         return $this->status;
     }

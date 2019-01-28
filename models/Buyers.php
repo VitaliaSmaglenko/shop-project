@@ -256,19 +256,19 @@ class Buyers extends Model
         return $this->userId;
     }
 
-    public function setStatusOrder(int $orderStatus):void
+    public function setStatusOrder($orderStatus):void
     {
         $this->orderStatus = $orderStatus;
     }
 
-    public function getStatusOrder():int
+    public function getStatusOrder()
     {
         return $this->orderStatus;
     }
 
     public function setData():void
     {
-        $this->createdAt = date('Y-m-d');
-        $this->updatedAt = date('Y-m-d');
+        $this->createdAt = date('Y-m-d H:i:s');
+        $this->updatedAt = date('Y-m-d H:i:s');
     }
 }
