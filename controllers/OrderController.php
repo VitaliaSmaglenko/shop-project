@@ -11,9 +11,15 @@ use Model\User;
 use Model\CheckUser;
 use Model\Buyers;
 use Base\Controller;
+use App\Response;
+use App\Request;
 
 class OrderController extends Controller
 {
+    /**
+     * Action for make an order
+     * @return bool
+     */
     public function actionCheckout():bool
     {
         $cart = new Cart();
@@ -26,15 +32,16 @@ class OrderController extends Controller
         $productOrder = new ProductOrder();
         $result = false;
         $dataPage['result'] = $result;
+        $request = new Request();
         if ($cartProduct == false) {
             unset($_POST);
         }
 
-        if (isset($_POST['submitSave'])) {
-            $firstName = $_POST['firstName'];
-            $lastName = $_POST['lastName'];
-            $phone = $_POST['phone'];
-            $comment = $_POST['comment'];
+        if (null !== $request->post('submitSave')) {
+            $firstName = $request->post('firstName');
+            $lastName = $request->post('lastName');
+            $phone = $request->post('phone');
+            $comment = $request->post('comment');
 
             $dataPage['phone'] = $phone;
             $dataPage['lastName'] = $lastName;
@@ -55,7 +62,7 @@ class OrderController extends Controller
                 } else {
                     $userId = $isUser->checkLogged();
                     if ($userId == false) {
-                        header('Location: /login');
+                        Response::redirect('/login');
                     }
                 }
                 $buyer->setLastName($lastName);
@@ -87,7 +94,7 @@ class OrderController extends Controller
             }
         } else {
             if ($cartProduct == false) {
-                header('Location: /');
+                Response::redirect('/');
             } else {
                 $productsIds = array_keys($cartProduct);
                 $items = $product->getByIds($productsIds);
@@ -106,7 +113,7 @@ class OrderController extends Controller
                 if ($isUser->isAuth()) {
                     $userId = $isUser->checkLogged();
                     if ($userId == false) {
-                        header('Location: /login');
+                        Response::redirect('/login');
                     }
                     $user = $user->getById($userId);
                     $firstName = $user->getFirstName();

@@ -26,7 +26,7 @@ class User
      * @return bool
      */
 
-    public function createUser()
+    public function createUser():bool
     {
         $sql ='INSERT INTO user (first_name, last_name, user_name, email, password, phone) '.
                ' VALUES (:firstName, :lastName, :userName, :email, :password, :phone)';
@@ -45,7 +45,7 @@ class User
      * @return User
      */
 
-    public function get()
+    public function get():User
     {
         $sql ='SELECT  user_name, first_name, last_name, email, id, password, phone FROM user '.
             ' WHERE email = :email AND password = :password';
@@ -67,10 +67,10 @@ class User
 
     /**
      * Returns authorized user by id
-     * @param $id
+     * @param int $id
      * @return User
      */
-    public function getById($id)
+    public function getById(int $id):User
     {
         $sql ='SELECT  user_name, first_name, last_name, email, id, password, phone, role FROM user  WHERE id = :id';
         $pdo = new PDODB();
@@ -92,10 +92,10 @@ class User
 
     /**
      * Updates user data by id
-     * @param $id
+     * @param int $id
      * @return bool
      */
-    public function updateUser($id)
+    public function updateUser(int $id):bool
     {
         $sql ='UPDATE user SET first_name = :firstName, last_name = :lastName, password = :password, phone = :phone'.
             ' WHERE id = :id';
@@ -106,82 +106,82 @@ class User
         return $result;
     }
 
-    public function setUserName($userName)
+    public function setUserName(string $userName):void
     {
         $this->userName = $userName;
     }
 
-    public function getUserName()
+    public function getUserName():string
     {
         return $this->userName;
     }
 
-    public function setLastName($lastName)
+    public function setLastName(string $lastName):void
     {
         $this->lastName = $lastName;
     }
 
-    public function getLastName()
+    public function getLastName():string
     {
         return $this->lastName;
     }
 
-    public function setFirstName($firstName)
+    public function setFirstName(string $firstName):void
     {
         $this->firstName = $firstName;
     }
 
-    public function getFirstName()
+    public function getFirstName():string
     {
         return $this->firstName;
     }
 
-    public function setPassword($password)
+    public function setPassword(string $password):void
     {
         $this->password = $password;
     }
 
-    public function getPassword()
+    public function getPassword():string
     {
         return $this->password;
     }
 
-    public function setEmail($email)
+    public function setEmail(string $email):void
     {
         $this->email = $email;
     }
 
-    public function getEmail()
+    public function getEmail():string
     {
         return $this->email;
     }
 
-    public function setId($id)
+    public function setId(int $id):void
     {
         $this->id = $id;
     }
 
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
-    public function setPhone($phone)
+    public function setPhone(string $phone):void
     {
         $this->phone = $phone;
     }
 
-    public function getPhone()
+    public function getPhone():string
     {
         return $this->phone;
     }
 
-    public function setRole($role)
+    public function setRole(string $role):void
     {
         $this->role = $role;
     }
 
-    public function getRole()
+    public function getRole():string
     {
         return $this->role;
     }

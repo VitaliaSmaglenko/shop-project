@@ -1,8 +1,13 @@
 <?php
 
 return array(
+
     //feedback:
     'feedback' => 'feedback/sender',
+
+    'delete/favorites/([0-9]+)' => 'cabinet/delete/$1',
+
+
     //admin:
     'admin/orders/view/([0-9]+)' => 'adminOrders/show/$1',
     'admin/orders/delete/([0-9]+)' => 'adminOrders/delete/$1',
@@ -26,8 +31,8 @@ return array(
         //'category/[a-z]+/([0-9])+' => 'catalog/category/$1',
     //products:
     'product/([0-9]+)' => 'product/view/$1',
-
-    //'catalog/page-([0-9]+)' => 'catalog/',
+    'favorites/([0-9]+)' => 'product/favorites/$1',
+     //'catalog/page-([0-9]+)' => 'catalog/',
     'catalog' => 'catalog/index',
     'category' => 'catalog/index',
     'category/by-price/([0-9])+' => 'catalog/priceCategory/$1',
@@ -47,11 +52,12 @@ return array(
     'login' => 'user/login',
     'logout' => 'user/logout',
     //cabinet
+    'delete/favorites/([0-9]+)' => 'cabinet/delete/$1',
+    'cabinet/favorites' => 'cabinet/favorites',
     'cabinet/orders' => 'cabinet/orders',
     'cabinet'=> 'cabinet/index',
     'edit'=> 'cabinet/edit',
     '([A-Za-z0-9]+)' => 'site/notFound',
     //main page:
-    'mysite' => 'site/index',
     '' => 'site/index',
 );

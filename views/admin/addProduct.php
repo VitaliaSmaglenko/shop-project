@@ -23,12 +23,13 @@
 
                 <h2>Add product</h2>
                 <br>
-                <form method="post" enctype="multipart/form-data">
-                    <div class="form-row">
-                        <div class="col-md-4 mb-3">
+                <form method="post" enctype="multipart/form-data" >
+                    <div class="form-row ">
+                        <div class="col-md-10 mb-1">
                             <label for="name">Product name </label>
                             <br>
-                            <input type="text" id="name" name="name">
+                            <textarea name="name" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+
                         </div>
                     </div>
 
@@ -80,19 +81,19 @@
 
 
                     <div class="form-row">
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-10 mb-1">
                             <label for="description">Description </label>
                             <br>
-                            <textarea name="description"></textarea>
+                            <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
                     </div>
 
 
                     <div class="form-row">
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-10 mb-1">
                             <label for="specifications">Specifications</label>
                             <br>
-                            <textarea name="specifications"></textarea>
+                            <textarea name="specifications"  class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
                     </div>
 

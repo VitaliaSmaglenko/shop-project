@@ -21,7 +21,10 @@ class Category
     private $updatedAt;
     private $createdAt;
 
-    public function create()
+    /**
+     * @return bool
+     */
+    public function create():bool
     {
         $sql ='INSERT INTO category (category,  status, updated_at, created_at)'.
             ' VALUES (:category, :status, :update_at, :created_at)';
@@ -37,7 +40,7 @@ class Category
      * @return  array
      */
 
-    public function get()
+    public function get():array
     {
         $sql ='SELECT  category, id, status FROM category  WHERE status = "1"';
         $pdo = new PDODB();
@@ -53,7 +56,11 @@ class Category
         return $categoryList;
     }
 
-    public function getAdmin()
+    /**
+     * Display all categories
+     * @return array
+     */
+    public function getAdmin():array
     {
         $sql ='SELECT  category, id, status FROM category';
         $pdo = new PDODB();
@@ -71,7 +78,11 @@ class Category
         return $categoryList;
     }
 
-    public function getById($id)
+    /**
+     * @param int $id
+     * @return Category
+     */
+    public function getById(int $id):Category
     {
         $sql ='SELECT  category, id, status FROM category WHERE id = :id';
         $pdo = new PDODB();
@@ -86,7 +97,11 @@ class Category
         return $objCategory;
     }
 
-    public function updateById($id)
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function updateById(int $id):bool
     {
         $sql = 'UPDATE category SET  category = :category, status = :status, '.
             ' updated_at = :update_at WHERE id = :id';
@@ -98,7 +113,11 @@ class Category
         return $result;
     }
 
-    public function deleteById($id)
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function deleteById(int $id):bool
     {
         $sql = "DELETE FROM category WHERE id = :id";
         $pdo = new PDODB();
@@ -107,52 +126,52 @@ class Category
         return $category;
     }
 
-    public function setId($id)
+    public function setId(int $id):void
     {
         $this->id = $id;
     }
 
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
-    public function setCategory($category)
+    public function setCategory(string $category):void
     {
         $this->category = $category;
     }
 
-    public function getCategory()
+    public function getCategory():string
     {
         return $this->category;
     }
 
-    public function setStatus($status)
+    public function setStatus(int $status):void
     {
         $this->status = $status;
     }
 
-    public function getStatus()
+    public function getStatus():int
     {
         return $this->status;
     }
 
-    public function setUpdatedAt()
+    public function setUpdatedAt():void
     {
         $this->updatedAt = date('Y-m-d');
     }
 
-    public function getUpdatedAt()
+    public function getUpdatedAt():string
     {
         return $this->updatedAt;
     }
 
-    public function setCreatedAt()
+    public function setCreatedAt():void
     {
         $this->createdAt = date('Y-m-d');
     }
 
-    public function getCreatedAt()
+    public function getCreatedAt():string
     {
         return $this->createdAt;
     }

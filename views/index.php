@@ -10,12 +10,14 @@ include("views/include/header.php");
 
                 <td width="50%">
 
-                    <h1 class="font-italic">Some information about discounts and offers</h1>
-                    <p class="lead my-3">little explanatory text.</p>
+                    <h1 class="font-italic">
+                        You will find your phone</h1>
+                    <p class="lead my-3">Phones from 1200 UAH</p>
 
                 </td>
-                <td width="50%"  align="center" valign="center">
-                    <img src="components/img/shopcard.png" width="200" height="200">
+                <td width="50%"  align="center" valign="center"> <a href="/catalog">
+                    <img src="components/img/phone.jpg" width="650" height="300">
+                    </a>
                 </td>
             </tr>
 
@@ -84,8 +86,12 @@ include("views/include/header.php");
 
         </div>
     </div>
+<?php
+include("views/slider.php");
+?>
 </main>
-<br>
+    <br>
+
 <hr class="featurette-divider"><br>
 <?php
 include("views/include/footer.php");

@@ -16,7 +16,9 @@
         "psr-4": {"App\\": "core/",
                   "Model\\": "models/",
                   "Base\\": "base/",
-                  "Sender\\": "sender/src"
+                  "Sender\\": "sender/src",
+                  "Controller\\" : "Controller/"
+
         }
     },
     "require-dev": {

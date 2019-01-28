@@ -120,14 +120,21 @@ class Cart
         return $price;
     }
 
-    public function clear()
+    /**
+     * Clear the session
+     */
+    public function clear():void
     {
         if ($this->isCart()) {
             unset($_SESSION['products']);
         }
     }
 
-    public function deleteProduct($id)
+    /**
+     * Delete product from session
+     * @param $id
+     */
+    public function deleteProduct(int $id)
     {
         $cartProduct = $this->getProducts();
         $product = new Products();
@@ -137,7 +144,11 @@ class Cart
         return;
     }
 
-    public function minusProduct($id)
+    /**
+     * Minus the value of the product in the session
+     * @param int $id
+     */
+    public function minusProduct(int $id)
     {
         $cartProduct = $this->getProducts();
         if ($cartProduct[$id] != 1) {
@@ -152,7 +163,11 @@ class Cart
         return;
     }
 
-    public function plusProduct($id)
+    /**
+     * Plus the value of the product in the session
+     * @param int $id
+     */
+    public function plusProduct(int $id)
     {
         $cartProduct = $this->getProducts();
         if ($cartProduct[$id]) {

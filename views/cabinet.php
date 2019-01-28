@@ -25,6 +25,9 @@
 
         <br>
         <a class=" h4  font-weight-normal link-edit" href="/cabinet/orders">Your orders</a>
+        <br>
+        <br>
+        <a class=" h4  font-weight-normal link-edit" href="/cabinet/favorites">Favorites product</a>
 
         <?php if ($role == true) {?>
             <br>

@@ -24,7 +24,7 @@ class Session
      * @return bool
      */
 
-    public function sessionExist()
+    public function sessionExist():bool
     {
             return session_status() == PHP_SESSION_ACTIVE;
     }
@@ -87,7 +87,7 @@ class Session
      * Checks cookie existence
      * @return bool
      */
-    public function cookieExists()
+    public function cookieExists():bool
     {
         if (isset($_COOKIE['PHPSESSID'])) {
             return true;

@@ -14,8 +14,8 @@
             <h1 class="h2">Your orders</h1>
 
         </div>
-
-        <?php   for ($i = 0; $i < count($orders); $i++) {?>
+        <?php if ($buyers) {?>
+            <?php   for ($i = 0; $i < count($orders); $i++) {?>
         <h2>Show orders #<?php echo $orders[$i]->getId();?></h2>
         <br>
         <div class="table-responsive">
@@ -80,10 +80,13 @@
                 </tbody>
             </table>
         </div>
+            <?php }?>
+        <?php  } else {?>
+            <p><span>You have not made an order</span></p>
         <?php }?>
         <br><br><br><br>
         <a class="btn  btn-primary" href="/cabinet">Back</a>
-
+</div>
 
  <hr class="featurette-divider"><br>
 <?php include("views/include/footer.php"); ?>

@@ -27,7 +27,7 @@ class Products extends Model
     private $createdAt;
     private $isNew;
 
-    const LIMIT = 3;
+    const LIMIT = 6;
     /**
      * @param bool $id
      * @param $page
@@ -161,7 +161,7 @@ class Products extends Model
     {
         $ids = implode(',', $idsArray);
 
-        $sql = 'SELECT  name, products.id, price, products.image, description, specifications, availability, brand,'.
+        $sql = 'SELECT  name, products.id, price,  product_images.image, description, specifications, availability, brand,'.
           ' status FROM products LEFT JOIN product_images ON products.id = product_images.product_id WHERE status="1" '.
           ' AND products.id IN ('.$ids.')';
         $pdo = new PDODB();
@@ -280,6 +280,11 @@ class Products extends Model
         return $result;
     }
 
+    /**
+     * @param int $id
+     * @param int $value
+     * @return bool
+     */
     public function updateQuantity(int $id, int $value):bool
     {
         $sql = 'UPDATE products SET availability = availability + :value  WHERE id = :id';
@@ -289,27 +294,27 @@ class Products extends Model
         return $result;
     }
 
-    public function setName($name)
+    public function setName(string $name):void
     {
         $this->name = $name;
     }
 
-    public function getName()
+    public function getName():string
     {
         return $this->name;
     }
 
-    public function setDescription($description)
+    public function setDescription(string $description):void
     {
         $this->description = $description;
     }
 
-    public function getDescription()
+    public function getDescription():string
     {
         return $this->description;
     }
 
-    public function setImage($image)
+    public function setImage($image):void
     {
         $this->image = $image;
     }
@@ -319,100 +324,100 @@ class Products extends Model
         return $this->image;
     }
 
-    public function setPrice($price)
+    public function setPrice(int $price):void
     {
         $this->price = $price;
     }
 
-    public function getPrice()
+    public function getPrice():int
     {
         return $this->price;
     }
-    public function setId($id)
+    public function setId(int $id):void
     {
         $this->id = $id;
     }
 
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
-    public function setSpecifications($specifications)
+    public function setSpecifications(string $specifications):void
     {
         $this->specifications = $specifications;
     }
 
-    public function getSpecifications()
+    public function getSpecifications():string
     {
         return $this->specifications;
     }
 
-    public function setAvailability($availability)
+    public function setAvailability(int $availability):void
     {
         $this->availability = $availability;
     }
 
-    public function getAvailability()
+    public function getAvailability():int
     {
         return $this->availability;
     }
 
-    public function setBrand($brand)
+    public function setBrand(string $brand):void
     {
         $this->brand = $brand;
     }
 
-    public function getBrand()
+    public function getBrand():string
     {
         return $this->brand;
     }
 
-    public function setStatus($status)
+    public function setStatus(int $status):void
     {
          $this->status = $status;
     }
 
-    public function getStatus()
+    public function getStatus():int
     {
         return $this->status;
     }
 
-    public function setCategoryId($categoryId)
+    public function setCategoryId(int $categoryId):void
     {
         $this->categoryId = $categoryId;
     }
 
-    public function getCategoryId()
+    public function getCategoryId():int
     {
         return $this->categoryId;
     }
-    public function setUpdatedAt()
+    public function setUpdatedAt():void
     {
         $this->updatedAt = date('Y-m-d');
     }
 
-    public function getUpdatedAt()
+    public function getUpdatedAt():string
     {
         return $this->updatedAt;
     }
 
-    public function setCreatedAt()
+    public function setCreatedAt():void
     {
         $this->createdAt = date('Y-m-d');
     }
 
-    public function getCreatedAt()
+    public function getCreatedAt():string
     {
         return $this->createdAt;
     }
 
-    public function setIsNew($isNew)
+    public function setIsNew(int $isNew):void
     {
         $this->isNew = $isNew;
     }
 
-    public function getIsNew()
+    public function getIsNew():int
     {
         return $this->isNew;
     }

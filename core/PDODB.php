@@ -15,15 +15,15 @@ class PDODB
     /**
      * @var Log
      */
-    private $logger;
-    private $pdo;
+    private static $logger;
+    private static $pdo;
 
     /**
      * PDODB constructor.
      */
     public function __construct()
     {
-        $this->logger = new Log('pdo');
+        self::$logger = new Log('pdo');
     }
 
     /**
@@ -31,7 +31,7 @@ class PDODB
      * @return PDO
      */
 
-    public function connect()
+    public static function connect()
     {
         $conf = include('config/db.php');
         $host = $conf['host'];
@@ -47,21 +47,24 @@ class PDODB
         ];
 
         try {
-            $pdo = new PDO($dsn, $user, $pass, $opt);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $pdo;
+            self::$pdo = new PDO($dsn, $user, $pass, $opt);
+            self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return self::$pdo;
         } catch (PDOException $e) {
-            die('Подключение не удалось: ' . $this->logger->error($e->getMessage()));
+            die('Подключение не удалось: ' . self::$logger->error($e->getMessage()));
         }
     }
 
-    public function getPDO()
+    /**
+     * @return PDO
+     */
+    public static function getPDO():pdo
     {
-        if ($this->pdo != null) {
-            return $this->pdo;
+        if (self::$pdo != null) {
+            return self::$pdo;
         }
-        $this->pdo = $this->connect();
-        return $this->pdo;
+        self::$pdo = self::connect();
+        return self::$pdo;
     }
 
     /**
@@ -72,7 +75,7 @@ class PDODB
      */
     public function queryData(string $sql, string $method = ''):array
     {
-        $pdo = $this->getPDO();
+        $pdo = self::getPDO();
         try {
             $result = $pdo->query($sql);
             if ($method == "setFetchMode") {
@@ -93,7 +96,7 @@ class PDODB
      */
     public function prepareData(string $sql, array $data, string $method)
     {
-        $pdo=$this->getPDO();
+        $pdo = self::getPDO();
         try {
             $result = $pdo->prepare($sql);
             foreach ($data as $k => $v) {

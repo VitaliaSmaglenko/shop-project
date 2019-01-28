@@ -9,6 +9,9 @@ use Base\Controller;
 use Model\Buyers;
 use Model\Orders;
 use Model\ProductOrder;
+use Model\FavoritesProduct;
+use App\Response;
+use App\Request;
 
 class CabinetController extends Controller
 {
@@ -21,7 +24,7 @@ class CabinetController extends Controller
         $user = new Authenticate();
         $userId = $user->checkLogged();
         if ($userId == false) {
-            header('Location: /login');
+            Response::redirect('/login');
         }
         $user = new User();
         $user = $user->getById($userId);
@@ -44,7 +47,7 @@ class CabinetController extends Controller
         $user = new Authenticate();
         $userId = $user->checkLogged();
         if ($userId == false) {
-            header('Location: /login');
+            Response::redirect('/login');
         }
         $user = new User();
         $user = $user->getById($userId);
@@ -57,11 +60,12 @@ class CabinetController extends Controller
 
         $result = false;
         $dataPage['result'] = $result;
-        if (isset($_POST['submitSave'])) {
-            $firstName = $_POST['firstName'];
-            $lastName = $_POST['lastName'];
-            $password=$_POST['password'];
-            $phone = $_POST['phone'];
+        $request = new Request();
+        if (null !== $request->post('submitSave')) {
+            $firstName = $request->post('firstName');
+            $lastName = $request->post('lastName');
+            $password = $request->post('password');
+            $phone = $request->post('phone');
             $errors = new CheckUser();
             $errors = $errors->checkEdit((hash("md5", $password)), $firstName, $lastName, $phone);
             $dataPage['errors'] = $errors;
@@ -78,6 +82,10 @@ class CabinetController extends Controller
         return true;
     }
 
+    /**
+     * Action for display orders
+     * @return bool
+     */
     public function actionOrders():bool
     {
         $user = new Authenticate();
@@ -87,18 +95,56 @@ class CabinetController extends Controller
 
         $buyersId = $buyers->getUserById($userId);
         $dataPage['buyers'] = $buyersId;
-        $ordersData = array();
-        for ($i = 0; $i < count($buyersId); $i++) {
-               $orders = new Orders();
-               $ordersData[$i] = $orders->getByBuyersId($buyersId[$i]->getId());
+
+        if ($buyersId) {
+            $ordersData = array();
+            for ($i = 0; $i < count($buyersId); $i++) {
+                $orders = new Orders();
+                $ordersData[$i] = $orders->getByBuyersId($buyersId[$i]->getId());
+            }
+            $dataPage['orders'] = $ordersData;
+            $productOrder = new ProductOrder();
+            for ($i = 0; $i < count($ordersData); $i++) {
+                $productOrderData[$i] = $productOrder->getByOrdersId($ordersData[$i]->getId());
+            }
+            $dataPage['productOrder'] = $productOrderData;
         }
-        $dataPage['orders'] = $ordersData;
-        $productOrder = new ProductOrder();
-        for ($i = 0; $i < count($ordersData); $i++) {
-            $productOrderData[$i] = $productOrder->getByOrdersId($ordersData[$i]->getId());
-        }
-        $dataPage['productOrder'] = $productOrderData;
         $this->view->render('orders.php', $dataPage);
+        return true;
+    }
+
+    /**
+     * Action for display favorites products
+     * @return bool
+     */
+    public function actionFavorites():bool
+    {
+        $user = new Authenticate();
+        $userId = $user->checkLogged();
+        if ($userId == false) {
+            Response::redirect('/login');
+        }
+        $favoritesProduct = new FavoritesProduct();
+        $favoritesProduct->setIdUser($userId);
+        $product = $favoritesProduct->get();
+
+        $dataPage['products'] = $product;
+        $this->view->render('favorites.php', $dataPage);
+        return true;
+    }
+
+    /**
+     * Action for delete favorites products
+     * @param int $id
+     * @return bool
+     */
+    public function actionDelete(int $id):bool
+    {
+        $favoritesProduct = new FavoritesProduct();
+        $favoritesProduct->setIdProduct($id);
+        $favoritesProduct->delete();
+        $path = ('/cabinet/favorites');
+        Response::redirect($path);
         return true;
     }
 }

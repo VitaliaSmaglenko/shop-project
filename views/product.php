@@ -22,7 +22,15 @@
                 <div class="row featurette">
                     <div class="col-md-7 order-md-2">
                         <h3 class="featurette-heading"> <?php echo  $product->getName();?></h3>
-                        <h4><span class="text-muted"><?php echo $product->getPrice();?></span></h4>
+                        <h4><span class="text-muted "><?php echo $product->getPrice();?></span></h4>
+                        <?php if ($userId != false) {
+                            if ($favorites == 0) { ?>
+                        <a class="font-weight-normal link-edit" href="/favorites/<?php echo $product->getId();?>">
+                        <span class="">Add to favorites</span></a>
+                            <?php } else {?>
+                         <span class="">Product in favorites</span></a>
+                            <?php }
+                        }?>
                         <h4><span class="text-muted">In stock: <?php echo $product->getAvailability();?></span></h4>
                         <p class="lead">Product character:</p>
                         <ul class="list-group list-group-flush">
@@ -38,7 +46,7 @@
         <tr>
             <td colspan="2"> <p class="lead"><?php echo $product->getDescription();?></p></td>
         </tr>
-        <?php if (!$cart) {?>
+        <?php if (!$cart && $product->getAvailability() != 0) {?>
         <tr>
             <td colspan="2" class="td-sub">
                 <a href="../add/<?php echo $product->getId();?>"

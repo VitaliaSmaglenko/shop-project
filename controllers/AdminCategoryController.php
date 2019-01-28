@@ -6,6 +6,8 @@ use Model\Authenticate;
 use Model\User;
 use Base\Controller;
 use Model\Category;
+use App\Response;
+use App\Request;
 
 class AdminCategoryController extends Controller
 {
@@ -18,7 +20,7 @@ class AdminCategoryController extends Controller
         $isUser = new Authenticate();
         $userId = $isUser->checkLogged();
         if ($userId == false) {
-            header('Location: /login');
+            Response::redirect('/login');
         }
         $user = new User();
         $user = $user->getById($userId);
@@ -48,10 +50,10 @@ class AdminCategoryController extends Controller
     {
         $category = new Category();
         $dataPage[] = '';
-
-        if (isset($_POST["submitSave"])) {
-            $options['category'] = $_POST['category'];
-            $options['status'] = $_POST['status'];
+        $request = new Request();
+        if (null !== $request->post("submitSave")) {
+            $options['category'] = $request->post('category');
+            $options['status'] = $request->post('status');
 
             $errors = false;
             if (!isset($options['category']) || empty($options['category'])) {
@@ -64,7 +66,7 @@ class AdminCategoryController extends Controller
                   $category->setCreatedAt();
                   $category->setUpdatedAt();
                   $category->create();
-                  header("Location: /admin/category");
+                  Response::redirect('/admin/category');
             }
         }
         unset($_POST);
@@ -81,10 +83,10 @@ class AdminCategoryController extends Controller
         $category = new Category();
         $categories = $category->getById($id);
         $dataPage['categories'] = $categories;
-
-        if (isset($_POST["submitSave"])) {
-            $options['category'] = $_POST['category'];
-            $options['status'] = $_POST['status'];
+        $request = new Request();
+        if (null !== $request->post("submitSave")) {
+            $options['category'] = $request->post('category');
+            $options['status'] = $request->post('status');
             $errors = false;
             if (!isset($options['category']) || empty($options['category'])) {
                 $errors[] = "Fill in the field ".$options['category'];
@@ -95,7 +97,7 @@ class AdminCategoryController extends Controller
                 $category->setStatus($options['status']);
                 $category->setUpdatedAt();
                 $category->updateById($id);
-                header("Location: /admin/category");
+                Response::redirect('/admin/category');
             }
         }
         unset($_POST);
@@ -111,10 +113,11 @@ class AdminCategoryController extends Controller
     public function actionDelete(int $id):bool
     {
         $pageData['id'] = $id;
-        if (isset($_POST['submitDelete'])) {
+        $request = new Request();
+        if (null !== $request->post('submitDelete')) {
             $category = new Category();
             $category->deleteById($id);
-            header('Location: /admin/category');
+            Response::redirect('/admin/category');
         }
         $this->view->render('admin/deleteCategory.php', $pageData);
         return true;

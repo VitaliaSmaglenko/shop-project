@@ -8,6 +8,8 @@ use Model\Category;
 use Model\ProductImages;
 use Model\Authenticate;
 use Model\User;
+use App\Response;
+use App\Request;
 
 class AdminProductController extends Controller
 {
@@ -20,7 +22,7 @@ class AdminProductController extends Controller
         $isUser = new Authenticate();
         $userId = $isUser->checkLogged();
         if ($userId == false) {
-            header('Location: /login');
+            Response::redirect('/login');
         }
         $user = new User();
         $user = $user->getById($userId);
@@ -52,16 +54,17 @@ class AdminProductController extends Controller
         $category = new Category();
         $categories = $category->getAdmin();
         $dataPage['categories'] = $categories;
-        if (isset($_POST["submitSave"])) {
-            $options['name'] = $_POST['name'];
-            $options['price'] = $_POST['price'];
-            $options['category_id'] = $_POST['category_id'];
-            $options['availability'] = $_POST['availability'];
-            $options['brand'] = $_POST['brand'];
-            $options['description'] = $_POST['description'];
-            $options['specifications'] = $_POST['specifications'];
-            $options['is_new'] = $_POST['is_new'];
-            $options['status'] = $_POST['status'];
+        $request = new Request();
+        if (null !== $request->post("submitSave")) {
+            $options['name'] = $request->post('name');
+            $options['price'] = $request->post('price');
+            $options['category_id'] = $request->post('category_id');
+            $options['availability'] = $request->post('availability');
+            $options['brand'] = $request->post('brand');
+            $options['description'] = $request->post('description');
+            $options['specifications'] = $request->post('specifications');
+            $options['is_new'] = $request->post('is_new');
+            $options['status'] = $request->post('status');
 
             $errors = false;
 
@@ -97,7 +100,7 @@ class AdminProductController extends Controller
                         $productImages->create();
                     }
                 }
-                header("Location: /admin/product");
+                Response::redirect('/admin/product');
             }
         }
         unset($_POST);
@@ -118,17 +121,17 @@ class AdminProductController extends Controller
         $category = new Category();
         $categories = $category->getAdmin();
         $dataPage['categories'] = $categories;
-
-        if (isset($_POST["submitEdit"])) {
-            $options['name'] = $_POST['name'];
-            $options['price'] = $_POST['price'];
-            $options['category_id'] = $_POST['category_id'];
-            $options['availability'] = $_POST['availability'];
-            $options['brand'] = $_POST['brand'];
-            $options['description'] = $_POST['description'];
-            $options['specifications'] = $_POST['specifications'];
-            $options['is_new'] = $_POST['is_new'];
-            $options['status'] = $_POST['status'];
+        $request = new Request();
+        if (null !== $request->post("submitEdit")) {
+            $options['name'] = $request->post('name');
+            $options['price'] = $request->post('price');
+            $options['category_id'] = $request->post('category_id');
+            $options['availability'] = $request->post('availability');
+            $options['brand'] = $request->post('brand');
+            $options['description'] = $request->post('description');
+            $options['specifications'] = $request->post('specifications');
+            $options['is_new'] = $request->post('is_new');
+            $options['status'] = $request->post('status');
             $errors = false;
 
             foreach ($options as $option) {
@@ -158,7 +161,7 @@ class AdminProductController extends Controller
                         $productImages->setImage("img/".$id.".jpg");
                         $productImages->updateById($id);
                 }
-                header("Location: /admin/product");
+                Response::redirect('/admin/product');
             }
         }
         unset($_POST);
@@ -174,10 +177,11 @@ class AdminProductController extends Controller
     public function actionDelete(int $id):bool
     {
         $pageData['id'] = $id;
-        if (isset($_POST['submitDelete'])) {
+        $request = new Request();
+        if (null !== $request->post('submitDelete')) {
             $product = new Products();
             $product->deleteById($id);
-            header('Location: /admin/product');
+            Response::redirect('/admin/product');
         }
         $this->view->render('admin/delete.php', $pageData);
         return true;

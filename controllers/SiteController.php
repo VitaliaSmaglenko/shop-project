@@ -5,6 +5,7 @@
 use Base\Controller;
 use Model\Category;
 use Model\Products;
+use App\Pagination;
 
 class SiteController extends Controller
 {
@@ -21,6 +22,7 @@ class SiteController extends Controller
         $productList = new Products();
         $productList = $productList->get();
         $dataPage['productList'] =  $productList;
+
         $this->view->render('index.php', $dataPage);
         return true;
     }
