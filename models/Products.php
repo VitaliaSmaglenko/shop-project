@@ -27,7 +27,7 @@ class Products extends Model
     private $createdAt;
     private $isNew;
 
-    const LIMIT = 3;
+    const LIMIT = 6;
     /**
      * @param bool $id
      * @param $page
