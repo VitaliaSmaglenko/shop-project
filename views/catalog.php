@@ -41,16 +41,16 @@ include("views/include/header.php");
                             <div class="card-deck mb-4 col-xs-4 text-center" style="width: 26%; margin: 15px; ">
                                 <div class="card text-center mb-4 col-sm" style="width: 15rem;">
                                     <img class="card-img-top" style="width: 150px; height: 150px; padding-top: 10px;"
-                                      src="components/<?php echo $productList[$i]->getImage();?>"
+                                      src="../components/<?php echo $productList[$i]->getImage();?>"
                                       alt="Card image cap">
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo   $productList[$i]->getName();?></h5>
                                         <p class="card-text"> Id: <?php echo $productList[$i]->getId();?></p>
                                         <h6 class="card-title"><?php echo $productList[$i]->getPrice();?> грн</h6>
-                                        <a href="product/<?php echo  $productList[$i]->getId();?>"
+                                        <a href="../product/<?php echo  $productList[$i]->getId();?>"
                                            class="btn btn-primary" name="view-btn">View</a> <br>
                                         <?php if ($productList[$i]->getAvailability() != 0) {?>
-                                            <a href="add/<?php echo $productList[$i]->getId();?>"
+                                            <a href="../add/<?php echo $productList[$i]->getId();?>"
                                                class="link-add-to-cart">Add to cart</a>
                                         <?php } else { ?>
                                             <p class="card-text"> Product ended </p>
@@ -72,6 +72,11 @@ include("views/include/header.php");
 
 
         </div>
+        <nav aria-label="Page navigation example">
+
+            <?php echo $pagination->get();?>
+
+        </nav>
 
     </main>
     <br>

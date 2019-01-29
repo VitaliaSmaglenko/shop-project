@@ -35,7 +35,7 @@ return array(
     'product/([0-9]+)' => 'product/view/$1',
     'favorites/([0-9]+)' => 'product/favorites/$1',
      //'catalog/page-([0-9]+)' => 'catalog/',
-    'catalog' => 'catalog/index',
+    'catalog/page-([0-9]+)' => 'catalog/index/$1',
     'category' => 'catalog/index',
     'category/by-price/([0-9])+' => 'catalog/priceCategory/$1',
     'by-price' => 'catalog/price',

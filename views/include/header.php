@@ -65,7 +65,7 @@
                         <a class="nav-link text-white font-weight-bold" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white  font-weight-bold" href="/catalog">Catalog</a>
+                        <a class="nav-link text-white  font-weight-bold" href="/catalog/page-1">Catalog</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white font-weight-bold" href="#">About</a>

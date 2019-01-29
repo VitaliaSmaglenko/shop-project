@@ -15,7 +15,7 @@ class Pagination
      */
     private $max = 10;
     private $index = 'page';
-    private $current_page;
+    private $currentPage;
     private $total;
     private $limit;
 
@@ -39,17 +39,17 @@ class Pagination
 
         $html = '<ul class="pagination justify-content-center">';
         for ($page = $limits[0]; $page <= $limits[1]; $page++) {
-            if ($page == $this->current_page) {
+            if ($page == $this->currentPage) {
                 $links .= '<li class="page-item"><a class="page-link" href="#">' . $page . '</a></li>';
             } else {
                 $links .= $this->generateHtml($page);
             }
         }
         if (!is_null($links)) {
-            if ($this->current_page > 1) {
+            if ($this->currentPage > 1) {
                 $links = $this->generateHtml(1, '&lt;') . $links;
             }
-            if ($this->current_page < $this->amount) {
+            if ($this->currentPage < $this->amount) {
                 $links .= $this->generateHtml($this->amount, '&gt;');
             }
         }
@@ -80,7 +80,7 @@ class Pagination
      */
     private function limits()
     {
-        $left = $this->current_page - round($this->max / 2);
+        $left = $this->currentPage - round($this->max / 2);
         $start = $left > 0 ? $left : 1;
         if ($start + $this->max <= $this->amount) {
             $end = $start > 1 ? $start + $this->max : $this->max;
@@ -98,13 +98,13 @@ class Pagination
      */
     private function setCurrentPage($currentPage)
     {
-        $this->current_page = $currentPage;
-        if ($this->current_page > 0) {
-            if ($this->current_page > $this->amount) {
-                $this->current_page = $this->amount;
+        $this->currentPage = $currentPage;
+        if ($this->currentPage > 0) {
+            if ($this->currentPage > $this->amount) {
+                $this->currentPage = $this->amount;
             }
         } else {
-            $this->current_page = 1;
+            $this->currentPage = 1;
         }
     }
 

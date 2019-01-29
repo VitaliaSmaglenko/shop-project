@@ -95,6 +95,37 @@ class Products extends Model
 
         return $productList;
     }
+
+    public function getCatalog(int $page = 1):array
+    {
+        $limit = self::LIMIT;
+        $offset = ($page - 1) * self::LIMIT;
+        $sql = 'SELECT  name, products.id, price, product_images.image, is_new, category_id, description, '.
+            'specifications, availability, brand, status'.
+            ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id '.
+            ' WHERE products.status = "1" ORDER by products.id ASC LIMIT :limit OFFSET :offset ';
+        $pdo = new PDODB();
+        $data = array(':limit' => $limit, ':offset' => $offset);
+        $product = $pdo->prepareData($sql, $data, 'fetchAll');
+
+        $productList = array();
+
+        for ($i = 0; $i < count($product); $i++) {
+            $objProduct = new Products();
+            $objProduct->setName($product[$i]['name']);
+            $objProduct->setDescription($product[$i]['description']);
+            $objProduct->setImage($product[$i]['image']);
+            $objProduct->setPrice($product[$i]['price']);
+            $objProduct->setId($product[$i]['id']);
+            $objProduct->setSpecifications($product[$i]['specifications']);
+            $objProduct->setAvailability($product[$i]['availability']);
+            $objProduct->setBrand($product[$i]['brand']);
+            $objProduct->setStatus($product[$i]['status']);
+            $productList[$i] = $objProduct;
+        }
+
+        return $productList;
+    }
     /**
      * @return array
      */
@@ -188,9 +219,17 @@ class Products extends Model
      * @return int
      */
 
-    public function getTotalProduct(int $id):int
+    public function getTotalProductById(int $id):int
     {
         $sql = "SELECT count(id) AS count FROM products WHERE status='1' AND category_id = '".$id."'";
+        $pdo = new PDODB();
+        $product = $pdo->queryData($sql, 'setFetchMode');
+        return $product[0]['count'];
+    }
+
+    public function getTotalProduct():int
+    {
+        $sql = "SELECT count(id) AS count FROM products WHERE status='1'";
         $pdo = new PDODB();
         $product = $pdo->queryData($sql, 'setFetchMode');
         return $product[0]['count'];

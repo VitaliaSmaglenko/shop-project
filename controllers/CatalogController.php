@@ -14,15 +14,19 @@ class CatalogController extends Controller
      * Action for display all products
      * @return bool
      */
-    public function actionIndex():bool
+    public function actionIndex(int $page = 1):bool
     {
 
         $categories = new Category();
         $categories = $categories->get();
         $dataPage['categories'] = $categories;
-        $productList = new Products();
-        $productList = $productList->get();
+        $product = new Products();
+        $productList = $product->getCatalog($page);
         $dataPage['productList'] = $productList;
+        $total = $product->getTotalProduct();
+        $pagination = new Pagination($total, $page, Products::LIMIT, 'page-');
+        $dataPage['pagination'] = $pagination;
+
 
         $this->view->render('catalog.php', $dataPage);
         return true;
@@ -43,7 +47,7 @@ class CatalogController extends Controller
         $product = new Products();
         $productList = $product->getByCategory($id, $page);
         $dataPage['productList'] = $productList;
-        $total = $product->getTotalProduct($id);
+        $total = $product->getTotalProductById($id);
 
         $pagination = new Pagination($total, $page, Products::LIMIT, 'page-');
         $dataPage['pagination'] = $pagination;
