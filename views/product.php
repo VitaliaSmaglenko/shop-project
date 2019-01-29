@@ -77,7 +77,7 @@
         <h3 class="title-comments">Комментарии (<?php echo $countComment?>)</h3>
 
         <br>
-         <?php if ($userId != false) { ?>
+            <?php if ($userId != false) { ?>
         <form method="post">
             <textarea rows="4" cols="100" name="text"></textarea>
             <br>  <br>
@@ -85,11 +85,11 @@
             <br>
         </form>
         <br>
-        <?php } else {?>
+            <?php } else {?>
              <p class="lead">Log in to leave a comment.</p>
-        <?php } ?>
+            <?php } ?>
         <?php if ($comment) {?>
-         <?php for ($i = 0; $i < count($comment); $i++) {?>
+            <?php for ($i = 0; $i < count($comment); $i++) {?>
         <ul class="media-list">
             <!-- Комментарий (уровень 1) -->
             <li class="media">
@@ -102,43 +102,59 @@
                         </div>
                     </div> <br>
                     <div class="media-text text-justify"><?php echo $comment[$i]->getText();?></div>
-
-                    <?php  if ($show == false) {?>
-                          <form method="post">
-                            <div class="footer-comment">
-                                  <span class="comment-reply"> <button name="subReplay.<?php echo $comment[$i]->getId()?>" class="reply btn-primary"> ответить
-
-                                    </button>  </span>
-                            </div>
-                            <br>
-                        </form>
-                        <?php } else {?>
+                    <?php if ($userId != false) { ?>
+                        <?php  if (isset($show[$comment[$i]->getId()]) && $show[$comment[$i]->getId()] == true) {?>
                         <br>
                         <form method="post">
                             <textarea rows="2" cols="90" name="textReplay"></textarea>
                             <br>  <br>
-
-                            <button class="reply " name="submitAddReplay.<?php echo $comment[$i]->getId()?>" type="submit">Add replay</button>
+                            <input type="text" value="<?php echo $comment[$i]->getId()?>" name="id" hidden>
+                            <button class=" btn-dark " name="submitAddReplay.<?php echo $comment[$i]->getId()?>"
+                                    type="submit">Add replay</button>
                             <br>
                         </form>
                         <br>
-                     <?php } ?>
+                        <?php } else {?>
+                        <form method="post">
+                            <div class="footer-comment">
+                                <input type="text" value="<?php echo $comment[$i]->getId()?>" name="id" hidden>
+                                <span class="comment-reply">
+                                    <button name="subReplay.<?php echo $comment[$i]->getId()?>"
+                                            class="btn-link border-0"> ответить
 
-                    <div class="media two-level" >
+                                    </button>  </span>
+                                <?php if ($userId == $comment[$i]->getUserId()) {?>
+                                <span class="comment-reply">
+                      <a href="/comment/delete/<?php echo $comment[$i]->getId()?>/<?php echo $product->getId();?>"
+                                       class="btn-link border-0"> Удалить </a>  </span>
+                                <?php } ?>
+                            </div>
 
+                        </form>
+                        <?php } ?>
+                    <?php }?>
+                    <br>
+                    <?php  for ($j = 0; $j < count($nesComment[$i]); $j++) {?>
+                     <div class="media two-level" >
                         <div class="media-body">
                             <div class="media-heading">
-                                <div class="author">Пётр</div>
+                                <div class="author"> <?php echo $nesComment[$i][$j]->getUserName();?> </div>
                                 <div class="metadata">
-                                    <span class="date">19 ноября 2015, 10:28</span>
+                                    <span class="date"><?php echo $nesComment[$i][$j]->getCreatedAt();?></span>
                                 </div>
                             </div>
-                            <div class="media-text text-justify">Dolor sit, ametsci velre veritatis et quasi architecm, nisi ut labore et aut reiciendis.</div>
-                            <div class="footer-comment"> <span class="comment-reply"> <a href="#" class="reply">ответить</a> <br> </span></div>
+                            <div class="media-text text-justify">
+                                <?php echo $nesComment[$i][$j]->getText();?>
                     </div>
-                </div>
+                            <?php if ($userId == $nesComment[$i][$j]->getUserId()) {?>
+                                <span class="comment-reply">
+                    <a href="/replay/delete/<?php echo $nesComment[$i][$j]->getId()?>/<?php echo $product->getId();?>"
+                                       class="btn-link border-0"> Удалить </a>  </span>
+                            <?php } ?>
+                </div></div>
+                        <br>
+                    <?php }?>
 
-                </div>
             </li>
         </ul>
             <?php }?>

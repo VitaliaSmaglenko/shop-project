@@ -246,12 +246,12 @@ class Buyers extends Model
         return $this->createdAt;
     }
 
-    public function setUserId(int $userId):void
+    public function setUserId($userId):void
     {
         $this->userId = $userId;
     }
 
-    public function getUserId():int
+    public function getUserId()
     {
         return $this->userId;
     }

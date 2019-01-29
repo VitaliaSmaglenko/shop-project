@@ -11,7 +11,6 @@ use Model\CommentProduct;
 use App\Request;
 use Model\NestedComment;
 
-
 class ProductController extends Controller
 {
     /**
@@ -35,13 +34,18 @@ class ProductController extends Controller
         $favorites = 0;
         $dataPage['favorites'] =$favorites;
         $comment = new CommentProduct();
-
         $commentList = $comment->get($id);
+
         $count = $comment->count($id);
-        var_dump($_POST);
         $dataPage['countComment'] = $count;
         $dataPage['comment'] = $commentList;
-         if ($userId != false) {
+        $nesComment = new NestedComment();
+        $nesCommentList = array();
+        for ($i =0; $i<count($commentList); $i++) {
+            $nesCommentList[] = $nesComment->get($commentList[$i]->getId());
+        }
+        $dataPage['nesComment'] = $nesCommentList;
+        if ($userId != false) {
             $favoritesProduct = new FavoritesProduct();
             $favoritesProduct->setIdProduct($id);
             $favoritesProduct->setIdUser($userId);
@@ -57,21 +61,20 @@ class ProductController extends Controller
                 Response::redirect('/product/'.$id);
 
             }
-            $show = false;
-
-            var_dump(explode("_", $request->post('subReplay')));
-             if (null !==  explode("_", $request->post('subReplay'))) {
-                 var_dump($request->post('commentId'));
-                 $show = true;
-
-              }
+            $show[] = false;
+            if (null !==  $request->post('subReplay_'.$request->post('id'))) {
+                 $show[$request->post('id')] = true;
+            }
              $dataPage['show'] = $show;
 
-             if (null !== explode("_", $request->post('submitAddReplay'))) {
-                 var_dump($request->post('commentId'));
-                // Response::redirect('/product/'.$id);
-
-             }
+            if (null !==  $request->post('submitAddReplay_'.$request->post('id'))) {
+                $nesComment->setCommentId($request->post('id'));
+                $nesComment->setUserId($userId);
+                $nesComment->setData();
+                $nesComment->setText($request->post('textReplay'));
+                $nesComment->create();
+                Response::redirect('/product/'.$id);
+            }
 
         }
 
@@ -98,10 +101,31 @@ class ProductController extends Controller
         return true;
     }
 
-    public function actionReplay(int $idProd, int $idComm)
+    /**
+     * Action for delete comment
+     * @param int $id
+     * @param int $idProd
+     * @return bool
+     */
+    public function actionCommentDelete(int $id, int $idProd):bool
+    {
+        $comment = new CommentProduct();
+        $comment->delete($id);
+        $path = ('/product/'.$idProd);
+        Response::redirect($path);
+        return true;
+    }
+
+    /**
+     * Action for delete replay
+     * @param int $id
+     * @param int $idProd
+     * @return bool
+     */
+    public function actionReplayDelete(int $id, int $idProd):bool
     {
         $nesComment = new NestedComment();
-
+        $nesComment->delete($id);
         $path = ('/product/'.$idProd);
         Response::redirect($path);
         return true;

@@ -1,12 +1,16 @@
 <?php
-
-
+/**
+ * Model CommentProduct
+ */
 namespace Model;
 
 use App\PDODB;
 
 class CommentProduct
 {
+    /**
+     * @var
+     */
     private $id;
     private $userId;
     private $productId;
@@ -15,19 +19,25 @@ class CommentProduct
     private $createdAt;
     private $userName;
 
-
-    public function create()
+    /**
+     * @return bool
+     */
+    public function create():bool
     {
         $sql = 'INSERT INTO comment_product (id_product, id_user, text, created_at, updated_at) '.
             'VALUES (:idProduct, :idUser, :text, :created_at, :updated_at);';
         $pdo = new PDODB();
         $data = array(':idProduct' => $this->getProductId(), ':idUser' => $this->getUserId(),
-            ':text' => $this->getText(), ':created_at' => $this->getCreatedAt(), ':updated_at' => $this->getUpdatedAt());
+           ':text' => $this->getText(), ':created_at' => $this->getCreatedAt(), ':updated_at' => $this->getUpdatedAt());
         $result = $pdo->prepareData($sql, $data, 'execute');
         return $result;
     }
 
-    public function get($id)
+    /**
+     * @param int $id
+     * @return array
+     */
+    public function get(int $id):array
     {
         $sql = 'SELECT  comment_product.id, text, created_at, updated_at, user_name, id_product, id_user '.
                ' FROM comment_product LEFT JOIN user ON comment_product.id_user = user.id '.
@@ -38,27 +48,45 @@ class CommentProduct
         $commentList = array();
 
         for ($i = 0; $i < count($result); $i++) {
-          $comment = new CommentProduct();
-          $comment->setId($result[$i]['id']);
-          $comment->setText($result[$i]['text']);
-          $comment->setCreatedAt($result[$i]['created_at']);
-          $comment->setUpdatedAt($result[$i]['updated_at']);
-          $comment->setUserName($result[$i]['user_name']);
-          $comment->setUserId($result[$i]['id_user']);
-          $comment->setProductId($result[$i]['id_product']);
-          $commentList[$i] = $comment;
+            $comment = new CommentProduct();
+            $comment->setId($result[$i]['id']);
+            $comment->setText($result[$i]['text']);
+            $comment->setCreatedAt($result[$i]['created_at']);
+            $comment->setUpdatedAt($result[$i]['updated_at']);
+            $comment->setUserName($result[$i]['user_name']);
+            $comment->setUserId($result[$i]['id_user']);
+            $comment->setProductId($result[$i]['id_product']);
+            $commentList[$i] = $comment;
         }
 
         return  $commentList;
     }
 
-    public function count($id)
+    /**
+     * Returns the number of comments for the product
+     * @param int $id
+     * @return int
+     */
+    public function count(int $id):int
     {
         $sql = 'SELECT count(*) FROM comment_product WHERE id_product = :id';
         $data = array(':id' => $id);
         $pdo = new PDODB();
         $result = $pdo->prepareData($sql, $data, 'fetchColumn');
 
+        return $result;
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function delete(int $id):bool
+    {
+        $sql = "DELETE FROM comment_product WHERE id = :id";
+        $data = array( ':id' => $id);
+        $pdo = new PDODB();
+        $result = $pdo->prepareData($sql, $data, 'execute');
         return $result;
     }
 
@@ -137,6 +165,4 @@ class CommentProduct
     {
         return $this->createdAt;
     }
-
-
 }

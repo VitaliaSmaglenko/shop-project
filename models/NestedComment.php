@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: phpstudent
- * Date: 28.01.19
- * Time: 17:00
+ * Model NestedComment
  */
 
 namespace Model;
@@ -12,22 +9,80 @@ use App\PDODB;
 
 class NestedComment
 {
+    /**
+     * @var
+     */
     private $userId;
     private $commentId;
     private $text;
     private $updatedAt;
     private $createdAt;
     private $userName;
+    private $id;
 
-    public function create()
+    /**
+     * @return bool
+     */
+    public function create():bool
     {
         $sql = 'INSERT INTO nested_comment (id_comment, id_user, text, created_at, updated_at) '.
             'VALUES (:idComment, :idUser, :text, :created_at, :updated_at);';
         $pdo = new PDODB();
         $data = array(':idComment' => $this->getCommentId(), ':idUser' => $this->getUserId(),
-            ':text' => $this->getText(), ':created_at' => $this->getCreatedAt(), ':updated_at' => $this->getUpdatedAt());
+           ':text' => $this->getText(), ':created_at' => $this->getCreatedAt(), ':updated_at' => $this->getUpdatedAt());
         $result = $pdo->prepareData($sql, $data, 'execute');
         return $result;
+    }
+
+    /**
+     * @param int $id
+     * @return array
+     */
+    public function get(int $id):array
+    {
+        $sql = 'SELECT  nested_comment.id, text, created_at, updated_at, user_name, id_comment, id_user ' .
+            ' FROM nested_comment LEFT JOIN user ON nested_comment.id_user = user.id ' .
+            ' WHERE id_comment = :id ';
+        $data = array(':id' => $id);
+        $pdo = new PDODB();
+        $result = $pdo->prepareData($sql, $data, 'fetchAll');
+        $commentList = array();
+
+        for ($i = 0; $i < count($result); $i++) {
+            $comment = new NestedComment();
+            $comment->setId($result[$i]['id']);
+            $comment->setText($result[$i]['text']);
+            $comment->setCreatedAt($result[$i]['created_at']);
+            $comment->setUpdatedAt($result[$i]['updated_at']);
+            $comment->setUserName($result[$i]['user_name']);
+            $comment->setUserId($result[$i]['id_user']);
+            $comment->setCommentId($result[$i]['id_comment']);
+            $commentList[$i] = $comment;
+        }
+        return $commentList;
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function delete(int $id):bool
+    {
+        $sql = "DELETE FROM nested_comment WHERE id = :id";
+        $data = array( ':id' => $id);
+        $pdo = new PDODB();
+        $result = $pdo->prepareData($sql, $data, 'execute');
+        return $result;
+    }
+
+    public function setId(int $id):void
+    {
+        $this->id = $id;
+    }
+
+    public function getId():int
+    {
+        return $this->id;
     }
 
     public function setUserId(int $id):void
