@@ -4,11 +4,11 @@ use Model\User;
 
 class UserTest extends TestCase
 {
-    private $user;
+    private static $user;
 
     public function setUp()
     {
-        $this->user = new User;
+        self::$user = new User;
     }
 
     public function testGetByIdIsCorrect()
@@ -24,46 +24,36 @@ class UserTest extends TestCase
         $objUser->setPhone('+380501700086');
         $objUser->setRole('admin');
         $expect = $objUser;
-        $result = $this->user->getById($id);
+        $result =  self::$user->getById($id);
         $this->assertEquals($expect, $result);
     }
 
     public function testCreateUserIsCorrect()
     {
-        $userObj = new User();
-        $userObj->setUserName('TestUser');
-        $userObj->setFirstName('User');
-        $userObj->setLastName('Test');
-        $userObj->setEmail('testuser@gmail.com');
-        $userObj->setPassword(hash("md5", 'tetsuser'));
-        $userObj->setPhone('+380500000006');
+
+        self::$user->setUserName('TestUser');
+        self::$user->setFirstName('User');
+        self::$user->setLastName('Test');
+        self::$user->setEmail('testuser@gmail.com');
+        self::$user->setPassword(hash("md5", 'tetsuser'));
+        self::$user->setPhone('+380500000006');
         $expect = true;
-        $result = $this->user->createUser();
+        $result = self::$user->createUser();
         $this->assertEquals($expect, $result);
+       // self::$user->delete();
     }
 
-    /*
+
     public function testGetIsCorrect()
     {
-        $objUser = new User;
-        $objUser->setEmail('dream@gmail.com');
-        $objUser->setFirstName('Fox');
-        $objUser->setLastName('Dream');
-        $objUser->setPassword('301fdb4ab42afde8b70c0395b507907c');
-        $objUser->setId(15);
-        $objUser->setUserName('DreamFoxxy');
-        $objUser->setPhone('+380501700086');
-        $objUser->setRole('admin');
-        $expect = $objUser;
 
-        $userTest = new User();
-        $userTest->setEmail('usertest@gmail.com');
-        $userTest->setPassword(hash("md5", 'testuser'));
-        $result = $this->user->get();
-        $this->assertEquals($expect, $result);
+        self::$user->setEmail('testuser@gmail.com');
+        self::$user->setPassword(hash("md5", 'tetsuser'));
+        $result = self::$user->get();
+        $this->assertIsObject($result = new User);
     }
-    */
 
+/*
     public function testUpdateUser()
     {
         $id = 17;
@@ -75,5 +65,13 @@ class UserTest extends TestCase
         $expect = true;
         $result = $this->user->updateUser($id);
         $this->assertEquals($expect, $result);
+    }
+*/
+
+
+
+    public static function tearDownAfterClass()
+    {
+        self::$user->delete();
     }
 }

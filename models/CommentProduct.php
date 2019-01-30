@@ -5,8 +5,9 @@
 namespace Model;
 
 use App\PDODB;
+use Base\Model;
 
-class CommentProduct
+class CommentProduct extends Model
 {
     /**
      * @var

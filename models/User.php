@@ -6,8 +6,10 @@ namespace Model;
 
 use App\PDODB;
 use Model\Authenticate;
+use Base\Model;
 
-class User
+
+class User extends Model
 {
     /**
      * @var
@@ -103,6 +105,15 @@ class User
         $data = array( ':firstName' => $this->getFirstName(), ':lastName' => $this->getLastName(),
             ':password' => $this->getPassword(), ':phone' => $this->getPhone(), ':id' => $id);
         $result=$pdo->prepareData($sql, $data, 'execute');
+        return $result;
+    }
+
+    public function delete()
+    {
+        $sql = "DELETE  FROM user  ORDER BY id DESC LIMIT 1";
+     //   $data = array( ':id' => $id);
+        $pdo = new PDODB();
+        $result = $pdo->queryData($sql);
         return $result;
     }
 

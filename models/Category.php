@@ -7,8 +7,9 @@
 namespace Model;
 
 use App\PDODB;
+use Base\Model;
 
-class Category
+class Category extends Model
 {
     /**
      * @param string $category

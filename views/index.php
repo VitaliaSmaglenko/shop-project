@@ -15,7 +15,7 @@ include("views/include/header.php");
                     <p class="lead my-3">Phones from 1200 UAH</p>
 
                 </td>
-                <td width="50%"  align="center" valign="center"> <a href="/catalog">
+                <td width="50%"  align="center" valign="center"> <a href="/catalog/page-1">
                     <img src="components/img/phone.jpg" width="670" height="360">
                     </a>
                 </td>

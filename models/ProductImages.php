@@ -6,8 +6,9 @@
 namespace Model;
 
 use App\PDODB;
+use Base\Model;
 
-class ProductImages
+class ProductImages extends Model
 {
     /**
      * @var

@@ -6,8 +6,9 @@
 namespace Model;
 
 use App\PDODB;
+use Base\Model;
 
-class FavoritesProduct
+class FavoritesProduct extends Model
 {
     /**
      * @var

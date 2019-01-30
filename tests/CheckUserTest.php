@@ -13,8 +13,8 @@ class CheckUserTest extends TestCase
 
     public function testCheckUserExistsIsCorrect()
     {
-        $email = 'usertest@gmail.com';
-        $password =  hash("md5", 'usertest');
+        $email = 'dream@gmail.com';
+        $password =  hash("md5", 'foxfox');
         $expect = true;
         $result = $this->check->checkUserExists($email, $password);
         $this->assertEquals($expect, $result);
@@ -32,7 +32,6 @@ class CheckUserTest extends TestCase
     public function testCheckUserNameExistsIsIncorrect()
     {
         $name = 'example';
-
         $expect = true;
         $result = $this->check->checkUserNameExists($name);
         $this->assertEquals($expect, $result);
@@ -40,8 +39,7 @@ class CheckUserTest extends TestCase
 
     public function testCheckUserNameExistsIsCorrect()
     {
-        $name = 'new name';
-
+        $name = 'DreamFoxxy';
         $expect = false;
         $result = $this->check->checkUserNameExists($name);
         $this->assertEquals($expect, $result);
@@ -49,8 +47,7 @@ class CheckUserTest extends TestCase
 
     public function testCheckEmailExistsIsIncorrect()
     {
-        $email = 'usertest1@gmail.com';
-
+        $email = 'usertest@gmail.com';
         $expect = true;
         $result = $this->check->checkEmailExists($email);
         $this->assertEquals($expect, $result);
@@ -58,7 +55,7 @@ class CheckUserTest extends TestCase
 
     public function testCheckEmailExistsExistsIsCorrect()
     {
-        $email = 'usertest@gmail.com';
+        $email = 'dream@gmail.com';
 
         $expect = false;
         $result = $this->check->checkEmailExists($email);
@@ -77,7 +74,6 @@ class CheckUserTest extends TestCase
     public function testCheckPhoneExistsIsCorrect()
     {
         $phone = '+380501717000';
-
         $expect = true;
         $result = $this->check->checkPhone($phone);
         $this->assertEquals($expect, $result);
@@ -86,7 +82,6 @@ class CheckUserTest extends TestCase
     public function testCheckPasswordIsIncorrect()
     {
         $password = 'asmds';
-
         $expect = false;
         $result = $this->check->checkPassword($password);
         $this->assertEquals($expect, $result);
@@ -208,8 +203,8 @@ class CheckUserTest extends TestCase
 
     public function testCheckAuthorisationIsCorrect()
     {
-        $email = 'usertest@gmail.com';
-        $password =  hash("md5", 'usertest');
+        $email = 'dream@gmail.com';
+        $password =  hash("md5", 'foxfox');
         $expect = array();
         $result = $this->check->checkAuthorisation($email, $password);
         $this->assertEquals($expect, $result);
@@ -246,10 +241,8 @@ class CheckUserTest extends TestCase
         $lastName = 'Lovely';
         $phone = '+380501717000';
         $password =  hash("md5", 'user1234');
-        $expect = array('0' => 'This email already exists.');
         $result = $this->check->checkRegistration($email, $password, $userName, $name, $lastName, $phone);
-        $this->assertEquals($expect, $result);
+        $this->assertIsArray($result);
     }
-
 
 }

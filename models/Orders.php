@@ -6,8 +6,9 @@
 namespace Model;
 
 use App\PDODB;
+use Base\Model;
 
-class Orders
+class Orders extends Model
 {
     /**
      * @var
