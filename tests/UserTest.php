@@ -75,8 +75,5 @@ class UserTest extends TestCase
         $expect = true;
         $result = $this->user->updateUser($id);
         $this->assertEquals($expect, $result);
-
     }
-
-
 }

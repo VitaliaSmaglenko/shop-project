@@ -28,7 +28,10 @@ class RouterTest extends TestCase
 
         $result=$this->router->run();
         $this->assertEquals($expect, $result);
+    }
 
+    public function testRunIsIncorrect():void
+    {
         $uri = 'sdasdasd';
         $_SERVER['REQUEST_URI']=$uri;
         $expect = array('controllerName' => 'SiteController',  'actionName' => 'actionNotFound',

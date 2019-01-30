@@ -12,7 +12,6 @@ class CartTest extends TestCase
     public function setUp()
     {
         $this->cart = new Cart();
-
     }
 
     public function testCountProductIsIncorrect()
@@ -24,7 +23,6 @@ class CartTest extends TestCase
 
     public function testGetProductsIsIncorrect()
     {
-
         $expect = false;
         $result = $this->cart->getProducts();
         $this->assertEquals($expect, $result);
@@ -32,7 +30,6 @@ class CartTest extends TestCase
 
     public function testisCartIsIncorrect()
     {
-
         $expect = false;
         $result = $this->cart->isCart();
         $this->assertEquals($expect, $result);
@@ -50,7 +47,7 @@ class CartTest extends TestCase
     public function testIsProductIncorrect()
     {
         $expect = false;
-        $result = $this->cart->isProduct($id=5);
+        $result = $this->cart->isProduct($id = 5);
         $this->assertEquals($expect, $result);
     }
 
@@ -59,7 +56,7 @@ class CartTest extends TestCase
     {
         $expect = true;
         $_SESSION['products'] = array('5' => '2');
-        $result = $this->cart->isProduct($id=5);
+        $result = $this->cart->isProduct($id = 5);
         $this->assertEquals($expect, $result);
     }
 
@@ -92,10 +89,8 @@ class CartTest extends TestCase
         $product = new Model\Products;
         $ids = array('5', '10');
         $product = $product->getByIds($ids);
-        $expect = 3160;
+        $expect = 7459;
         $result = $this->cart->getPrice($product);
         $this->assertEquals($expect, $result);
     }
-
-
 }

@@ -16,7 +16,7 @@ include("views/include/header.php");
 
                 </td>
                 <td width="50%"  align="center" valign="center"> <a href="/catalog">
-                    <img src="components/img/phone.jpg" width="650" height="300">
+                    <img src="components/img/phone.jpg" width="670" height="360">
                     </a>
                 </td>
             </tr>

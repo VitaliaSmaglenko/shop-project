@@ -9,7 +9,6 @@ class CheckUserTest extends TestCase
     public function setUp()
     {
         $this->check = new CheckUser();
-
     }
 
     public function testCheckUserExistsIsCorrect()
@@ -17,7 +16,7 @@ class CheckUserTest extends TestCase
         $email = 'usertest@gmail.com';
         $password =  hash("md5", 'usertest');
         $expect = true;
-        $result = $this->check->checkUserExists($email,$password);
+        $result = $this->check->checkUserExists($email, $password);
         $this->assertEquals($expect, $result);
     }
 
@@ -26,7 +25,7 @@ class CheckUserTest extends TestCase
         $email = 'usertest@gmail.com';
         $password =  hash("md5", '');
         $expect = false;
-        $result = $this->check->checkUserExists($email,$password);
+        $result = $this->check->checkUserExists($email, $password);
         $this->assertEquals($expect, $result);
     }
 
