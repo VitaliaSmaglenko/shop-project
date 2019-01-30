@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: phpstudent
- * Date: 16.01.19
- * Time: 18:26
+ * Model Buyers
  */
 
 namespace Model;
@@ -13,6 +10,9 @@ use Base\Model;
 
 class Buyers extends Model
 {
+    /**
+     * @var
+     */
     private $firstName;
     private $lastName;
     private $comment;

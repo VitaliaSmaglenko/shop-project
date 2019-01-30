@@ -1,9 +1,16 @@
 <?php
-
+/**
+ * Class Sender
+ */
 namespace Sender;
 
 class Sender
 {
+    /**
+     * Method for send message
+     * @param $view
+     * @param $config
+     */
     public function send($view, $config)
     {
         $params = $view;
@@ -18,8 +25,6 @@ class Sender
 
         } catch (\Swift_SwiftException $e){
             die ("You have errors: {$e->getMessage()}\n");
-
-
         }
     }
 }

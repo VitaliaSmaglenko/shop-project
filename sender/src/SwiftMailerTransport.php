@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: phpstudent
- * Date: 25.01.19
- * Time: 15:31
+ * Class SwiftMailerTransport
  */
 
 namespace Sender;
@@ -13,10 +10,18 @@ use Swift_Message;
 
 class SwiftMailerTransport implements TransportInterface
 {
+    /**
+     * @var
+     */
     private $mailer;
     private $message;
 
-    public function createTransport($config){
+    /**
+     * @param $config
+     * @return Swift_SmtpTransport
+     */
+    public function createTransport($config)
+    {
         $transport = (new Swift_SmtpTransport($config['host'], $config['port']))
             ->setUsername($config['username'])
             ->setPassword($config['password'])
@@ -25,17 +30,31 @@ class SwiftMailerTransport implements TransportInterface
         return $transport;
     }
 
+    /**
+     * @param $config
+     * @return Swift_SmtpTransport
+     */
     public function getTransport($config)
     {
         $transport = $this->createTransport($config);
         return $transport;
     }
+
+    /**
+     * @param $config
+     * @return Swift_Mailer
+     */
     protected function createMailer($config)
     {
         $transport = $this->getTransport($config);
         $mailer = new Swift_Mailer($transport);
         return $mailer;
     }
+
+    /**
+     * @param $config
+     * @return Swift_Mailer
+     */
     public function getMailer($config)
     {
         if (null == $this->mailer) {
@@ -43,6 +62,11 @@ class SwiftMailerTransport implements TransportInterface
         }
         return $this->mailer;
     }
+
+    /**
+     * @param $params
+     * @return Swift_Message
+     */
     public function getMessage($params)
     {
         if (null == $this->message) {
@@ -50,7 +74,13 @@ class SwiftMailerTransport implements TransportInterface
         }
         return $this->message;
     }
-    public function createMessage($params){
+
+    /**
+     * @param $params
+     * @return Swift_Message
+     */
+    public function createMessage($params)
+    {
         $page = new Render();
         $page = $page->renderPhpFile($params);
         $message = (new Swift_Message($params['subject']))

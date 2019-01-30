@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Виталия
- * Date: 22.01.2019
- * Time: 19:35
+ * Class Pagination
  */
 
 namespace App;

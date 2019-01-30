@@ -1,33 +1,41 @@
 <?php
+/**
+ * Controller FeedbackController
+ */
+
 use Base\Controller;
 use Sender\Sender;
+use App\Request;
 
 class FeedbackController extends Controller
 {
-    public function actionSender()
+    /**
+     * Action for page for send message
+     * @return bool
+     */
+    public function actionSender():bool
     {
 
        $config = include('config/configSender.php');
        $send = false;
-        if (isset ($_POST['submitSend'])) {
+       $request = new Request();
+        if (null !== $request->post('submitSend')) {
             $data = array(
-                'fromEmail' => $_POST['email'],
-                'subject' => $_POST['theme'],
-                'fromName' => $_POST['name'],
-                'name' => $_POST['name'],
+                'fromEmail' => $request->post('email'),
+                'subject' => $request->post('theme'),
+                'fromName' => $request->post('name'),
+                'name' => $request->post('name'),
                 'email'=> 'vitaliasmaglenko@gmail.com',
-                'msg' => $_POST['message'],
+                'msg' => $request->post('message'),
                 'path' =>'sender/src/view/letter.php'
             );
             $sender = new Sender;
             $sender->send($data, $config);
             $send = true;
         }
-
         $dataPage['send'] = $send;
         if ($send == true) {
-            unset($_POST);
-
+           unset($_POST);
         }
 
         $this->view->render('feedback.php', $dataPage);
