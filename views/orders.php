@@ -69,7 +69,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php for ($j=0; $j<count($productOrder); $j++) {?>
+                <?php   for ($j=0; $j<count($productOrder[$i]); $j++) {?>
                     <tr>
                         <td><?php echo $productOrder[$i][$j]->getIdProduct();?></td>
                         <td><?php echo $productOrder[$i][$j]->getNameProduct();?></td>

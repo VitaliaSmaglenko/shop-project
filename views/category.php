@@ -51,7 +51,7 @@ include("views/include/header.php");
                                         <a href="../product/<?php echo $productList[$i]->getId();?>"
                                            class="btn btn-primary" name="view-btn">View</a> <br>
                                         <?php if ($productList[$i]->getAvailability() != 0) {?>
-                                            <a href="add/<?php echo $productList[$i]->getId();?>"
+                                            <a href="../add/<?php echo $productList[$i]->getId();?>"
                                                class="link-add-to-cart">Add to cart</a>
                                         <?php } else { ?>
                                             <p class="card-text"> Product ended </p>

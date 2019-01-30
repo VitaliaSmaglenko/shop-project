@@ -13,8 +13,9 @@ include("views/include/header.php");
 
     <br> <hr class="featurette-divider">
 
-    <h2 class="text-center">Your cart is empty</h2>
+
     <?php if ($cart) {?>
+    <h2 class="text-center">Cart</h2>
     <table class="tab-cart" align="center" valign="center">
         <tr>
             <td class="font-weight-bold text-info">Name of product</td>
@@ -49,7 +50,9 @@ include("views/include/header.php");
         <tr><td  class="td-sub" colspan="5">
                 <a href="/checkout" class="btn btn-info my-2 my-sm-0" name="view-btn">Checkout</a>
             </td></tr>
-    <?php } ?>
+    <?php } else {?>
+        <h2 class="text-center">Your cart is empty</h2>
+        <?php } ?>
     </table>
 
     <hr class="featurette-divider"><br>

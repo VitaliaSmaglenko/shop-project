@@ -11,6 +11,7 @@ use Model\User;
 use App\Response;
 use App\Request;
 
+
 class AdminProductController extends Controller
 {
     /**
@@ -178,6 +179,8 @@ class AdminProductController extends Controller
     {
         $pageData['id'] = $id;
         $request = new Request();
+
+
         if (null !== $request->post('submitDelete')) {
             $product = new Products();
             $product->deleteById($id);
