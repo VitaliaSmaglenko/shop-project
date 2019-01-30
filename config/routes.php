@@ -43,7 +43,7 @@ return array(
     'catalog/page-([0-9]+)' => 'catalog/index/$1',
     'category' => 'catalog/index',
     'category/by-price/([0-9])+' => 'catalog/priceCategory/$1',
-    'by-price' => 'catalog/price',
+    'by-price/page-([0-9])+' => 'catalog/price/$1',
 
     //cart:
     'add/([0-9]+)' => 'cart/add/$1',

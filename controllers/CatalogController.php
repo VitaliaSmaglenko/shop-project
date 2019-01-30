@@ -59,15 +59,19 @@ class CatalogController extends Controller
      * Action for sorting by price
      * @return bool
      */
-    public function actionPrice():bool
+    public function actionPrice(int $page = 1):bool
     {
         $categories = new Category();
         $categories = $categories->get();
         $dataPage['categories'] = $categories;
-        $productList = new Products();
-        $productList = $productList->getSortingByPrice();
+        $product = new Products();
+        $productList = $product->getSortingByPrice($page);
         $dataPage['productList'] = $productList;
 
+
+        $total = $product->getTotalProduct();
+        $pagination = new Pagination($total, $page, Products::LIMIT, 'page-');
+        $dataPage['pagination'] = $pagination;
         $this->view->render('catalog.php', $dataPage);
         return true;
     }

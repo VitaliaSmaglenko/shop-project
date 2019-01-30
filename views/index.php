@@ -46,9 +46,8 @@ include("views/include/header.php");
             <div class="p-3">
                 <h4 class="font-italic">Sorting</h4> <br />
                 <ol class="list-unstyled">
-                    <li><a class="cat-link" href="/by-price">By price</a></li>
-                    <li><a class="cat-link" href="#">By date</a></li>
-                    <li><a class="cat-link" href="#">By popularity</a></li>
+                    <li><a class="cat-link" href="/by-price/page-1">By price</a></li>
+
                 </ol>
             </div>
         </aside>
@@ -81,10 +80,15 @@ include("views/include/header.php");
                             </div>
                         </div>
                         <?php } ?>
-                </div>
-            </div>
 
+                </div>
+
+            </div>
+            <h3 class="pb-3 mb-4 font-italic border-bottom text-center font-weight-bold text-warning ">
+                     <a href="catalog/page-1"
+               class="link-add-to-cart">Show all</a></h3>
         </div>
+
     </div>
 <?php
 include("views/slider.php");

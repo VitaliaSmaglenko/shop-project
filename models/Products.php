@@ -71,12 +71,14 @@ class Products extends Model
      */
     public function get():array
     {
+        $limit = 12;
         $sql = 'SELECT  name, products.id, price, product_images.image, is_new, category_id, description, '.
             'specifications, availability, brand, status'.
             ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id '.
-            ' WHERE products.status = "1" ORDER by products.id ASC ';
+            ' WHERE products.status = "1" ORDER by products.id ASC LIMIT :limit';
         $pdo = new PDODB();
-        $product = $pdo->queryData($sql);
+        $data = array(':limit' => $limit);
+        $product = $pdo->prepareData($sql, $data, 'fetchAll');
         $productList = array();
 
         for ($i = 0; $i < count($product); $i++) {
@@ -238,13 +240,16 @@ class Products extends Model
     /**
      * @return array
      */
-    public function getSortingByPrice():array
+    public function getSortingByPrice(int $page = 1):array
     {
-        $sql = 'SELECT  name, products.id, price, products.image, description, specifications, availability, brand, '.
-            ' status FROM products LEFT JOIN product_images ON products.id = product_images.product_id '.
-            'WHERE status = "1" ORDER BY price ASC' ;
+        $limit = self::LIMIT;
+        $offset = ($page - 1) * self::LIMIT;
+        $sql = 'SELECT  name, products.id, price, product_images    .image, description, specifications, availability, brand, '.
+            ' status FROM products LEFT JOIN product_images ON products.id = product_images.product_id  '.
+            'WHERE status = "1" ORDER BY price ASC  LIMIT :limit OFFSET :offset'  ;
         $pdo = new PDODB();
-        $product = $pdo->queryData($sql);
+        $data = array(':limit' => $limit, ':offset' => $offset);
+        $product = $pdo->prepareData($sql, $data, 'fetchAll');
         $productList = array();
 
         for ($i = 0; $i < count($product); $i++) {

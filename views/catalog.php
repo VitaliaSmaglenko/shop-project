@@ -21,10 +21,8 @@ include("views/include/header.php");
                 <div class="p-3">
                     <h4 class="font-italic">Sorting</h4> <br />
                     <ol class="list-unstyled">
-                        <li><a class="cat-link" href="/by-price">By price</a></li>
-                        <li><a class="cat-link" href="#">By date</a></li>
-                        <li><a class="cat-link" href="#">By popularity</a></li>
-                    </ol>
+                        <li><a class="cat-link" href="/by-price/page-1">By price</a></li>
+                      </ol>
                 </div>
             </aside>
 
