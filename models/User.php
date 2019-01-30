@@ -108,6 +108,80 @@ class User extends Model
         return $result;
     }
 
+    /**
+     * Method for update user by admin
+     * @param int $id
+     * @return bool
+     */
+    public function updateAdmin(int $id):bool
+    {
+        $sql = 'UPDATE user SET first_name = :firstName, last_name = :lastName, phone = :phone, ' .
+        ' email = :email, role = :role, user_name = :userName WHERE id = :id';
+
+        $data = array(':firstName' => $this->getFirstName(), ':lastName' => $this->getLastName(),
+             ':phone' => $this->getPhone(), ':email'=>$this->getEmail(), ':role' => $this->getRole(),
+            ':userName' => $this->getUserName(), ':id' => $id);
+        $pdo = new PDODB();
+        $result = $pdo->prepareData($sql, $data, 'execute');
+        return $result;
+    }
+
+    /**
+     * Method for update user password by admin
+     * @param int $id
+     * @return bool
+     */
+    public function updatePasswordAdmin(int $id):bool
+    {
+        $sql = 'UPDATE user SET password = :password WHERE id = :id';
+        $data = array(  ':password' => $this->getPassword(), ':id' => $id);
+        $pdo = new PDODB();
+        $result = $pdo->prepareData($sql, $data, 'execute');
+        return $result;
+    }
+
+    /**
+     * Returns users
+     * @return array
+     */
+    public function getAdmin():array
+    {
+        $sql ='SELECT  user_name, first_name, last_name, email, id, password, phone FROM user ';
+        $pdo = new PDODB();
+        $user = $pdo->queryData($sql);
+        $userList = array();
+        for ($i=0; $i<count($user); $i++) {
+            $objUser = new User();
+            $objUser->setEmail($user[$i]['email']);
+            $objUser->setFirstName($user[$i]['first_name']);
+            $objUser->setLastName($user[$i]['last_name']);
+            $objUser->setPassword($user[$i]['password']);
+            $objUser->setId($user[$i]['id']);
+            $objUser->setUserName($user[$i]['user_name']);
+            $objUser->setPhone($user[$i]['phone']);
+            $userList[$i] = $objUser;
+        }
+        return  $userList;
+    }
+
+    /**
+     * Delete user by id
+     * @param int $id
+     * @return bool
+     */
+    public function deleteById(int $id):bool
+    {
+        $sql = "DELETE FROM user WHERE id = :id";
+        $data = array( ':id' => $id);
+        $pdo = new PDODB();
+        $product = $pdo->prepareData($sql, $data, 'execute');
+        return $product;
+    }
+
+    /**
+     * Removes the last user
+     * @return array
+     */
     public function delete()
     {
         $sql = "DELETE  FROM user  ORDER BY id DESC LIMIT 1";

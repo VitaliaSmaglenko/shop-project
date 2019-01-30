@@ -11,34 +11,36 @@
             </div>
 
 
-            <h2>Orders</h2>
+            <h2>Users</h2>
             <br>
+            <br> <br>
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
                     <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Buyer name</th>
+                        <th>Id user</th>
+                        <th>First name</th>
+                        <th>Last Name</th>
+                        <th>User Name</th>
+                        <th>Email</th>
                         <th>Phone</th>
-                        <th>Status</th>
-                        <th>Create</th>
-                        <th>Show</th>
                         <th>Edit</th>
+                        <th>Edit password</th>
                         <th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <?php for ($i=0; $i<count($buyers); $i++) {  ?>
+                    <?php for ($i=0; $i<count($user); $i++) {?>
                         <tr>
-                            <td><?php echo $buyers[$i]->getId();?></td>
-                            <td><?php echo  $buyers[$i]->getLastName();?></td>
-                            <td><?php echo $buyers[$i]->getPhone();?></td>
-                            <td><?php echo $buyers[$i]->getStatusOrder();?></td>
-
-                            <td><?php echo $buyers[$i]->getCreatedAt();?></td>
-                            <td><a href="/admin/orders/view/<?php echo $buyers[$i]->getId();?>">Show</a></td>
-                            <td><a href="/admin/orders/edit/<?php echo $buyers[$i]->getId();?>">Edit</a></td>
-                            <td><a href="/admin/orders/delete/<?php echo $buyers[$i]->getId();?>">Delete</a></td>
+                            <td><?php echo $user[$i]->getId();?></td>
+                            <td><?php echo  $user[$i]->getFirstName();?></td>
+                            <td><?php echo $user[$i]->getLastName();?></td>
+                            <td><?php echo $user[$i]->getuserName();?></td>
+                            <td><?php echo $user[$i]->getEmail();?></td>
+                            <td><?php echo $user[$i]->getphone();?></td>
+                            <td><a href="/admin/user/edit/<?php echo $user[$i]->getId();?>">Edit</a></td>
+                            <td><a href="/admin/user/edit-password/<?php echo $user[$i]->getId();?>">Edit password</a></td>
+                            <td><a href="/admin/user/delete/<?php echo $user[$i]->getId();?>">Delete</a></td>
                         </tr>
                     <?php } ?>
                     </tbody>
@@ -50,10 +52,12 @@
 <br><br><br>
 <br><br><br>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+
+</script>
 <script>window.jQuery || document.write('<script src="/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')
 </script><script src="/docs/4.2/dist/js/bootstrap.bundle.min.js"
-integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
+                 integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 <script src="dashboard.js"></script></body>

@@ -9,6 +9,11 @@ return array(
 
 
     //admin:
+    'admin/user/delete/([0-9]+)' => 'adminUser/delete/$1',
+    'admin/user/edit-password/([0-9]+)' => 'adminUser/updatePassword/$1',
+    'admin/user/edit/([0-9]+)' => 'adminUser/update/$1',
+    'admin/user' => 'adminUser/index',
+
     'admin/orders/view/([0-9]+)' => 'adminOrders/show/$1',
     'admin/orders/delete/([0-9]+)' => 'adminOrders/delete/$1',
     'admin/orders/edit/([0-9]+)' => 'adminOrders/update/$1',

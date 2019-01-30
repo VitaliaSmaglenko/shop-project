@@ -20,9 +20,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/admin/user">
                     <span data-feather="bar-chart-2"></span>
-                    Reports
+                    Users
                 </a>
             </li>
             <li class="nav-item">

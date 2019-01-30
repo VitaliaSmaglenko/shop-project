@@ -29,4 +29,3 @@ integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTo
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 <script src="dashboard.js"></script></body>
 
-<?php include("views/include/footer_admin.php"); ?>
