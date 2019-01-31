@@ -15,10 +15,9 @@ class FeedbackController extends Controller
      */
     public function actionSender():bool
     {
-
-       $config = include('config/configSender.php');
-       $send = false;
-       $request = new Request();
+        $config = include('config/configSender.php');
+        $send = false;
+        $request = new Request();
         if (null !== $request->post('submitSend')) {
             $data = array(
                 'fromEmail' => $request->post('email'),
@@ -35,9 +34,8 @@ class FeedbackController extends Controller
         }
         $dataPage['send'] = $send;
         if ($send == true) {
-           unset($_POST);
+            unset($_POST);
         }
-
         $this->view->render('feedback.php', $dataPage);
         return true;
     }

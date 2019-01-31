@@ -17,6 +17,7 @@ class Controller
      */
     public function start(array $result):void
     {
+      //  echo $_SERVER['REQUEST_URI'];
         $controllerName = $result['controllerName'];
         $actionName = $result['actionName'];
         $parameters  = $result['parameters'];

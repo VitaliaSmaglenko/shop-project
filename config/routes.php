@@ -2,6 +2,8 @@
 
 return array(
 
+    'search/([a-z]+)/page-([0-9]+)' => 'catalog/search/$1/$2',
+    'search//page-([0-9]+)' => 'catalog/search/',
     //feedback:
     'feedback' => 'feedback/sender',
 

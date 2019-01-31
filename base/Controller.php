@@ -5,6 +5,8 @@
 namespace Base;
 
 use Base\View;
+use App\Response;
+use App\Request;
 
 abstract class Controller
 {
@@ -19,5 +21,9 @@ abstract class Controller
     public function __construct()
     {
         $this->view = new View();
+        $request = new Request();
+        if (null !== $request->post('subSearch')) {
+            Response::redirect('/search/'.$request->post('search').'/page-1');
+        }
     }
 }

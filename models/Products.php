@@ -98,6 +98,45 @@ class Products extends Model
         return $productList;
     }
 
+    /**
+     * Returns product by brand
+     * @param string $search
+     * @param int $page
+     * @return array
+     */
+    public function getSearch(string $search, int $page = 1):array
+    {
+        $limit = self::LIMIT;
+        $offset = ($page - 1) * self::LIMIT;
+        $sql = 'SELECT  name, products.id, price, product_images.image, is_new, category_id, description, '.
+            'specifications, availability, brand, status'.
+            ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id '.
+            ' WHERE products.status = "1" AND brand LIKE :search ORDER by products.id LIMIT :limit OFFSET :offset';
+        $pdo = new PDODB();
+        $data = array(':search' => $search, ':limit' => $limit, ':offset' => $offset);
+        $product = $pdo->prepareData($sql, $data, 'fetchAll');
+        $productList = array();
+        for ($i = 0; $i < count($product); $i++) {
+            $objProduct = new Products();
+            $objProduct->setName($product[$i]['name']);
+            $objProduct->setDescription($product[$i]['description']);
+            $objProduct->setImage($product[$i]['image']);
+            $objProduct->setPrice($product[$i]['price']);
+            $objProduct->setId($product[$i]['id']);
+            $objProduct->setSpecifications($product[$i]['specifications']);
+            $objProduct->setAvailability($product[$i]['availability']);
+            $objProduct->setBrand($product[$i]['brand']);
+            $objProduct->setStatus($product[$i]['status']);
+            $productList[$i] = $objProduct;
+        }
+
+        return $productList;
+    }
+
+    /**
+     * @param int $page
+     * @return array
+     */
     public function getCatalog(int $page = 1):array
     {
         $limit = self::LIMIT;
@@ -217,6 +256,7 @@ class Products extends Model
     }
 
     /**
+     * Returns total count product by id
      * @param int $id
      * @return int
      */
@@ -229,6 +269,10 @@ class Products extends Model
         return $product[0]['count'];
     }
 
+    /**
+     * Returns total count product
+     * @return int
+     */
     public function getTotalProduct():int
     {
         $sql = "SELECT count(id) AS count FROM products WHERE status='1'";
@@ -238,13 +282,27 @@ class Products extends Model
     }
 
     /**
+     * Returns total count product by brand
+     * @param $search
+     * @return int
+     */
+    public function getTotalSearch($search):int
+    {
+        $sql = "SELECT count(id) AS count FROM products WHERE status='1'  AND brand LIKE :search";
+        $pdo = new PDODB();
+        $data = array(':search'=> $search);
+        $product = $pdo->prepareData($sql, $data, 'setFetchMode');
+        return $product['count'];
+    }
+
+    /**
      * @return array
      */
     public function getSortingByPrice(int $page = 1):array
     {
         $limit = self::LIMIT;
         $offset = ($page - 1) * self::LIMIT;
-        $sql = 'SELECT  name, products.id, price, product_images    .image, description, specifications, availability, brand, '.
+        $sql = 'SELECT  name, products.id, price, product_images.image, description, specifications, availability, brand, '.
             ' status FROM products LEFT JOIN product_images ON products.id = product_images.product_id  '.
             'WHERE status = "1" ORDER BY price ASC  LIMIT :limit OFFSET :offset'  ;
         $pdo = new PDODB();

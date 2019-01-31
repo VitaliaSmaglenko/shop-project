@@ -111,6 +111,9 @@ class PDODB
                         return $result->fetchColumn();
                 } elseif ($method == 'lastId') {
                         return $pdo->lastInsertId();
+                } elseif ($method == 'setFetchMode') {
+                    $result->setFetchMode(PDO::FETCH_ASSOC);
+                    return $result->fetch();
                 }
                 return true;
             }

@@ -7,12 +7,12 @@
     <meta name="author" content="">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="../components/css/bootstrap.css" type="text/css">
-    <link rel="stylesheet" href="../components/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="../components/css/bootstrap-grid.css" type="text/css">
-    <link rel="stylesheet" href="../components/css/bootstrap-grid.min.css" type="text/css">
-    <link rel="stylesheet" href="../components/css/bootstrap-reboot.css" type="text/css">
-    <link rel="stylesheet" href="../components/css/bootstrap-reboot.min.css" type="text/css">
+    <link rel="stylesheet" href="../../components/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="../../components/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../components/css/bootstrap-grid.css" type="text/css">
+    <link rel="stylesheet" href="../../components/css/bootstrap-grid.min.css" type="text/css">
+    <link rel="stylesheet" href="../../components/css/bootstrap-reboot.css" type="text/css">
+    <link rel="stylesheet" href="../../components/css/bootstrap-reboot.min.css" type="text/css">
 
     <title>My shop</title>
 
@@ -20,7 +20,7 @@
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
     <link href="blog.css" rel="stylesheet">
-    <link rel="stylesheet" href="../components/css/main.css" type="text/css">
+    <link rel="stylesheet" href="../../components/css/main.css" type="text/css">
 </head>
 <body>
 
@@ -39,7 +39,7 @@
                 <a class="text-muted h4" href="/cart">
                      (<?php $count = new Model\Cart();
                      echo $count->countProducts();?>)
-                    <img src="../components/img/shopcard.png" class="im-bucket">
+                    <img src="../../../components/img/shopcard.png" class="im-bucket">
 
                 </a>
                     </span>
@@ -81,9 +81,9 @@
 
 
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" width="50px">
-                    <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
+                <form class="form-inline my-2 my-lg-0" method="post">
+                    <input class="form-control mr-sm-2" name="search" type="text" placeholder="Search" width="50px">
+                    <button class="btn btn-info my-2 my-sm-0" name = "subSearch">Search</button>
                 </form>
             </div>
 

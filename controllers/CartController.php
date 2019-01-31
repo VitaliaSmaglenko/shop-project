@@ -23,29 +23,27 @@ class CartController extends Controller
         $products = new Products();
 
         if ($cart) {
-           $productsId = array_keys($cart);
-           $products = $products->getByIds($productsId);
+            $productsId = array_keys($cart);
+            $products = $products->getByIds($productsId);
 
-           if(count($products) !== count($cart)) {
-               if (empty($products)) {
-                   $cartProducts->clear();
-               }
-               for ($i = 0; $i < count($products); $i++) {
-                   foreach ($cart as $k => $v) {
-                       if ($products[$i]->getId() !== $k) {
-                           $cartProducts->deleteProduct($k);
-                       }
-                   }
-               }
-           }
-
+            if (count($products) !== count($cart)) {
+                if (empty($products)) {
+                    $cartProducts->clear();
+                }
+                for ($i = 0; $i < count($products); $i++) {
+                    foreach ($cart as $k => $v) {
+                        if ($products[$i]->getId() !== $k) {
+                            $cartProducts->deleteProduct($k);
+                        }
+                    }
+                }
+            }
                 $dataPage['products'] = $products;
                 $price = $cartProducts->getPrice($products);
                 $dataPage['price'] = $price;
-            }
+        }
             $this->view->render('cart.php', $dataPage);
             return true;
-
     }
 
 

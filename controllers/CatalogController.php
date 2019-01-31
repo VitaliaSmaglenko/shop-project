@@ -27,7 +27,6 @@ class CatalogController extends Controller
         $pagination = new Pagination($total, $page, Products::LIMIT, 'page-');
         $dataPage['pagination'] = $pagination;
 
-
         $this->view->render('catalog.php', $dataPage);
         return true;
     }
@@ -51,6 +50,7 @@ class CatalogController extends Controller
 
         $pagination = new Pagination($total, $page, Products::LIMIT, 'page-');
         $dataPage['pagination'] = $pagination;
+
         $this->view->render('category.php', $dataPage);
         return true;
     }
@@ -68,29 +68,42 @@ class CatalogController extends Controller
         $productList = $product->getSortingByPrice($page);
         $dataPage['productList'] = $productList;
 
-
         $total = $product->getTotalProduct();
         $pagination = new Pagination($total, $page, Products::LIMIT, 'page-');
         $dataPage['pagination'] = $pagination;
+
         $this->view->render('catalog.php', $dataPage);
         return true;
     }
 
     /**
-     * Action for sorting by price
-     * @param int $id
+     * Action for search product by brand
+     * @param string $search
+     * @param int $page
      * @return bool
      */
-    public function actionPriceCategory(int $id):bool
+    public function actionSearch(string $search = '', int $page = 1):bool
     {
         $categories = new Category();
         $categories = $categories->get();
         $dataPage['categories'] = $categories;
-        $productList = new Products();
-        $productList = $productList->getByCategory($id);
+        $product = new Products();
+        $productList = $product->getSearch($search, $page);
         $dataPage['productList'] = $productList;
 
-        $this->view->render('catalog.php', $dataPage);
+        if ($productList) {
+            $total = $product->getTotalSearch($search);
+            $pagination = new Pagination($total, $page, Products::LIMIT, 'page-');
+            $dataPage['pagination'] = $pagination;
+            $this->view->render('category.php', $dataPage);
+        } else {
+            $productList = $product->getCatalog($page);
+            $dataPage['productList'] = $productList;
+            $total = $product->getTotalProduct();
+            $pagination = new Pagination($total, $page, Products::LIMIT, 'page-');
+            $dataPage['pagination'] = $pagination;
+            $this->view->render('catalog.php', $dataPage);
+        }
         return true;
     }
 }

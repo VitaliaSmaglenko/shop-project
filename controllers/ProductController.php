@@ -27,12 +27,12 @@ class ProductController extends Controller
         $cartObj = new Model\Cart();
         $cart = $cartObj->isProduct($id);
         $dataPage['cart'] = $cart;
-
+        $request = new Request();
         $user = new Authenticate();
         $userId = $user->checkLogged();
         $dataPage['userId'] = $userId;
         $favorites = 0;
-        $dataPage['favorites'] =$favorites;
+        $dataPage['favorites'] = $favorites;
         $comment = new CommentProduct();
         $commentList = $comment->get($id);
 
@@ -51,7 +51,6 @@ class ProductController extends Controller
             $favoritesProduct->setIdUser($userId);
             $favorites = $favoritesProduct->exist();
 
-            $request = new Request();
             if (null !== $request->post('submitAdd')) {
                 $comment->setUserId($userId);
                 $comment->setProductId($id);
@@ -80,6 +79,7 @@ class ProductController extends Controller
 
         $dataPage['favorites'] = $favorites;
         $this->view->render('product.php', $dataPage);
+
         return true;
     }
 

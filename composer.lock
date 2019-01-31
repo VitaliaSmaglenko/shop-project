@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3f8bfed2a4656931d3a89af558b8172c",
+    "content-hash": "e531b89eed4372685fd8a07ca51d4d9d",
     "packages": [
         {
             "name": "doctrine/lexer",

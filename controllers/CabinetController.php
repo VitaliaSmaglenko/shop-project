@@ -34,6 +34,7 @@ class CabinetController extends Controller
             $role = true;
         }
         $dataPage['role'] = $role;
+
         $this->view->render('cabinet.php', $dataPage);
         return true;
     }
@@ -78,6 +79,7 @@ class CabinetController extends Controller
                 $dataPage['result'] = $result;
             }
         }
+
         $this->view->render('edit.php', $dataPage);
         return true;
     }
@@ -107,7 +109,7 @@ class CabinetController extends Controller
             for ($i = 0; $i < count($ordersData); $i++) {
                 $productOrderData[$i] = $productOrder->getByOrdersId($ordersData[$i]->getId());
             }
-          $dataPage['productOrder'] = $productOrderData;
+            $dataPage['productOrder'] = $productOrderData;
         }
         $this->view->render('orders.php', $dataPage);
         return true;

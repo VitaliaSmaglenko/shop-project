@@ -5,7 +5,6 @@
 use Base\Controller;
 use Model\Category;
 use Model\Products;
-use App\Pagination;
 
 class SiteController extends Controller
 {
