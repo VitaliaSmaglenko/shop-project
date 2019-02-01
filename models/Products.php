@@ -37,6 +37,7 @@ class Products extends Model
     {
         $limit = self::LIMIT;
         $offset = ($page - 1) * self::LIMIT;
+        $productList = array();
         if ($id) {
             $sql = 'SELECT  name, products.id, price, product_images.image, description, specifications, '.
                 ' availability, brand, products.status'.
@@ -47,7 +48,6 @@ class Products extends Model
             $data = array(':id' => $id, ':limit' => $limit, ':offset' => $offset);
             $pdo = new PDODB();
             $product = $pdo->prepareData($sql, $data, 'fetchAll');
-            $productList = array();
             for ($i = 0; $i<count($product); $i++) {
                 $objProduct = new Products();
                 $objProduct->setName($product[$i]['name']);
