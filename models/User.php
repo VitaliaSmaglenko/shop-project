@@ -8,7 +8,6 @@ use App\PDODB;
 use Model\Authenticate;
 use Base\Model;
 
-
 class User extends Model
 {
     /**
@@ -32,11 +31,10 @@ class User extends Model
     {
         $sql ='INSERT INTO user (first_name, last_name, user_name, email, password, phone) '.
                ' VALUES (:firstName, :lastName, :userName, :email, :password, :phone)';
-        $pdo = new PDODB();
         $data = array(':firstName' => $this->getFirstName(), ':lastName' => $this->getLastName(),
             ':userName' => $this->getUserName(), ':email' => $this->getEmail(),
             ':password' => $this->getPassword(), ':phone' => $this->getPhone());
-        $result=$pdo->prepareData($sql, $data, 'execute');
+        $result=PDODB::prepareData($sql, $data, 'execute');
 
         return $result;
     }
@@ -51,9 +49,8 @@ class User extends Model
     {
         $sql ='SELECT  user_name, first_name, last_name, email, id, password, phone FROM user '.
             ' WHERE email = :email AND password = :password';
-        $pdo = new PDODB();
         $data = array(':email' => $this->getEmail(), ':password' => $this->getPassword());
-        $user = $pdo->prepareData($sql, $data, 'fetch');
+        $user = PDODB::prepareData($sql, $data, 'fetch');
         $objUser = new User();
         for ($i=0; $i<count($user); $i++) {
             $objUser->setEmail($user['email']);
@@ -74,10 +71,9 @@ class User extends Model
      */
     public function getById(int $id):User
     {
-        $sql ='SELECT  user_name, first_name, last_name, email, id, password, phone, role FROM user  WHERE id = :id';
-        $pdo = new PDODB();
+        $sql = 'SELECT  user_name, first_name, last_name, email, id, password, phone, role FROM user  WHERE id = :id';
         $data = array(':id' => $id);
-        $user = $pdo-> prepareData($sql, $data, 'fetchAll');
+        $user = PDODB::prepareData($sql, $data, 'fetchAll');
         $objUser = new User();
         for ($i=0; $i<count($user); $i++) {
             $objUser->setEmail($user[$i]['email']);
@@ -99,12 +95,11 @@ class User extends Model
      */
     public function updateUser(int $id):bool
     {
-        $sql ='UPDATE user SET first_name = :firstName, last_name = :lastName, password = :password, phone = :phone'.
+        $sql = 'UPDATE user SET first_name = :firstName, last_name = :lastName, password = :password, phone = :phone'.
             ' WHERE id = :id';
-        $pdo = new PDODB();
         $data = array( ':firstName' => $this->getFirstName(), ':lastName' => $this->getLastName(),
             ':password' => $this->getPassword(), ':phone' => $this->getPhone(), ':id' => $id);
-        $result=$pdo->prepareData($sql, $data, 'execute');
+        $result = PDODB::prepareData($sql, $data, 'execute');
         return $result;
     }
 
@@ -121,8 +116,7 @@ class User extends Model
         $data = array(':firstName' => $this->getFirstName(), ':lastName' => $this->getLastName(),
              ':phone' => $this->getPhone(), ':email'=>$this->getEmail(), ':role' => $this->getRole(),
             ':userName' => $this->getUserName(), ':id' => $id);
-        $pdo = new PDODB();
-        $result = $pdo->prepareData($sql, $data, 'execute');
+        $result = PDODB::prepareData($sql, $data, 'execute');
         return $result;
     }
 
@@ -135,8 +129,7 @@ class User extends Model
     {
         $sql = 'UPDATE user SET password = :password WHERE id = :id';
         $data = array(  ':password' => $this->getPassword(), ':id' => $id);
-        $pdo = new PDODB();
-        $result = $pdo->prepareData($sql, $data, 'execute');
+        $result = PDODB::prepareData($sql, $data, 'execute');
         return $result;
     }
 
@@ -147,8 +140,7 @@ class User extends Model
     public function getAdmin():array
     {
         $sql ='SELECT  user_name, first_name, last_name, email, id, password, phone FROM user ';
-        $pdo = new PDODB();
-        $user = $pdo->queryData($sql);
+        $user = PDODB::queryData($sql);
         $userList = array();
         for ($i=0; $i<count($user); $i++) {
             $objUser = new User();
@@ -173,8 +165,7 @@ class User extends Model
     {
         $sql = "DELETE FROM user WHERE id = :id";
         $data = array( ':id' => $id);
-        $pdo = new PDODB();
-        $product = $pdo->prepareData($sql, $data, 'execute');
+        $product = PDODB::prepareData($sql, $data, 'execute');
         return $product;
     }
 
@@ -185,9 +176,7 @@ class User extends Model
     public function delete()
     {
         $sql = "DELETE  FROM user  ORDER BY id DESC LIMIT 1";
-     //   $data = array( ':id' => $id);
-        $pdo = new PDODB();
-        $result = $pdo->queryData($sql);
+        $result = PDODB::queryData($sql);
         return $result;
     }
 

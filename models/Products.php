@@ -46,8 +46,7 @@ class Products extends Model
               ' WHERE category.id=:id  AND products.status = "1" ORDER by products.id ASC LIMIT :limit OFFSET :offset ';
 
             $data = array(':id' => $id, ':limit' => $limit, ':offset' => $offset);
-            $pdo = new PDODB();
-            $product = $pdo->prepareData($sql, $data, 'fetchAll');
+            $product = PDODB::prepareData($sql, $data, 'fetchAll');
             for ($i = 0; $i<count($product); $i++) {
                 $objProduct = new Products();
                 $objProduct->setName($product[$i]['name']);
@@ -76,9 +75,8 @@ class Products extends Model
             'specifications, availability, brand, status'.
             ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id '.
             ' WHERE products.status = "1" ORDER by products.id ASC LIMIT :limit';
-        $pdo = new PDODB();
         $data = array(':limit' => $limit);
-        $product = $pdo->prepareData($sql, $data, 'fetchAll');
+        $product = PDODB::prepareData($sql, $data, 'fetchAll');
         $productList = array();
 
         for ($i = 0; $i < count($product); $i++) {
@@ -112,9 +110,8 @@ class Products extends Model
             'specifications, availability, brand, status'.
             ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id '.
             ' WHERE products.status = "1" AND brand LIKE :search ORDER by products.id LIMIT :limit OFFSET :offset';
-        $pdo = new PDODB();
         $data = array(':search' => $search, ':limit' => $limit, ':offset' => $offset);
-        $product = $pdo->prepareData($sql, $data, 'fetchAll');
+        $product = PDODB::prepareData($sql, $data, 'fetchAll');
         $productList = array();
         for ($i = 0; $i < count($product); $i++) {
             $objProduct = new Products();
@@ -145,10 +142,8 @@ class Products extends Model
             'specifications, availability, brand, status'.
             ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id '.
             ' WHERE products.status = "1" ORDER by products.id ASC LIMIT :limit OFFSET :offset ';
-        $pdo = new PDODB();
         $data = array(':limit' => $limit, ':offset' => $offset);
-        $product = $pdo->prepareData($sql, $data, 'fetchAll');
-
+        $product = PDODB::prepareData($sql, $data, 'fetchAll');
         $productList = array();
 
         for ($i = 0; $i < count($product); $i++) {
@@ -174,8 +169,7 @@ class Products extends Model
     {
         $sql = 'SELECT  name, id, price, image, description, specifications, availability, brand, status'.
             ' FROM products';
-        $pdo = new PDODB();
-        $product = $pdo->queryData($sql);
+        $product = PDODB::queryData($sql);
         $productList = array();
         for ($i = 0; $i < count($product); $i++) {
             $objProduct = new Products();
@@ -205,8 +199,7 @@ class Products extends Model
            ' FROM products LEFT JOIN product_images ON products.id = product_images.product_id WHERE products.id = :id';
 
         $data = array (':id' => $id);
-        $pdo = new PDODB();
-        $product = $pdo->prepareData($sql, $data, 'fetchAll');
+        $product = PDODB::prepareData($sql, $data, 'fetchAll');
         $objProduct = new Products();
         for ($i = 0; $i < count($product); $i++) {
             $objProduct->setName($product[$i]['name']);
@@ -236,8 +229,7 @@ class Products extends Model
         $sql = 'SELECT  name, products.id, price,  product_images.image, description, specifications, availability, brand,'.
           ' status FROM products LEFT JOIN product_images ON products.id = product_images.product_id WHERE status="1" '.
           ' AND products.id IN ('.$ids.')';
-        $pdo = new PDODB();
-        $product = $pdo->queryData($sql, 'setFetchMode');
+        $product = PDODB::queryData($sql, 'setFetchMode');
         $productList = array();
         for ($i = 0; $i < count($product); $i++) {
             $objProduct = new Products();
@@ -264,8 +256,7 @@ class Products extends Model
     public function getTotalProductById(int $id):int
     {
         $sql = "SELECT count(id) AS count FROM products WHERE status='1' AND category_id = '".$id."'";
-        $pdo = new PDODB();
-        $product = $pdo->queryData($sql, 'setFetchMode');
+        $product = PDODB::queryData($sql, 'setFetchMode');
         return $product[0]['count'];
     }
 
@@ -276,8 +267,7 @@ class Products extends Model
     public function getTotalProduct():int
     {
         $sql = "SELECT count(id) AS count FROM products WHERE status='1'";
-        $pdo = new PDODB();
-        $product = $pdo->queryData($sql, 'setFetchMode');
+        $product = PDODB::queryData($sql, 'setFetchMode');
         return $product[0]['count'];
     }
 
@@ -289,9 +279,8 @@ class Products extends Model
     public function getTotalSearch($search):int
     {
         $sql = "SELECT count(id) AS count FROM products WHERE status='1'  AND brand LIKE :search";
-        $pdo = new PDODB();
         $data = array(':search'=> $search);
-        $product = $pdo->prepareData($sql, $data, 'setFetchMode');
+        $product = PDODB::prepareData($sql, $data, 'setFetchMode');
         return $product['count'];
     }
 
@@ -305,9 +294,8 @@ class Products extends Model
         $sql = 'SELECT  name, products.id, price, product_images.image, description, specifications, availability, brand, '.
             ' status FROM products LEFT JOIN product_images ON products.id = product_images.product_id  '.
             'WHERE status = "1" ORDER BY price ASC  LIMIT :limit OFFSET :offset'  ;
-        $pdo = new PDODB();
         $data = array(':limit' => $limit, ':offset' => $offset);
-        $product = $pdo->prepareData($sql, $data, 'fetchAll');
+        $product = PDODB::prepareData($sql, $data, 'fetchAll');
         $productList = array();
 
         for ($i = 0; $i < count($product); $i++) {
@@ -335,8 +323,7 @@ class Products extends Model
     {
         $sql = "DELETE FROM products WHERE id = :id";
         $data = array( ':id' => $id);
-        $pdo = new PDODB();
-        $product = $pdo->prepareData($sql, $data, 'execute');
+        $product = PDODB::prepareData($sql, $data, 'execute');
         return $product;
     }
 
@@ -356,8 +343,7 @@ class Products extends Model
            ':status' => $this->getStatus(), ':update_at' => $this->getUpdatedAt(),
            ':created_at' => $this->getCreatedAt(),
            ':specifications' => $this->getSpecifications(), ':is_new' => $this->getIsNew());
-        $pdo = new PDODB();
-        $result=$pdo->prepareData($sql, $data, 'lastId');
+        $result = PDODB::prepareData($sql, $data, 'lastId');
         return $result;
     }
 
@@ -377,8 +363,7 @@ class Products extends Model
             ':brand' => $this->getBrand(), ':description' => $this->getDescription(),
            ':status' => $this->getStatus(), ':update_at' => $this->getUpdatedAt(),
            ':specifications' => $this->getSpecifications(), ':is_new' => $this->getIsNew(), ':id' => $id);
-        $pdo = new PDODB();
-        $result = $pdo->prepareData($sql, $data, 'execute');
+        $result = PDODB::prepareData($sql, $data, 'execute');
         return $result;
     }
 
@@ -391,8 +376,7 @@ class Products extends Model
     {
         $sql = 'UPDATE products SET availability = availability + :value  WHERE id = :id';
         $data = array( ':id' => $id, ':value' =>$value);
-        $pdo = new PDODB();
-        $result = $pdo->prepareData($sql, $data, 'execute');
+        $result = PDODB::prepareData($sql, $data, 'execute');
         return $result;
     }
 

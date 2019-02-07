@@ -26,10 +26,9 @@ class ProductOrder extends Model
     {
         $sql = 'INSERT INTO product_order(id_product, id_orders, price, quantity) ' .
                ' VALUES (:idProduct, :idOrders, :price, :quantity);';
-        $pdo = new PDODB();
         $data = array(':idProduct' => $this->getIdProduct(), ':idOrders' => $this->getIdOrders(),
             ':price' => $this->price, ':quantity' => $this->quantity);
-        $result = $pdo->prepareData($sql, $data, 'execute');
+        $result = PDODB::prepareData($sql, $data, 'execute');
 
         return $result;
     }
@@ -43,9 +42,8 @@ class ProductOrder extends Model
         $sql = 'SELECT id_product, id_orders, product_order.price, quantity, name '.
             ' FROM product_order INNER JOIN products  ON product_order.id_product=products.id WHERE '.
             ' product_order.id_orders = :id';
-        $pdo = new PDODB();
         $data = array('id' => $id);
-        $result = $pdo->prepareData($sql, $data, 'fetchAll');
+        $result = PDODB::prepareData($sql, $data, 'fetchAll');
         $productOrderList = array();
         for ($i=0; $i<count($result); $i++) {
             $objProductOrder = new ProductOrder();
@@ -66,9 +64,8 @@ class ProductOrder extends Model
     {
         $sql = 'SELECT id_product, id_orders, name, product_order.price, quantity  FROM product_order '.
             ' INNER JOIN products  ON product_order.id_product=products.id WHERE id_orders = :id';
-        $pdo = new PDODB();
         $data = array(':id' => $id);
-        $result = $pdo->prepareData($sql, $data, 'fetchAll');
+        $result = PDODB::prepareData($sql, $data, 'fetchAll');
         $productOrderList = array();
         for ($i=0; $i<count($result); $i++) {
             $objProductOrder = new ProductOrder();

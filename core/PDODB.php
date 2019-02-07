@@ -73,7 +73,7 @@ class PDODB
      * @param string $method
      * @return array
      */
-    public function queryData(string $sql, string $method = ''):array
+    public static function queryData(string $sql, string $method = ''):array
     {
         $pdo = self::getPDO();
         try {
@@ -94,7 +94,7 @@ class PDODB
      * @param $method
      * @return array|bool|mixed|string
      */
-    public function prepareData(string $sql, array $data, string $method)
+    public static function prepareData(string $sql, array $data, string $method)
     {
         $pdo = self::getPDO();
         try {

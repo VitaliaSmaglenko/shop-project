@@ -27,10 +27,9 @@ class CommentProduct extends Model
     {
         $sql = 'INSERT INTO comment_product (id_product, id_user, text, created_at, updated_at) '.
             'VALUES (:idProduct, :idUser, :text, :created_at, :updated_at);';
-        $pdo = new PDODB();
         $data = array(':idProduct' => $this->getProductId(), ':idUser' => $this->getUserId(),
            ':text' => $this->getText(), ':created_at' => $this->getCreatedAt(), ':updated_at' => $this->getUpdatedAt());
-        $result = $pdo->prepareData($sql, $data, 'execute');
+        $result = PDODB::prepareData($sql, $data, 'execute');
         return $result;
     }
 
@@ -44,8 +43,7 @@ class CommentProduct extends Model
                ' FROM comment_product LEFT JOIN user ON comment_product.id_user = user.id '.
                ' WHERE id_product = :id ';
         $data = array(':id' => $id);
-        $pdo = new PDODB();
-        $result = $pdo->prepareData($sql, $data, 'fetchAll');
+        $result = PDODB::prepareData($sql, $data, 'fetchAll');
         $commentList = array();
 
         for ($i = 0; $i < count($result); $i++) {
@@ -72,8 +70,7 @@ class CommentProduct extends Model
     {
         $sql = 'SELECT count(*) FROM comment_product WHERE id_product = :id';
         $data = array(':id' => $id);
-        $pdo = new PDODB();
-        $result = $pdo->prepareData($sql, $data, 'fetchColumn');
+        $result = PDODB::prepareData($sql, $data, 'fetchColumn');
 
         return $result;
     }
@@ -86,8 +83,7 @@ class CommentProduct extends Model
     {
         $sql = "DELETE FROM comment_product WHERE id = :id";
         $data = array( ':id' => $id);
-        $pdo = new PDODB();
-        $result = $pdo->prepareData($sql, $data, 'execute');
+        $result = PDODB::prepareData($sql, $data, 'execute');
         return $result;
     }
 

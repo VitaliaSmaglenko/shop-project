@@ -23,9 +23,8 @@ class ProductImages extends Model
     {
         $sql ='INSERT INTO product_images (product_id, image) '.
             ' VALUES (:product_id, :image)';
-        $pdo = new PDODB();
         $data = array(':product_id' => $this->getProductId(), ':image' => $this->getImage());
-        $result=$pdo->prepareData($sql, $data, 'execute');
+        $result=PDODB::prepareData($sql, $data, 'execute');
         return $result;
     }
 
@@ -36,9 +35,8 @@ class ProductImages extends Model
     public function updateById(int $id):bool
     {
         $sql = 'UPDATE  product_images SET image = :image WHERE product_id = :id';
-        $pdo = new PDODB();
         $data= array(':image' => $this->getImage(), ':id' => $id);
-        $result = $pdo->prepareData($sql, $data, 'execute');
+        $result = PDODB::prepareData($sql, $data, 'execute');
         return $result;
     }
 

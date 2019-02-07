@@ -12,8 +12,7 @@ use Base\Model;
 class Category extends Model
 {
     /**
-     * @param string $category
-     * @param int $status
+     * @var
      */
 
     public $category;
@@ -27,12 +26,11 @@ class Category extends Model
      */
     public function create():bool
     {
-        $sql ='INSERT INTO category (category,  status, updated_at, created_at)'.
+        $sql = 'INSERT INTO category (category,  status, updated_at, created_at)'.
             ' VALUES (:category, :status, :update_at, :created_at)';
-        $pdo = new PDODB();
-        $data= array(':category' => $this->getCategory(), ':status' => $this->getStatus(),
+        $data = array(':category' => $this->getCategory(), ':status' => $this->getStatus(),
             ':update_at' => $this->getUpdatedAt(), ':created_at' => $this->getCreatedAt());
-        $result=$pdo->prepareData($sql, $data, 'execute');
+        $result = PDODB::prepareData($sql, $data, 'execute');
         return $result;
     }
 
@@ -45,9 +43,9 @@ class Category extends Model
     {
         $sql ='SELECT  category, id, status FROM category  WHERE status = "1"';
         $pdo = new PDODB();
-        $category=$pdo->queryData($sql);
+        $category = PDODB::queryData($sql);
         $categoryList = array();
-        for ($i=0; $i<count($category); $i++) {
+        for ($i = 0; $i<count($category); $i++) {
             $objCategory = new Category();
             $objCategory->setCategory($category[$i]['category']);
             $objCategory->setId($category[$i]['id']);
@@ -63,10 +61,8 @@ class Category extends Model
      */
     public function getAdmin():array
     {
-        $sql ='SELECT  category, id, status FROM category';
-        $pdo = new PDODB();
-        $category=$pdo->queryData($sql);
-
+        $sql = 'SELECT  category, id, status FROM category';
+        $category = PDODB::queryData($sql);
         $categoryList = array();
 
         for ($i=0; $i<count($category); $i++) {
@@ -86,9 +82,8 @@ class Category extends Model
     public function getById(int $id):Category
     {
         $sql ='SELECT  category, id, status FROM category WHERE id = :id';
-        $pdo = new PDODB();
         $data = array('id' => $id);
-        $category=$pdo->prepareData($sql, $data, 'fetchAll');
+        $category = PDODB::prepareData($sql, $data, 'fetchAll');
         $objCategory = new Category();
         for ($i=0; $i<count($category); $i++) {
             $objCategory->setCategory($category[$i]['category']);
@@ -106,11 +101,9 @@ class Category extends Model
     {
         $sql = 'UPDATE category SET  category = :category, status = :status, '.
             ' updated_at = :update_at WHERE id = :id';
-
-        $pdo = new PDODB();
-        $data= array(':category' => $this->getCategory(), ':status' => $this->getStatus(),
+        $data = array(':category' => $this->getCategory(), ':status' => $this->getStatus(),
            ':update_at' => $this->getUpdatedAt(), ':id' => $id);
-        $result=$pdo->prepareData($sql, $data, 'execute');
+        $result = PDODB::prepareData($sql, $data, 'execute');
         return $result;
     }
 
@@ -121,9 +114,8 @@ class Category extends Model
     public function deleteById(int $id):bool
     {
         $sql = "DELETE FROM category WHERE id = :id";
-        $pdo = new PDODB();
         $data = array(':id' => $id);
-        $category = $pdo->prepareData($sql, $data, 'execute');
+        $category = PDODB::prepareData($sql, $data, 'execute');
         return $category;
     }
 

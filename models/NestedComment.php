@@ -28,10 +28,9 @@ class NestedComment extends Model
     {
         $sql = 'INSERT INTO nested_comment (id_comment, id_user, text, created_at, updated_at) '.
             'VALUES (:idComment, :idUser, :text, :created_at, :updated_at);';
-        $pdo = new PDODB();
         $data = array(':idComment' => $this->getCommentId(), ':idUser' => $this->getUserId(),
            ':text' => $this->getText(), ':created_at' => $this->getCreatedAt(), ':updated_at' => $this->getUpdatedAt());
-        $result = $pdo->prepareData($sql, $data, 'execute');
+        $result = PDODB::prepareData($sql, $data, 'execute');
         return $result;
     }
 
@@ -45,8 +44,7 @@ class NestedComment extends Model
             ' FROM nested_comment LEFT JOIN user ON nested_comment.id_user = user.id ' .
             ' WHERE id_comment = :id ';
         $data = array(':id' => $id);
-        $pdo = new PDODB();
-        $result = $pdo->prepareData($sql, $data, 'fetchAll');
+        $result = PDODB::prepareData($sql, $data, 'fetchAll');
         $commentList = array();
 
         for ($i = 0; $i < count($result); $i++) {
@@ -71,8 +69,7 @@ class NestedComment extends Model
     {
         $sql = "DELETE FROM nested_comment WHERE id = :id";
         $data = array( ':id' => $id);
-        $pdo = new PDODB();
-        $result = $pdo->prepareData($sql, $data, 'execute');
+        $result = PDODB::prepareData($sql, $data, 'execute');
         return $result;
     }
 

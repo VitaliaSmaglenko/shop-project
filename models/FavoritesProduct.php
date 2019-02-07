@@ -28,9 +28,8 @@ class FavoritesProduct extends Model
     {
         $sql ='INSERT INTO favorites_products (id_product, id_user) '.
             ' VALUES (:id_product, :id_user)';
-        $pdo = new PDODB();
         $data = array('id_product' => $this->getIdProduct(), ':id_user' => $this->getIdUser());
-        $result=$pdo->prepareData($sql, $data, 'execute');
+        $result=PDODB::prepareData($sql, $data, 'execute');
         return $result;
     }
 
@@ -41,9 +40,8 @@ class FavoritesProduct extends Model
     {
         $sql ='SELECT EXISTS(SELECT id_product, id_user FROM favorites_products'.
             ' WHERE id_product = :id_product AND id_user = :id_user)';
-        $pdo = new PDODB();
         $data = array('id_product' => $this->getIdProduct(), ':id_user' => $this->getIdUser());
-        $result=$pdo->prepareData($sql, $data, 'fetchColumn');
+        $result=PDODB::prepareData($sql, $data, 'fetchColumn');
         return $result;
     }
 
@@ -56,9 +54,8 @@ class FavoritesProduct extends Model
             ' INNER JOIN products ON favorites_products.id_product=products.id '.
             'INNER JOIN product_images ON product_images.product_id=products.id'.
             ' WHERE  id_user = :id_user';
-        $pdo = new PDODB();
         $data = array( ':id_user' => $this->getIdUser());
-        $result=$pdo->prepareData($sql, $data, 'fetchAll');
+        $result=PDODB::prepareData($sql, $data, 'fetchAll');
         $favProductList = array();
         for ($i = 0; $i < count($result); $i++) {
             $objFavProduct = new FavoritesProduct();
@@ -80,9 +77,8 @@ class FavoritesProduct extends Model
     {
         $sql ='DELETE  FROM favorites_products'.
             ' WHERE id_product = :id_product ';
-        $pdo = new PDODB();
         $data = array('id_product' => $this->getIdProduct());
-        $result=$pdo->prepareData($sql, $data, 'execute');
+        $result = PDODB::prepareData($sql, $data, 'execute');
         return $result;
     }
     public function setIdProduct(int $id):void

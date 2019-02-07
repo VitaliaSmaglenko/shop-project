@@ -30,22 +30,20 @@ class Buyers extends Model
      */
     public function createBuyers():bool
     {
-        if ($this->getUserId()==false) {
+        if ($this->getUserId()== false) {
             $sql = 'INSERT INTO buyers (first_name, last_name, comment, phone,  updated_at, created_at) '
                 . 'VALUES (:firstName, :lastName, :comment, :phone, :updatedAt, :createdAt);';
-            $pdo = new PDODB();
             $data = array(':firstName' => $this->getFirstName(), ':lastName' => $this->getLastName(),
                 ':comment' => $this->getComment(), ':phone' => $this->getPhone(),
                 ':updatedAt' => $this->updatedAt, ':createdAt' => $this->getCreatedAt());
-            $result = $pdo->prepareData($sql, $data, 'execute');
+            $result = PDODB::prepareData($sql, $data, 'execute');
         } else {
             $sql = 'INSERT INTO buyers (first_name, last_name, comment, phone,  user_id, updated_at, created_at) '
                 . 'VALUES (:firstName, :lastName, :comment, :phone, :userId, :updatedAt, :createdAt);';
-            $pdo = new PDODB();
             $data = array(':firstName' => $this->getFirstName(), ':lastName' => $this->getLastName(),
                 ':comment' => $this->getComment(), ':phone' => $this->getPhone(), ':userId' => $this->getUserId(),
                ':updatedAt' => $this->updatedAt, ':createdAt' => $this->getCreatedAt());
-            $result = $pdo->prepareData($sql, $data, 'execute');
+            $result = PDODB::prepareData($sql, $data, 'execute');
         }
 
         return $result;
@@ -57,8 +55,7 @@ class Buyers extends Model
     public function getBuyersId():int
     {
         $sql = "SELECT id FROM buyers ORDER BY id DESC LIMIT 1";
-        $pdo = new PDODB();
-        $result = $pdo->queryData($sql);
+        $result = PDODB::queryData($sql);
 
         for ($i=0; $i<count($result); $i++) {
             $this->setId($result[$i]['id']);
@@ -75,8 +72,7 @@ class Buyers extends Model
         $sql = "SELECT buyers.id, last_name, first_name, phone, updated_at, created_at, user_id, comment, ".
             "orders.status FROM buyers" .
             " INNER JOIN orders ON buyers.id = orders.id_buyers";
-        $pdo = new PDODB();
-        $result = $pdo->queryData($sql);
+        $result = PDODB::queryData($sql);
 
         $order = new Orders();
         $buyersList = array();
@@ -106,12 +102,10 @@ class Buyers extends Model
             ' INNER JOIN orders ON buyers.id = orders.id_buyers ' .
             ' SET last_name = :last_name, first_name = :first_name, phone = :phone, orders.status = :status '.
             '  WHERE buyers.id = :id';
-
-        $pdo = new PDODB();
         $data = array(':last_name' => $this->getLastName(), ':first_name' => $this->getFirstName(),
             ':phone' => $this->getPhone(),
             ':status' => $this->getStatusOrder(), ':id' => $id);
-        $result=$pdo->prepareData($sql, $data, 'execute');
+        $result = PDODB::prepareData($sql, $data, 'execute');
         return $result;
     }
 
@@ -122,9 +116,8 @@ class Buyers extends Model
     public function deleteById(int $id):bool
     {
         $sql = "DELETE FROM buyers WHERE id = :id";
-        $pdo = new PDODB();
         $data = array(':id' => $id);
-        $buyer = $pdo->prepareData($sql, $data, 'execute');
+        $buyer = PDODB::prepareData($sql, $data, 'execute');
         return $buyer;
     }
 
@@ -136,10 +129,9 @@ class Buyers extends Model
     {
         $sql = 'SELECT buyers.id, orders.status, first_name, last_name, phone, comment, user_id, created_at, '.
             ' updated_at FROM buyers INNER JOIN orders  ON orders.id_buyers=buyers.id WHERE buyers.id = :id';
-        $pdo = new PDODB();
         $objBuyers = new Buyers();
         $data = array('id' => $id);
-        $result = $pdo->prepareData($sql, $data, 'fetchAll');
+        $result = PDODB::prepareData($sql, $data, 'fetchAll');
         for ($i=0; $i<count($result); $i++) {
             $objBuyers->setId($result[$i]['id']);
             $objBuyers->setLastName($result[$i]["last_name"]);
@@ -161,9 +153,8 @@ class Buyers extends Model
     public function getUserById(int $id)
     {
         $sql = 'SELECT id, created_at from buyers WHERE user_id = :id';
-        $pdo = new PDODB();
         $data = array(':id' => $id);
-        $result = $pdo->prepareData($sql, $data, 'fetchAll');
+        $result = PDODB::prepareData($sql, $data, 'fetchAll');
 
         $buyersList = array();
         for ($i = 0; $i < count($result); $i++) {
