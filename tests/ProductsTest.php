@@ -5,7 +5,10 @@ use Model\Products;
 
 class ProductsTest extends TestCase
 {
-    private  $product;
+    /**
+     * @var Products
+     */
+    private $product;
 
     public function setUp()
     {
@@ -14,9 +17,9 @@ class ProductsTest extends TestCase
 
     public function testGetByCategoryIsCorrect()
     {
-       $id = 15;
-       $result = $this->product->getByCategory($id);
-       $this->assertIsArray($result);
+        $id = 15;
+        $result = $this->product->getByCategory($id);
+        $this->assertIsArray($result);
     }
 
     public function testGetByCategoryIsInCorrect()
@@ -32,7 +35,8 @@ class ProductsTest extends TestCase
         $this->assertIsArray($result);
     }
 
-    public function getSearchDataProvider() {
+    public function getSearchDataProvider()
+    {
         return array(
             array('apple'),
             array('Apple'),
@@ -50,7 +54,8 @@ class ProductsTest extends TestCase
         $this->assertIsArray($result);
     }
 
-    public function getSearchIncorrectDataProvider() {
+    public function getSearchIncorrectDataProvider()
+    {
         return array(
             array('noproducts'),
             array('1234'),
@@ -126,5 +131,4 @@ class ProductsTest extends TestCase
         $result = $this->product->getSortingByPrice();
         $this->assertIsArray($result);
     }
-
 }

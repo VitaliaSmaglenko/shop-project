@@ -19,8 +19,6 @@ class ControllerTest extends TestCase
      */
     public function testStartIsCorrect():void
     {
-
-//        $this->expectException(\InvalidArgumentException::class);
         $result = array('controllerName' => 'example',
             'actionName' => 'example', 'parameters' => array());
         $this->controller ->start($result);

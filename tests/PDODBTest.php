@@ -4,6 +4,9 @@ use PHPUnit\Framework\TestCase;
 
 class PDODBTest extends TestCase
 {
+    /**
+     * @var PDODB
+     */
     private $pdo;
 
     public function setUp()
@@ -34,7 +37,7 @@ class PDODBTest extends TestCase
         $sql = 'SELECT name FROM products WHERE id = :id ';
         $result = $this->pdo->prepareData($sql, $data, 'fetch');
         $this->assertIsArray($result);
-     }
+    }
 
     public function testPrepareDataExecuteIsCorrect()
     {
@@ -63,7 +66,4 @@ class PDODBTest extends TestCase
         $result = $this->pdo->prepareData($sql, $data, 'fetchAll');
         $this->assertEquals($expect, $result);
     }
-
-
-
 }

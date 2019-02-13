@@ -4,6 +4,9 @@ use Model\CheckUser;
 
 class CheckUserTest extends TestCase
 {
+    /**
+     * @var CheckUser
+     */
     private $check;
 
     public function setUp()
@@ -244,5 +247,4 @@ class CheckUserTest extends TestCase
         $result = $this->check->checkRegistration($email, $password, $userName, $name, $lastName, $phone);
         $this->assertIsArray($result);
     }
-
 }

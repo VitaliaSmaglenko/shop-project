@@ -4,7 +4,10 @@ use Model\Authenticate;
 
 class AuthenticateTest extends TestCase
 {
-    private  $auth;
+    /*
+     * @var Authenticate
+     */
+    private $auth;
 
     public function setUp()
     {
@@ -18,8 +21,8 @@ class AuthenticateTest extends TestCase
     }
     public function testIsAuthIsIncorrect()
     {
-       $result = $this->auth->isAuth();
-       $this->assertFalse($result);
+        $result = $this->auth->isAuth();
+        $this->assertFalse($result);
     }
 
     public function testIsAuthIsCorrect()
@@ -34,5 +37,4 @@ class AuthenticateTest extends TestCase
         $result = $this->auth->checkLogged();
         $this->assertIsInt($result);
     }
-
- }
+}

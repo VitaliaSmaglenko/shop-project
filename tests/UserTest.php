@@ -4,6 +4,9 @@ use Model\User;
 
 class UserTest extends TestCase
 {
+    /**
+     * @var User
+     */
     private static $user;
 
     public function setUp()
@@ -40,9 +43,7 @@ class UserTest extends TestCase
         $expect = true;
         $result = self::$user->createUser();
         $this->assertEquals($expect, $result);
-       // self::$user->delete();
     }
-
 
     public function testGetIsCorrect()
     {
@@ -52,23 +53,6 @@ class UserTest extends TestCase
         $result = self::$user->get();
         $this->assertIsObject($result = new User);
     }
-
-/*
-    public function testUpdateUser()
-    {
-        $id = 17;
-        $objUser = new User;
-        $objUser->setFirstName('NewtestUser');
-        $objUser->setLastName('test');
-        $objUser->setPassword((hash("md5", 'testuser')));
-        $objUser->setPhone('+380501700086');
-        $expect = true;
-        $result = $this->user->updateUser($id);
-        $this->assertEquals($expect, $result);
-    }
-*/
-
-
 
     public static function tearDownAfterClass()
     {

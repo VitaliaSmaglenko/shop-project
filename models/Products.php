@@ -226,7 +226,8 @@ class Products extends Model
     {
         $ids = implode(',', $idsArray);
 
-        $sql = 'SELECT  name, products.id, price,  product_images.image, description, specifications, availability, brand,'.
+        $sql = 'SELECT  name, products.id, price,  product_images.image, description, specifications,'.
+          ' availability, brand,'.
           ' status FROM products LEFT JOIN product_images ON products.id = product_images.product_id WHERE status="1" '.
           ' AND products.id IN ('.$ids.')';
         $product = PDODB::queryData($sql, 'setFetchMode');
@@ -291,7 +292,8 @@ class Products extends Model
     {
         $limit = self::LIMIT;
         $offset = ($page - 1) * self::LIMIT;
-        $sql = 'SELECT  name, products.id, price, product_images.image, description, specifications, availability, brand, '.
+        $sql = 'SELECT  name, products.id, price, product_images.image, description, specifications, '.
+            'availability, brand, '.
             ' status FROM products LEFT JOIN product_images ON products.id = product_images.product_id  '.
             'WHERE status = "1" ORDER BY price ASC  LIMIT :limit OFFSET :offset'  ;
         $data = array(':limit' => $limit, ':offset' => $offset);

@@ -2,12 +2,12 @@
 use PHPUnit\Framework\TestCase;
 use Model\Cart;
 
-
 class CartTest extends TestCase
 {
+    /**
+     * @var Cart
+     */
     private $cart;
-
-
 
     public function setUp()
     {
