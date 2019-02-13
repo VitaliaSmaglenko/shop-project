@@ -8,6 +8,7 @@ class Autoload
     /**
      * Method for automatic connection classes
      * @param $className
+     * @return bool
      */
     public static function myAutoload($className)
     {
@@ -22,7 +23,7 @@ class Autoload
         );
         foreach ($pathParts as $parts) {
             if (!preg_match('%^\p{Lu}%u', $parts)) {
-                return;
+                return false;
             }
         }
         if (preg_match('%^\p{Lu}%u', $class)) {
@@ -32,7 +33,7 @@ class Autoload
                      include_once  $file;
                 }
             }
-        }  return;
+        }  return true;
     }
 }
 

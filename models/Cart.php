@@ -48,7 +48,7 @@ class Cart
 
     /**
      * Returns the product id and its quantity from the session
-     * @return bool|void
+     * @return bool|mixed
      */
     public function getProducts()
     {
@@ -113,7 +113,7 @@ class Cart
         $cartProducts = $this->getProducts();
         $price = 0;
         if ($cartProducts) {
-            for ($i=0; $i<count($products); $i++) {
+            for ($i = 0; $i < count($products); $i++) {
                  $price += $products[$i]->getPrice() * $cartProducts[$products[$i]->getId()];
             }
         }
@@ -133,6 +133,7 @@ class Cart
     /**
      * Delete product from session
      * @param $id
+     * @return bool
      */
     public function deleteProduct(int $id)
     {
@@ -141,12 +142,13 @@ class Cart
         $product->updateQuantity($id, $cartProduct[$id]);
         unset($cartProduct[$id]);
         $this->session->set('products', $cartProduct);
-        return;
+        return true;
     }
 
     /**
      * Minus the value of the product in the session
      * @param int $id
+     * @return bool
      */
     public function minusProduct(int $id)
     {
@@ -160,12 +162,13 @@ class Cart
         $value = 1;
         $product->updateQuantity($id, $value);
         $this->session->set('products', $cartProduct);
-        return;
+        return true;
     }
 
     /**
      * Plus the value of the product in the session
      * @param int $id
+     * @return bool
      */
     public function plusProduct(int $id)
     {
@@ -177,7 +180,6 @@ class Cart
             $product->updateQuantity($id, $value);
         }
         $this->session->set('products', $cartProduct);
-        return;
+        return true;
     }
-
 }

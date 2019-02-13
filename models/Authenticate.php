@@ -74,20 +74,19 @@ class Authenticate
     {
         if ($this->session->cookieExists()) {
             setcookie($key, $val, time()+3600);
-        } else {
-            return;
         }
     }
 
     /**
      * @param $key
+     * @return mixed
      */
     public function getCookie($key)
     {
         if ($this->session->cookieExists()) {
             return $_COOKIE[$key];
         } else {
-            return;
+            return false;
         }
     }
 

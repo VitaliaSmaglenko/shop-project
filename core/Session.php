@@ -9,13 +9,15 @@ class Session
 {
     /**
      *  Includes session if it does not exist yet
+     * @return bool
      */
     public function start()
     {
         if (!$this->sessionExist()) {
             session_start();
+            return true;
         } else {
-            return;
+            return false;
         }
     }
 
@@ -38,21 +40,20 @@ class Session
     {
         if ($this->sessionExist()) {
             $_SESSION[$key] = $val;
-        } else {
-            return;
         }
     }
 
     /**
      * Gets sessions values by key
      * @param $key
+     * @return mixed
      */
     public function get($key)
     {
         if ($this->sessionExist()) {
             return $_SESSION[$key];
         } else {
-            return;
+            return false;
         }
     }
 
@@ -65,14 +66,12 @@ class Session
     {
         if (!$this->sessionExist()) {
             session_name($name);
-        } else {
-            return;
         }
     }
 
     /**
      * Gets session name
-     * @return string|void
+     * @return string|false
      */
 
     public function getName()
@@ -80,7 +79,7 @@ class Session
         if ($this->sessionExist()) {
             return session_name();
         } else {
-            return;
+            return false;
         }
     }
     /**
@@ -98,14 +97,16 @@ class Session
 
     /**
      * Destroys session if it exists
+     * @return bool
      */
     public function destroy()
     {
         if (!$this->sessionExist() && !$this->cookieExists()) {
-            return;
+            return false;
         } else {
             session_unset();
             session_destroy();
+            return true;
         }
     }
 }
