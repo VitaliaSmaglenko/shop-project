@@ -17,7 +17,8 @@
                   "Model\\": "models/",
                   "Base\\": "base/",
                   "Sender\\": "sender/src",
-                  "Controller\\" : "Controller/"
+                  "Controller\\" : "Controller/",
+                  "Service\\": "service/"
 
         }
     },

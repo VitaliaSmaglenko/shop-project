@@ -25,7 +25,7 @@
     if ($result) {
         echo"<p> Order is processed. We will call you back<p>";
     } else {
-        echo"<p> You choose goods -".$quantity." cost- ".$price."<p>";
+        echo"<p> You choose goods -".$info['quantity']." cost- ".$info['price']."<p>";
         ?>
 
     <form method="post" class="validation" novalidate  action="#">
@@ -37,7 +37,7 @@
                     <label for="validationCustom01">First name</label>
                     <input type="text" name="firstName" class="form-control"
                            id="validationCustom01" placeholder="First name"
-                      value="<?php echo  $firstName?>" required>
+                      value="<?php echo  $user['firstName']?>" required>
                     <div class="invalid-feedback">
                         Please choose a first name.
                     </div>
@@ -47,7 +47,7 @@
                 <div class="col-md-4 mb-3">
                     <label for="validationCustom02">Last name</label>
                     <input type="text" name="lastName" class="form-control" id="validationCustom02"
-                           placeholder="Last name" value="<?php echo $lastName?>" required>
+                           placeholder="Last name" value="<?php echo $user['lastName']?>" required>
                     <div class="invalid-feedback">
                         Please choose a last name.
                     </div>
@@ -58,7 +58,7 @@
             <tr> <td>
                     <div class="col-md-4 mb-3">
                         <label for="validationCustomUsername">Your phone number</label>
-                        <input type="text" name="phone" value="<?php echo  $phone;?>"
+                        <input type="text" name="phone" value="<?php echo  $user['phone'];?>"
                                placeholder="Your phone number"
                                class=" white  form-control"
                                id="phone_no" pattern="^((8|\+3)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$" required>
