@@ -19,6 +19,7 @@ class CommentProduct extends Model
     private $updatedAt;
     private $createdAt;
     private $userName;
+    private $parentId;
 
     /**
      * @return bool
@@ -33,13 +34,24 @@ class CommentProduct extends Model
         return $result;
     }
 
+    public function createDaughter():bool
+    {
+        $sql = 'INSERT INTO comment_product (id_product, id_user, text, created_at, updated_at, parent_id) '.
+            'VALUES (:idProduct, :idUser, :text, :created_at, :updated_at, :parent_id);';
+        $data = array(':idProduct' => $this->getProductId(), ':idUser' => $this->getUserId(),
+            ':text' => $this->getText(), ':created_at' => $this->getCreatedAt(),
+            ':updated_at' => $this->getUpdatedAt(), ':parent_id' => $this->getParentId());
+        $result = PDODB::prepareData($sql, $data, 'execute');
+        return $result;
+    }
+
     /**
      * @param int $id
      * @return array
      */
     public function get(int $id):array
     {
-        $sql = 'SELECT  comment_product.id, text, created_at, updated_at, user_name, id_product, id_user '.
+        $sql = 'SELECT  comment_product.id, text, created_at, updated_at, user_name, id_product, id_user, parent_id '.
                ' FROM comment_product LEFT JOIN user ON comment_product.id_user = user.id '.
                ' WHERE id_product = :id ';
         $data = array(':id' => $id);
@@ -55,9 +67,32 @@ class CommentProduct extends Model
             $comment->setUserName($result[$i]['user_name']);
             $comment->setUserId($result[$i]['id_user']);
             $comment->setProductId($result[$i]['id_product']);
+            $comment->setParentId($result[$i]['parent_id']);
             $commentList[$i] = $comment;
         }
+        return  $commentList;
+    }
+    public function getDaughter(int $id):array
+    {
+        $sql = 'SELECT  comment_product.id, text, created_at, updated_at, user_name, id_product, id_user, parent_id '.
+            ' FROM comment_product LEFT JOIN user ON comment_product.id_user = user.id '.
+            ' WHERE parent_id = :id ';
+        $data = array(':id' => $id);
+        $result = PDODB::prepareData($sql, $data, 'fetchAll');
+        $commentList = array();
 
+        for ($i = 0; $i < count($result); $i++) {
+            $comment = new CommentProduct();
+            $comment->setId($result[$i]['id']);
+            $comment->setText($result[$i]['text']);
+            $comment->setCreatedAt($result[$i]['created_at']);
+            $comment->setUpdatedAt($result[$i]['updated_at']);
+            $comment->setUserName($result[$i]['user_name']);
+            $comment->setUserId($result[$i]['id_user']);
+            $comment->setProductId($result[$i]['id_product']);
+            $comment->setParentId($result[$i]['parent_id']);
+            $commentList[$i] = $comment;
+        }
         return  $commentList;
     }
 
@@ -68,7 +103,7 @@ class CommentProduct extends Model
      */
     public function count(int $id):int
     {
-        $sql = 'SELECT count(*) FROM comment_product WHERE id_product = :id';
+        $sql = 'SELECT count(*) FROM comment_product WHERE id_product = :id AND parent_id != 0';
         $data = array(':id' => $id);
         $result = PDODB::prepareData($sql, $data, 'fetchColumn');
 
@@ -161,5 +196,15 @@ class CommentProduct extends Model
     public function getCreatedAt():string
     {
         return $this->createdAt;
+    }
+
+    public function setParentId(int $id):void
+    {
+        $this->parentId = $id;
+    }
+
+    public function getParentId():int
+    {
+        return $this->parentId;
     }
 }
