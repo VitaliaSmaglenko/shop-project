@@ -42,7 +42,6 @@ class Category extends Model
     public function get():array
     {
         $sql ='SELECT  category, id, status FROM category  WHERE status = "1"';
-        $pdo = new PDODB();
         $category = PDODB::queryData($sql);
         $categoryList = array();
         for ($i = 0; $i<count($category); $i++) {

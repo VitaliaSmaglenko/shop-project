@@ -6,7 +6,7 @@ use App\Controller;
 use App\PDODB;
 use Model\Authenticate;
 
-$checkAuth = new Authenticate();
+//$checkAuth = new Authenticate();
 //$checkAuth->isAuth();
 
 
