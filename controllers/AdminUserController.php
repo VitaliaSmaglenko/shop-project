@@ -106,13 +106,12 @@ class AdminUserController extends Controller
             $dataPage['errors'] = $errors;
 
             if ($errors == false) {
-
                 $userObj->setPassword(hash("md5", $options['password']));
                 $userObj->updatePasswordAdmin($id);
                 Response::redirect('/admin/user');
             }
         }
-        $this->view->render('admin/updatePassword.php',  $dataPage);
+        $this->view->render('admin/updatePassword.php', $dataPage);
         return true;
     }
 

@@ -11,7 +11,6 @@ use Model\User;
 use App\Response;
 use App\Request;
 
-
 class AdminProductController extends Controller
 {
     /**
