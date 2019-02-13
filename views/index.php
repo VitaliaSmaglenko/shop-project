@@ -90,9 +90,7 @@ include("views/include/header.php");
         </div>
 
     </div>
-<?php
-include("views/slider.php");
-?>
+
 </main>
     <br>
 
