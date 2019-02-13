@@ -4,6 +4,7 @@
  */
 
 namespace Sender;
+
 use Swift_Mailer;
 use Swift_SmtpTransport;
 use Swift_Message;
@@ -70,7 +71,7 @@ class SwiftMailerTransport implements TransportInterface
     public function getMessage($params)
     {
         if (null == $this->message) {
-            $this->message = $this->createMessage( $params);
+            $this->message = $this->createMessage($params);
         }
         return $this->message;
     }

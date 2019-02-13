@@ -22,9 +22,8 @@ class Sender
 
         try {
             $result = $mailer->send($message);
-
-        } catch (\Swift_SwiftException $e){
-            die ("You have errors: {$e->getMessage()}\n");
+        } catch (\Swift_SwiftException $e) {
+            die("You have errors: { $e->getMessage() }\n");
         }
     }
 }
