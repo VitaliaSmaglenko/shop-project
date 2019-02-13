@@ -5,9 +5,9 @@
  */
 
 use Model\Cart;
-use Model\Products;
 use Base\Controller;
 use App\Response;
+use Service\CartService;
 
 class CartController extends Controller
 {
@@ -19,31 +19,14 @@ class CartController extends Controller
     {
         $cartProducts = new Cart();
         $cart = $cartProducts->getProducts();
-        $dataPage['cart'] = $cart;
-        $products = new Products();
+        $cartService = new CartService();
 
         if ($cart) {
-            $productsId = array_keys($cart);
-            $products = $products->getByIds($productsId);
-
-            if (count($products) !== count($cart)) {
-                if (empty($products)) {
-                    $cartProducts->clear();
-                }
-                for ($i = 0; $i < count($products); $i++) {
-                    foreach ($cart as $k => $v) {
-                        if ($products[$i]->getId() !== $k) {
-                            $cartProducts->deleteProduct($k);
-                        }
-                    }
-                }
-            }
-                $dataPage['products'] = $products;
-                $price = $cartProducts->getPrice($products);
-                $dataPage['price'] = $price;
+            $dataPage = $cartService->cart($cart);
         }
-            $this->view->render('cart.php', $dataPage);
-            return true;
+        $dataPage['cart'] = $cart;
+        $this->view->render('cart.php', $dataPage);
+        return true;
     }
 
 
