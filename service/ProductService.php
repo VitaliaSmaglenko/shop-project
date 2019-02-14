@@ -6,74 +6,84 @@ namespace Service;
 
 use Model\CommentProduct;
 use App\Request;
-use Model\Authenticate;
 use Model\FavoritesProduct;
 use App\Response;
 
 class ProductService
 {
+    /**
+     * @var
+     */
     private $comment;
     private $request;
-    private $user;
     private $favoritesProduct;
+
+    /**
+     * ProductService constructor.
+     */
 
     public function __construct()
     {
         $this->comment = new CommentProduct();
         $this->request = new Request();
-        $this->user = new Authenticate();
         $this->favoritesProduct = new FavoritesProduct();
     }
 
-    public function comment($id)
+    /**
+     * Add comment
+     * @param int $userId
+     * @param int $id
+     */
+    public function createComment(int $userId, int $id):void
     {
+           $this->comment->setUserId($userId);
+           $this->comment->setProductId($id);
+           $this->comment->setData();
+           $this->comment->setText($this->request->post('text'));
+           $this->comment->create();
+           Response::redirect('/product/'.$id);
+    }
 
-        $userId = $this->user->checkLogged();
-        $dataPage['userId'] = $userId;
-        $favorites = 0;
-        $dataPage['favorites'] = $favorites;
+    /**
+     * Add nested comment
+     * @param int $userId
+     * @param int $id
+     */
+    public function createNesComment(int $userId, int $id):void
+    {
+        $this->comment->setParentId($this->request->post('id'));
+        $this->comment->setUserId($userId);
+        $this->comment->setProductId($id);
+        $this->comment->setData();
+        $this->comment->setText($this->request->post('textReplay'));
+        $this->comment->createDaughter();
+        Response::redirect('/product/'.$id);
+    }
 
-        $commentList = $this->comment->get($id);
-
-        $count = $this->comment->count($id);
-        $dataPage['countComment'] = $count;
-        $dataPage['comment'] = $commentList;
+    /**
+     * Return list of nested comment
+     * @param array $commentList
+     * @return array
+     */
+    public function getNesComment(array $commentList):array
+    {
         $nesCommentList = array();
         for ($i = 0; $i<count($commentList); $i++) {
             $nesCommentList[] = $this->comment->getDaughter($commentList[$i]->getId());
         }
+        return $nesCommentList;
+    }
 
-        $dataPage['nesComment'] = $nesCommentList;
-        if ($userId != false) {
-            $this->favoritesProduct->setIdProduct($id);
-            $this->favoritesProduct->setIdUser($userId);
-            $favorites = $this->favoritesProduct->exist();
-
-            if (null !== $this->request->post('submitAdd')) {
-                $this->comment->setUserId($userId);
-                $this->comment->setProductId($id);
-                $this->comment->setData();
-                $this->comment->setText($this->request->post('text'));
-                $this->comment->create();
-                Response::redirect('/product/'.$id);
-            }
-            $show[] = false;
-            if (null !==  $this->request->post('subReplay_'.$this->request->post('id'))) {
-                $show[$this->request->post('id')] = true;
-            }
-            $dataPage['show'] = $show;
-
-            if (null !==  $this->request->post('submitAddReplay_'.$this->request->post('id'))) {
-                $this->comment->setParentId($this->request->post('id'));
-                $this->comment->setUserId($userId);
-                $this->comment->setProductId($id);
-                $this->comment->setData();
-                $this->comment->setText($this->request->post('textReplay'));
-                $this->comment->createDaughter();
-                Response::redirect('/product/'.$id);
-            }
-        }
-        $dataPage['favorites'] = $favorites;
-        return $dataPage;
+    /**
+     * Return exist product in favorites or not
+     * @param int $userId
+     * @param int $id
+     * @return int
+     */
+    public function favoritesProduct(int $userId, int $id):int
+    {
+        $this->favoritesProduct->setIdProduct($id);
+        $this->favoritesProduct->setIdUser($userId);
+        return  $this->favoritesProduct->exist();
     }
 }

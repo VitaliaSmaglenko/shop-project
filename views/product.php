@@ -90,6 +90,7 @@
             <?php } ?>
             <?php if ($comment) {?>
                 <?php for ($i = 0; $i < count($comment); $i++) {?>
+                    <?php if ($comment[$i]->getParentId() == 0) { ?>
                     <ul class="media-list">
                         <!-- Комментарий (уровень 1) -->
                         <li class="media">
@@ -157,6 +158,7 @@
 
                         </li>
                     </ul>
+                    <?php }?>
                 <?php }?>
             <?php }?>
 

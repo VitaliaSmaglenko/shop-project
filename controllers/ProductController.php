@@ -25,41 +25,24 @@ class ProductController extends Controller
         $comment = new CommentProduct();
         $request = new Request();
         $user = new Authenticate();
-        $favoritesProduct = new FavoritesProduct();
         $product = new Products();
         $product = $product->getById($id);
         $dataPage['product'] = $product;
         $cartObj = new Model\Cart();
-        $cart = $cartObj->isProduct($id);
-        $dataPage['cart'] = $cart;
+        $dataPage['cart'] = $cartObj->isProduct($id);
         $userId = $user->checkLogged();
         $dataPage['userId'] = $userId;
         $favorites = 0;
-        $dataPage['favorites'] = $favorites;
 
-        $commentList = $comment->get($id);
+        $dataPage['countComment'] = $comment->count($id);
+        $dataPage['comment'] = $comment->get($id);
+        $dataPage['nesComment'] = $productService->getNesComment($dataPage['comment']);
 
-        $count = $comment->count($id);
-        $dataPage['countComment'] = $count;
-        $dataPage['comment'] = $commentList;
-        $nesCommentList = array();
-        for ($i = 0; $i<count($commentList); $i++) {
-            $nesCommentList[] = $comment->getDaughter($commentList[$i]->getId());
-        }
-
-        $dataPage['nesComment'] = $nesCommentList;
         if ($userId != false) {
-            $favoritesProduct->setIdProduct($id);
-            $favoritesProduct->setIdUser($userId);
-            $favorites = $favoritesProduct->exist();
+            $favorites = $productService->favoritesProduct($userId, $id);
 
             if (null !== $request->post('submitAdd')) {
-                $comment->setUserId($userId);
-                $comment->setProductId($id);
-                $comment->setData();
-                $comment->setText($request->post('text'));
-                $comment->create();
-                Response::redirect('/product/'.$id);
+                $productService->createComment($userId, $id);
             }
             $show[] = false;
             if (null !==  $request->post('subReplay_'.$request->post('id'))) {
@@ -68,20 +51,11 @@ class ProductController extends Controller
             $dataPage['show'] = $show;
 
             if (null !==  $request->post('submitAddReplay_'.$request->post('id'))) {
-                $comment->setParentId($request->post('id'));
-                $comment->setUserId($userId);
-                $comment->setProductId($id);
-                $comment->setData();
-                $comment->setText($request->post('textReplay'));
-                $comment->createDaughter();
-                Response::redirect('/product/'.$id);
+                $productService->createNesComment($userId, $id);
             }
         }
         $dataPage['favorites'] = $favorites;
-       // $dataPage['data'] = $productService->comment($id);
-
         $this->view->render('product.php', $dataPage);
-
         return true;
     }
 
@@ -113,6 +87,15 @@ class ProductController extends Controller
     {
         $comment = new CommentProduct();
         $comment->delete($id);
+        $path = ('/product/'.$idProd);
+        Response::redirect($path);
+        return true;
+    }
+
+    public function actionReplayDelete(int $id, int $idProd):bool
+    {
+        $comment = new CommentProduct();
+        $comment->deleteDaughter($id);
         $path = ('/product/'.$idProd);
         Response::redirect($path);
         return true;

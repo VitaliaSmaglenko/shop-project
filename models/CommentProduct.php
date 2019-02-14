@@ -103,7 +103,7 @@ class CommentProduct extends Model
      */
     public function count(int $id):int
     {
-        $sql = 'SELECT count(*) FROM comment_product WHERE id_product = :id AND parent_id != 0';
+        $sql = 'SELECT count(*) FROM comment_product WHERE id_product = :id AND parent_id   = 0';
         $data = array(':id' => $id);
         $result = PDODB::prepareData($sql, $data, 'fetchColumn');
 
@@ -115,6 +115,14 @@ class CommentProduct extends Model
      * @return bool
      */
     public function delete(int $id):bool
+    {
+        $sql = "DELETE FROM comment_product WHERE id = :id OR parent_id = :par_id";
+        $data = array( ':id' => $id, ':par_id' => $id);
+        $result = PDODB::prepareData($sql, $data, 'execute');
+        return $result;
+    }
+
+    public function deleteDaughter(int $id):bool
     {
         $sql = "DELETE FROM comment_product WHERE id = :id";
         $data = array( ':id' => $id);
